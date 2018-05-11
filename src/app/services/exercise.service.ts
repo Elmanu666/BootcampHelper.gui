@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import {Response} from '@angular/http';
 import { Injectable } from '@angular/core';
+import { PagerService } from '../services/pages.service';
 
 
 @Injectable()
@@ -14,7 +15,8 @@ export class ExerciseService {
   exerciseUrl = `${this.api_url}/api/exercises`;
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    public pagerService : PagerService
   ) { }
 
 
@@ -33,19 +35,27 @@ export class ExerciseService {
   //   })
   // }
 
-    getExercises(): Observable<Exercise[]>{
-    return this.http.get(this.exerciseUrl)
-    .pipe(
+    getExercises(page: number): Observable<Exercise[]>{
+    	let url = this.exerciseUrl+'?page='+page
+    	return this.http.get(url)
+    		.pipe(
 
-    	map(res  => {
-      //Maps the response object sent from the server
+    			map(res  => {
+      			//Maps the response object sent from the server
+
+          		this.pagerService.setPager(res["data"].pages, res["data"].page, res["data"].limit)
+
         
-      return res["data"].docs as Exercise[];
+      	return res["data"].docs as Exercise[];
     }) )
   }
   //Update exercise, takes a exercise Object as parameter
   editExercise(exercise:Exercise){
-    let editUrl = `${this.exerciseUrl}`
+
+  	console.log('service exercise Edit :')
+  	console.log(exercise)
+
+    let editUrl = `${this.exerciseUrl}/${exercise._id}`
     //returns the observable of http put request 
     return this.http.put(editUrl, exercise);
   }
@@ -54,9 +64,9 @@ export class ExerciseService {
     //Delete the object by the id
     let deleteUrl = `${this.exerciseUrl}/${id}`
     return this.http.delete(deleteUrl)
-    .map(res  => {
-      return res;
-    })
+    // .map(res  => {
+    //   return res;
+    // })
   }
 
   //Default Error handling method.

@@ -1,11 +1,15 @@
 import { Response } from '@angular/http';
 import { ExerciseService } from './services/exercise.service';
 import Exercise from './models/exercise.model';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { PagerService } from './services/pages.service';
+import Page from './models/pages.model';
+
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
+  templateUrl: './app.component.2.html',
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
@@ -13,8 +17,13 @@ export class AppComponent {
 
 	  constructor(
     //Private todoservice will be injected into the component by Angular Dependency Injector
-    private exerciseService: ExerciseService
-  ) { }
+    public toastr: ToastsManager, vcr: ViewContainerRef,
+    private exerciseService: ExerciseService,
+    private pagerService: PagerService
+
+  ) { 
+	  	this.toastr.setRootViewContainerRef(vcr);
+	  }
 
   //Declaring the new todo Object and initilizing it
   public newExercise: Exercise = new Exercise()
@@ -23,19 +32,29 @@ export class AppComponent {
   exercisesList: Exercise[];
 
   editExercises: Exercise[] = [];
+  
+  //to do passer par un service
+  bodyPart: string[] = ["Abs", "Biceps", "Triceps", "Glutes", "Legs", "Shoulders", "Oblics", "Chest (middle)", "Chest (high)", "Chest (low)" ];
+  materialType: string[] = ["elastic band","dumbbell", "Yoga ball","medcine ball", "TRX", "bench", "ball"];
+  pagesInfo : Page = new Page();
 
 
 
 
   ngOnInit(): void {
+  	console.log(this.pagesInfo);
 
     //At component initialization the 
-    this.exerciseService.getExercises()
+
+    this.exerciseService.getExercises(1)
       .subscribe(exercises => {
         //assign the todolist property to the proper http response
-        this.exercisesList = exercises
-        console.log('on a récupéré les exerices')
-        console.log(exercises)
+        this.exercisesList = exercises;
+        this.pagesInfo = this.pagerService.getPager();
+        console.log('pagesInfo :');
+        console.log(this.pagesInfo)
+
+
       })
   }
 
@@ -48,19 +67,40 @@ export class AppComponent {
   }
 
 
-    editExercise(exercise: Exercise) {
-    console.log(exercise)
+  getExercice(page){
+
+  		this.exerciseService.getExercises(page)
+		      .subscribe(exercises => {
+		        //assign the todolist property to the proper http response
+		        this.exercisesList = exercises;
+		        this.pagesInfo = this.pagerService.getPager();
+
+
+
+		      })
+
+
+
+  }
+
+
+    editExercise(event, exercise: Exercise) {
+
     if(this.exercisesList.includes(exercise)){
       if(!this.editExercises.includes(exercise)){
+      	this.editExercises = []
         this.editExercises.push(exercise)
       }else{
-      	console.log('on passe pas l edit')
-        this.editExercises.splice(this.editExercises.indexOf(exercise), 1)
+
+ //       this.editExercises.splice(this.editExercises.indexOf(exercise), 1)
         this.exerciseService.editExercise(exercise).subscribe(res => {
           console.log('Update Succesful')
+          this.toastr.success('Update succesful', 'Success!' , {toastLife: 2000});
+
         }, err => {
-          this.editExercise(exercise)
+          this.editExercise(err, exercise)
           console.error('Update Unsuccesful')
+          this.toastr.error('Update Unsuccesful', 'Error!' , {toastLife: 2000});
         })
       }
     }
@@ -69,6 +109,8 @@ export class AppComponent {
 
 
     submitExercise(event, exercise:Exercise){
+    	console.log('on est dans le submitExercise')
+    	console.log(event)
     if(event.keyCode ==13){
 
     	this.exerciseService.createExercise(exercise).subscribe(res =>{
@@ -86,6 +128,8 @@ export class AppComponent {
   deleteExercise(exercise: Exercise) {
     this.exerciseService.deleteExercise(exercise._id).subscribe(res => {
       this.exercisesList.splice(this.exercisesList.indexOf(exercise), 1);
+      this.toastr.success('Delete succesful', 'Success!' , {toastLife: 2000});
+
     })
   }
 

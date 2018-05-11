@@ -1,0 +1,205 @@
+
+<div class="row">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
+    <div class="Table">
+      <div class="HeaderTable row" *ngIf="exercisesList">
+      
+              <div class="col-md-3">Title</div>
+              <div class="col-md-4">Description</div>
+              <div class="col-md-1">Muscu</div>
+              <div class="col-md-1">Cardio</div>        
+              <div class="col-md-1">Balance</div>        
+              <div class="col-md-2">actions</div>        
+      </div>
+      
+      <div class="BodyTable row">
+
+        <div class="col-md-12">
+          
+          <div class="RowTable row" (dblclick)="editExercise(exercise)" *ngFor="let exercise of exercisesList; let i =index" id={{i}}>
+
+
+
+             <ng-container *ngIf="!editExercises.includes(exercise); else editTD"> 
+              <div class="CellTable col-md-3">{{exercise.title}}</div>
+              <div class="CellTable col-md-4">{{exercise.description}}</div>
+              <div class="CellTable col-md-1">{{exercise.type.muscu}}</div>
+              <div class="CellTable col-md-1">{{exercise.type.cardio}}</div>
+              <div class="CellTable col-md-1">{{exercise.type.balance}}</div>
+
+              <div class="CellTable col-md-2">
+                
+              <button class="btn btn-primary" (click)="editExercise($event, exercise)">
+                  <i  class="fa fa-pencil"></i>
+                </button>
+              <button class="btn btn-danger" (click)="deleteExercise(exercise)">
+                  <i  class="fa fa-trash"></i>
+                </button>
+              </div>  
+             </ng-container> 
+            
+            <ng-template #editTD>
+              <div class="EditZone col-md-12">
+                <div class="row">
+                  <div class="col-md-8 form-group">
+                    <label for="title">Title</label>
+                    <input type="text" name="title" id="title" (blur)="editExercise($event, exercise)" [(ngModel)]="exercise.title" placeholder="Title" class="form-control">
+                  </div>
+                  <div class="col-md-4 ActionButtons">
+                      <button class="btn btn-success" (click)="doneEditing(exercise)">
+                        <i  class="fa fa-check"></i>
+                      </button>
+                      <button class="btn btn-danger" (click)="deleteExercise(exercise)">
+                        <i  class="fa fa-trash"></i>
+                      </button>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group col-md-12">
+                    <label for="description">Description</label>
+<!--                     <input type="textarea" name="description" id="description" (blur)="editExercise($event, exercise)" [(ngModel)]="exercise.description" placeholder="Description" class="form-control"> -->
+                    <editor [(ngModel)]="exercise.description" (onBlur)="editExercise($event, exercise)" name="description" id="description{{i}}" class="form-control"></editor>
+                  </div>
+                </div>
+
+              
+                <div class="checklist row">
+
+
+                    <div class="form-check col-md-4">
+                      <ui-switch type="checkbox" size="small" name="muscu" id="muscu" (change)="editExercise($event, exercise)" [(ngModel)]="exercise.type.muscu"  class="form-control-input"></ui-switch>
+                      <!-- <input type="checkbox" name="muscu" id="muscu" (change)="editExercise($event, exercise)" [(ngModel)]="exercise.type.muscu"  class="form-control-input"> -->
+                      <label class="switch-label form-check-label" for="muscu">Muscu</label>
+                    </div>
+                
+                  <div class="form-group col-md-4">
+                      <ui-switch type="checkbox" size="small" name="cardio" id="cardio" (change)="editExercise($event, exercise)" [(ngModel)]="exercise.type.cardio" class="form-control-input"></ui-switch>
+ <!--                      <input type="checkbox" name="cardio" id="cardio" (change)="editExercise($event, exercise)" [(ngModel)]="exercise.type.cardio" class="form-control-input"> -->
+                      <label class="form-check-label" for="cardio">Cardio</label>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <ui-switch type="checkbox" size="small" name="balance" id="balance" (change)="editExercise($event, exercise)" [(ngModel)]="exercise.type.balance" ></ui-switch>
+<!--                       <input type="checkbox" name="balance" id="balance" (change)="editExercise($event, exercise)" [(ngModel)]="exercise.type.balance" class="form-control-input"> -->
+                      <label class="form-check-label" for="balance">Balance</label>
+                  </div>
+                </div>
+                <div class="row media">
+                  <div class="form-group col-md-4"> 
+                      <input type="text" name="Img_path" id="Img_path" (keypress)="editExercise($event, exercise)" [(ngModel)]="exercise.media.img" placeholder="Img path" class="form-control">
+                  </div>
+                  <div class="form-group col-md-4"> 
+                      <input type="text" name="GIf_path" id="GIf_path" (keypress)="editExercise($event, exercise)" [(ngModel)]="exercise.media.gif" placeholder="GIf path" class="form-control">
+                  </div>
+                  <div class="form-group col-md-4">  
+                      <input type="text" name="video_path" id="video_path" (keypress)="editExercise($event, exercise)" [(ngModel)]="exercise.media.video" placeholder="video_path" class="form-control">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group col-md-6">
+<!--                       <input type="checkbox" name="balance" id="bodyPart" (keypress)="editExercise($event, exercise)" [(ngModel)]="exercise.type.bodyPart" class="form-control-input"> -->
+                      <label class="form-check-label" for="balance">Body part</label>
+                      <select multiple class="form-control" id="bodyPart" [(ngModel)]="exercise.type.bodyPart" (click)="editExercise($event, exercise)">
+                        <option *ngFor="let bp of bodyPart" [value]="bp" [selected]="exercise.type.bodyPart.includes(bp)">{{bp}}</option>  
+                      </select>
+                      
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label class="form-check-label" for="balance">Material</label>
+                       <select multiple class="form-control" id="materialType" [(ngModel)]="exercise.material" (click)="editExercise($event, exercise)" >
+                          <option *ngFor="let mt of materialType" [value]="mt" [selected]="exercise.material.includes(mt)">{{mt}}</option>
+            
+                      </select>
+                      
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+
+             
+           
+
+
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+          <!-- <nav aria-label="Page navigation"> -->
+            <ul class="pagination justify-content-center" *ngIf="pagesInfo.totalPages > 1">
+              <li class="page-item"  ><a class="page-link" href="#" (click)="getExercice(pagesInfo.previousPage)">Previous</a></li>
+              <li *ngFor="let page of pagesInfo.pages" [ngClass]="{'page-item':true, 'active':page === pagesInfo.currentPage}"><a class="page-link" href="#" (click)="getExercice(page)">{{page}}</a></li>
+              <li class="page-item"><a class="page-link"  href="#">Next</a></li>
+            </ul>
+<!--           </nav>
+ -->      </div>
+      <div class="col-md-2">
+        
+      </div>
+      </div>
+    </div>
+
+
+    <form>
+
+
+        <div class="form-group">
+          <label for="inputAddress">Title</label>
+          <input type="text" name="title" id="title" [(ngModel)]="newExercise.title" (keypress)="submitExercise($event, exercise)" placeholder="Title" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="inputAddress">Description</label>
+          <input type="text" name="description" id="description" [(ngModel)]="newExercise.description" (keypress)="submitExercise($event, exercise)" placeholder="Description" class="form-control"
+            id="description">
+        </div>        
+        <div class="form-group">
+          <label for="muscu">Muscu</label>
+          <input type="checkbox"  id="muscu" [(ngModel)]="newExercise.type['muscu']" [ngModelOptions]="{name: 'muscu'}" name="muscu" (keypress)="submitExercise($event, exercise)" placeholder="Muscu" class="form-control" id="muscu">
+        </div>
+        <div class="form-group">
+          <label for="cardio">Cardio</label>
+          <input type="checkbox"  id="cardio" [(ngModel)]="newExercise.type['cardio']" name="cardio" placeholder="cardio" class="form-control"
+            id="cardio" (keypress)="submitExercise($event, exercise)">
+        </div>
+        <div class="form-group">
+          <label for="body_part">Example multiple select</label>
+            <select multiple class="form-control" id="body_part" [(ngModel)]="newExercise.type.bodyPart" name="body_part" >
+              <option>Abs</option>
+              <option>Biceps</option>
+              <option>Triceps</option>
+              <option>Glutes</option>
+              <option>Legs</option>
+              <option>Shoulders</option>
+              <option>Oblics</option>
+              <option>Chest (middle)</option>
+              <option>Chest (high)</option>
+              <option>Chest (low)</option>
+            </select>
+        </div>
+        <div class="form-group">
+          <label for="Img_path">Img</label>
+          <input type="texte" name="Img_path" id="Img_path" [(ngModel)]="newExercise.media.img" (keypress)="submitExercise($event, exercise)" placeholder="Img_path" class="form-control"
+            id="Img_path">
+        </div>
+        <div class="form-group">
+          <label for="GIf_path">Gif</label>
+          <input type="texte" name="GIf_path" id="GIf_path" [(ngModel)]="newExercise.media.gif" (keypress)="submitExercise($event, exercise)" placeholder="GIf_path" class="form-control"
+            id="GIf_path">
+        </div>
+        <div class="form-group">
+          <label for="video_path">Video</label>
+          <input type="texte" name="video_path" id="video_path" [(ngModel)]="newExercise.media.video" (keypress)="submitExercise($event, exercise)" placeholder="video_path" class="form-control"
+            id="video_path">
+        </div>
+
+        <div class="col-md-2">
+          <button type="submit" class="btn btn-primary" (click)="create()">Add</button>
+        </div>
+
+    </form>
+  </div>
+  <div class="col-md-2">
+    
+  </div>
+</div>

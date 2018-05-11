@@ -5,6 +5,7 @@ class exercise {
     type :{ 
     	muscu : Boolean;
     	cardio : Boolean;
+    	balance : Boolean;
     	bodyPart : [String]
     	};
     media : {
@@ -22,14 +23,8 @@ class exercise {
 
     	this.title = ""
         this.description = ""
-        this.type = {muscu : false, cardio : false, bodyPart : ['']}
-        // this.type.muscu = false
-        // this.type.cardio = false
-        // this.type.bodyPart = [""]
+        this.type = {muscu : false, cardio : false, balance: false, bodyPart : ['']}
         this.media = {img: "", video :"", gif : ""}
-        // this.media.img = ""
-        // this.media.video = ""
-        // this.media.gif = ""
         this.material = [""]
         this.hidden = false
 
