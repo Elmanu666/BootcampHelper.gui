@@ -11,10 +11,13 @@ import { EditorModule } from '@tinymce/tinymce-angular';
 import { UiSwitchModule } from 'ngx-ui-switch';
 
 
-import {ToastModule} from 'ng2-toastr/ng2-toastr';
+
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
-
+import {
+    ToastrModule } from 'ngx-toastr';
+    
+    
 
 import { AppComponent } from './app.component';
 
@@ -33,7 +36,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     FormsModule,
     EditorModule,
     NgbModule.forRoot(),
-    ToastModule.forRoot()
+    ToastrModule.forRoot(),
   ],
   providers: [ExerciseService, PagerService],
   bootstrap: [AppComponent]

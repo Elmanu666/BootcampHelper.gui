@@ -2,7 +2,7 @@ import { Response } from '@angular/http';
 import { ExerciseService } from './services/exercise.service';
 import Exercise from './models/exercise.model';
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
-import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { ToastrService } from 'ngx-toastr';
 import { PagerService } from './services/pages.service';
 import Page from './models/pages.model';
 
@@ -17,13 +17,12 @@ export class AppComponent {
 
 	  constructor(
     //Private todoservice will be injected into the component by Angular Dependency Injector
-    public toastr: ToastsManager, vcr: ViewContainerRef,
+    public toastr: ToastrService,
     private exerciseService: ExerciseService,
     private pagerService: PagerService
 
-  ) { 
-	  	this.toastr.setRootViewContainerRef(vcr);
-	  }
+  ) {
+      }
 
   //Declaring the new todo Object and initilizing it
   public newExercise: Exercise = new Exercise()
@@ -95,12 +94,12 @@ export class AppComponent {
  //       this.editExercises.splice(this.editExercises.indexOf(exercise), 1)
         this.exerciseService.editExercise(exercise).subscribe(res => {
           console.log('Update Succesful')
-          this.toastr.success('Update succesful', 'Success!' , {toastLife: 2000});
+          this.toastr.success('Update succesful', 'Success!' , {timeOut: 2000});
 
         }, err => {
           this.editExercise(err, exercise)
           console.error('Update Unsuccesful')
-          this.toastr.error('Update Unsuccesful', 'Error!' , {toastLife: 2000});
+          this.toastr.error('Update Unsuccesful', 'Error!' , {timeOut: 2000});
         })
       }
     }
@@ -128,7 +127,7 @@ export class AppComponent {
   deleteExercise(exercise: Exercise) {
     this.exerciseService.deleteExercise(exercise._id).subscribe(res => {
       this.exercisesList.splice(this.exercisesList.indexOf(exercise), 1);
-      this.toastr.success('Delete succesful', 'Success!' , {toastLife: 2000});
+      this.toastr.success('Delete succesful', 'Success!' , {timeOut: 2000});
 
     })
   }
