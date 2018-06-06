@@ -14,6 +14,8 @@ import { UiSwitchModule } from 'ngx-ui-switch';
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
+import { AppRoutingModule } from './app-routing/app-routing.module';
+
 import {
     ToastrModule } from 'ngx-toastr';
     
@@ -22,13 +24,18 @@ import {
 import { AppComponent } from './app.component';
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { SessionListComponent } from './session-list/session-list.component';
+import { ExerciseListComponent } from './exercise-list/exercise-list.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    SessionListComponent,
+    ExerciseListComponent
   ],
   imports: [
+    AppRoutingModule,
     BrowserModule,
     UiSwitchModule,
     BrowserAnimationsModule,
