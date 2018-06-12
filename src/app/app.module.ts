@@ -23,9 +23,14 @@ import { UiSwitchModule } from 'ngx-ui-switch';
 
 
 import {ToastrModule} from 'ngx-toastr';
+
+
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
+import { AppRoutingModule } from './app-routing/app-routing.module';
 
+    
+    
 
 import { AppComponent } from './app.component';
 import { ExercisesComponent } from './exercises/exercises.component';
@@ -46,6 +51,8 @@ import { SessionDisplayComponent } from './session-display/session-display.compo
 import { SessionListComponent } from './session-list/session-list.component';
 
 
+import { SessionListComponent } from './session-list/session-list.component';
+import { ExerciseListComponent } from './exercise-list/exercise-list.component';
 
 
 @NgModule({
@@ -64,6 +71,11 @@ import { SessionListComponent } from './session-list/session-list.component';
   ],
   imports: [
   	AppRoutingModule,
+    SessionListComponent,
+    ExerciseListComponent
+  ],
+  imports: [
+    AppRoutingModule,
     BrowserModule,
     UiSwitchModule,
     BrowserAnimationsModule,
@@ -85,8 +97,6 @@ import { SessionListComponent } from './session-list/session-list.component';
    MatCardModule,
     NgbModule.forRoot(),
     ToastrModule.forRoot(),
-
-
   ],
   providers: [ExerciseService, PagerService, FileService, authService, userService, userSessionService, SessionService, CanActivateExercisesGuard],
   bootstrap: [AppComponent]

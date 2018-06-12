@@ -11,6 +11,7 @@ export class SessionListComponent implements OnInit {
 
 
 
+
   constructor() { }
 
   sessionList : [Session];
@@ -29,6 +30,5 @@ export class SessionListComponent implements OnInit {
       })
 
 
-  }
 
 }
