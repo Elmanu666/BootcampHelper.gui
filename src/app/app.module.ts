@@ -28,17 +28,17 @@ import {ToastrModule} from 'ngx-toastr';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing/app-routing.module';
-
-    
-    
-
 import { AppComponent } from './app.component';
+
+    
+    
+
+//import { AppComponent } from './app.component';
 import { ExercisesComponent } from './exercises/exercises.component';
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { FileUploadComponent } from './file-upload/file-upload.component';
 
-import { AppRoutingModule } from './app-routing.module';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { BootcampHelperHeaderComponent } from './bootcamp-helper-header/bootcamp-helper-header.component';
 import { CountdownComponent } from './countdown/countdown.component';
@@ -48,10 +48,10 @@ import { BchSsessionsComponent } from './bch-ssessions/bch-ssessions.component';
 
 import {MatStepperModule, MatNativeDateModule, MatListModule, MatCardModule, MatInputModule, MatButtonModule, MatDatepickerModule, MatSelectModule, MatGridListModule, MatExpansionModule, MatIconModule} from '@angular/material';
 import { SessionDisplayComponent } from './session-display/session-display.component';
-import { SessionListComponent } from './session-list/session-list.component';
+//import { SessionListComponent } from './session-list/session-list.component';
 
 
-import { SessionListComponent } from './session-list/session-list.component';
+
 import { ExerciseListComponent } from './exercise-list/exercise-list.component';
 
 
@@ -67,15 +67,12 @@ import { ExerciseListComponent } from './exercise-list/exercise-list.component';
     loginComponent,
     BchSsessionsComponent,
     SessionDisplayComponent,
-    SessionListComponent
-  ],
-  imports: [
-  	AppRoutingModule,
-    SessionListComponent,
-    ExerciseListComponent
+ //   SessionListComponent
   ],
   imports: [
     AppRoutingModule,
+//    SessionListComponent,
+   
     BrowserModule,
     UiSwitchModule,
     BrowserAnimationsModule,
@@ -85,16 +82,16 @@ import { ExerciseListComponent } from './exercise-list/exercise-list.component';
     EditorModule,
     AngularFontAwesomeModule,
     MatIconModule,
- 	MatStepperModule,
- 	MatInputModule,
- 	MatDatepickerModule,
- 	MatButtonModule, 
- 	MatNativeDateModule,
- 	MatGridListModule,
- 	MatSelectModule,
- 	MatExpansionModule,
-   MatListModule,
-   MatCardModule,
+ 	  MatStepperModule,
+ 	  MatInputModule,
+ 	  MatDatepickerModule,
+ 	  MatButtonModule, 
+ 	  MatNativeDateModule,
+ 	  MatGridListModule,
+ 	  MatSelectModule,
+ 	  MatExpansionModule,
+     MatListModule,
+     MatCardModule,
     NgbModule.forRoot(),
     ToastrModule.forRoot(),
   ],

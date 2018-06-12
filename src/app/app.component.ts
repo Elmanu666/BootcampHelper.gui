@@ -1,4 +1,3 @@
-import { Component } from '@angular/core';
 
 import { Response } from '@angular/http';
 import { ExerciseService } from './services/exercise.service';
@@ -16,8 +15,6 @@ import Page from './models/pages.model';
 })
 export class AppComponent {
   styleUrls: ['./app.component.scss']
-})
-export class AppComponent {
   
 
 	  constructor(

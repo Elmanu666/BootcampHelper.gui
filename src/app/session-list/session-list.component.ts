@@ -7,6 +7,8 @@ import Session from '../models/session.model';
   templateUrl: './session-list.component.html',
   styleUrls: ['./session-list.component.scss']
 })
+
+
 export class SessionListComponent implements OnInit {
 
 
@@ -19,16 +21,16 @@ export class SessionListComponent implements OnInit {
 
   ngOnInit(): void {
 
-  	this.SessionService.getSessions(this.page)
-      .subscribe(exercises => {
-        //assign the todolist property to the proper http response
-        this.sessionList = exercises;
+  	// this.SessionService.getSessions(this.page)
+   //    .subscribe(exercises => {
+   //      //assign the todolist property to the proper http response
+   //      this.sessionList = exercises;
 //        this.pagesInfo = this.pagerService.getPager();
 
 
 
-      })
+      }
 
 
-
+  
 }
