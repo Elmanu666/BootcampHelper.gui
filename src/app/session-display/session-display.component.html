@@ -1,0 +1,31 @@
+ <div>
+
+
+ 
+  <h3 mat-subheader>{{session.description}}</h3>
+  <h5 mat-subheader>Planned date : {{session.plannedDate | date}}</h5>
+  <h5 mat-subheader>Atendees : {{session.attendees}}</h5>
+
+  <mat-card *ngFor="let round of session.round">
+
+  	<mat-list>
+  		<h2 mat-subheader>{{round.title}}</h2>
+  		<div class="session-timing">
+  			<h3 mat-subheader>Exercises duration : {{round.drillsDuration}}</h3>
+  			<h3 mat-subheader>Rest duration : {{round.restDuration}}</h3>
+  			<h3 mat-subheader>Repeat : {{round.repeat}}</h3>
+  		</div>
+  	<mat-list-item *ngFor="let exercise of round.exercices">
+    	
+    	<h4 mat-line>{{exercise.title}}</h4>
+    	<mat-icon mat-list-icon>accessibility_new</mat-icon>
+    	<p mat-line> {{round.drillsDuration }}s </p>
+  	</mat-list-item>
+
+ 	</mat-list>
+  </mat-card>
+
+
+
+    <div>{{session | json}}</div>
+</div>    

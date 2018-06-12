@@ -1,0 +1,98 @@
+<mat-horizontal-stepper [linear]="isLinear" #stepper>
+  <mat-step >
+    <form >
+      <ng-template matStepLabel>Define your session</ng-template>
+      <mat-grid-list cols="2" rowHeight="6:1">
+  		<mat-grid-tile>
+  			<mat-form-field>
+        		<input matInput placeholder="description"   [(ngModel)]="newSession.description" name="description">
+      		</mat-form-field>
+      	</mat-grid-tile>
+  			<mat-grid-tile>
+  				<mat-form-field>
+		  			<input matInput  [(ngModel)]="newSession.plannedDate" name="plannedDate" [matDatepicker]="picker" placeholder="Choose a date">
+		  			<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+		  			<mat-datepicker #picker></mat-datepicker>
+			</mat-form-field>
+		</mat-grid-tile>
+  		<mat-grid-tile>
+  			<mat-form-field>
+  				<mat-select placeholder="Participants" [(ngModel)]="newSession.attendees" multiple name="newSession.attendees">
+    			<mat-option *ngFor="let user of users" [value]="user">{{user}}</mat-option>
+  				</mat-select>
+			</mat-form-field>
+		</mat-grid-tile>
+  		<mat-grid-tile>
+  			 <mat-form-field >
+    			<input matInput type="number" (change)="updatedRoundsNumber()" placeholder="number of rounds" [(ngModel)]="roundNb" min="1" max="20" name="roundNb">
+    			<mat-error *ngIf="roundNb < 1 || roundNb > 21 ">Min nb: 1</mat-error>
+  			</mat-form-field>
+  		</mat-grid-tile>
+		</mat-grid-list>
+      
+		
+      <div>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="secondFormGroup">
+
+      <ng-template matStepLabel>Configure rounds</ng-template>
+      	
+			<mat-accordion *ngFor="let round of newSession.round; let i =index" >
+			  <mat-expansion-panel>
+			    <mat-expansion-panel-header>
+			      <mat-panel-title>
+			          	<mat-form-field>
+        					<input matInput placeholder="description"   [(ngModel)]="round.description" name="description{{i}}">
+      					</mat-form-field>
+			      </mat-panel-title>
+<!-- 			      <mat-panel-description>
+			        Define your round
+			      </mat-panel-description> -->
+			    </mat-expansion-panel-header>
+            <div>
+  		  			<mat-form-field >
+  		    			<input matInput type="number" placeholder="number of repeat" [(ngModel)]="round.repeat" min="1" max="20" name="round.repeat">
+  		    			<mat-error *ngIf="round.repeat < 1 || round.repeat > 8 ">Min nb: 1</mat-error>
+  		  			</mat-form-field>
+
+  		  			<mat-form-field >
+  		    			<input matInput type="number" placeholder="drills duration" [(ngModel)]="round.drillsDuration" min="1" max="90" name="round.drillsDuration">
+  		    			<mat-error *ngIf="round.drillsDuration < 10 || round.drillsDuration > 90 ">Min nb: 1</mat-error>
+  		  			</mat-form-field>
+  		  			<mat-form-field >
+  		    			<input matInput type="number" placeholder="rest duration" [(ngModel)]="round.restDuration" min="1" max="20" name="round.restDuration">
+  		    			<mat-error *ngIf="round.restDuration < 5 || round.restDuration > 20 ">Min nb: 1</mat-error>
+  		  			</mat-form-field>
+  		  			<mat-form-field >
+  		    			<input matInput type="number" placeholder="number of exercises" (change)="updateExercisesNumber(i)" [(ngModel)]="round.exercisesNumber" min="0" max="20" name="round.exercisesNumber">
+  		    			<mat-error *ngIf="round.exercisesNumber < 1 || round.exercisesNumber > 10 ">Min nb: 1</mat-error>
+  		  			</mat-form-field>
+            </div>
+            <div *ngFor="let exercise of round.exercices; let j =index">
+      		  	<mat-form-field >
+    						<mat-select placeholder="Exercises"  (change)="updateExercises(i, j)" [(ngModel)]="round.exercices[j]" name="exercise-{{j}}">
+      				    <mat-option *ngFor="let a of exercisesList; let v =index" [value]="a" >{{a.title}}</mat-option> 
+    						</mat-select>
+  					</mat-form-field>
+            </div>
+
+			  </mat-expansion-panel>
+			</mat-accordion>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+ 
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Summary</ng-template>
+    <app-session-display [session]="newSession"></app-session-display>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button (click)="sessionSave()">Save</button>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>

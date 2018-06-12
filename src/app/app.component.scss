@@ -1,18 +1,39 @@
+
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+
+
 .HeaderTable{
     border-top: 1px solid #DEE2E6;
     border-bottom: 2px solid #DEE2E6;
     margin-top: 4px;
-    margin-bottom: 5px;
     padding-top: 7px;
     padding-bottom: 7px;
     font-weight : bold;
 
+
+}
+a:not([href]) {
+    color: #007bff;
+    ext-decoration: none; 
+}
+
+.pagination {
+	
+	padding-top : 5px;
 }
 
 .RowTable {
     padding-bottom: 5px;
     border-bottom: 1px solid #DEE2E6;
-    margin-bottom: 5px;
+	padding-top: 5px;
+	}
+
+.RowTable-extended {
+	
+	padding-bottom: 5px;
+    border-bottom: 1px solid #DEE2E6;
+	padding-top: 5px;
 }
 
 .CellTable {
@@ -23,3 +44,54 @@
 .EditZone {
     padding: 10px;
 }
+
+.image-container {
+    position: relative;
+    text-align: center;
+    color: black;
+}
+
+.image-container i {
+	
+	 position: absolute;
+    top: 45%;  
+    left: 45%;
+    transform: translate(-45%, -45%);
+    display: none;
+}
+
+.image-container:hover img {
+    opacity: 0.5;    
+}
+
+.image-container:hover i {
+    display: block;
+    z-index: 500;
+}
+
+.RowTable:hover {
+	
+	background-color: #c7cbce;
+
+}
+
+.RowTable-extended:hover {
+	
+	background-color: white;
+
+}
+
+.session-timing {
+    display: inline-flex;
+    flex-direction: row;
+}
+
+
+.session-timing .mat-subheader:first-child{
+    
+   margin-top: 0px !important; 
+}
+
+
+
+

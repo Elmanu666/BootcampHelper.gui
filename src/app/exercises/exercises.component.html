@@ -1,40 +1,43 @@
 
 <div class="row">
-  <div class="col-md-2"></div>
-  <div class="col-md-8">
+
+  <div class="col-md-12">
 
     <ng-container *ngIf="creatorView; else viewCre">
-      <div class="Table">
-        <div class="HeaderTable row" *ngIf="exercisesList">
+      <table class="table" *ngIf="exercisesList">
+        <thead class="thead-dark bg-primary">
+          <tr>
         
-                <div class="col-md-3">Title</div>
-                <div class="col-md-4">Description</div>
-                <div class="col-md-1">Muscu</div>
-                <div class="col-md-1">Cardio</div>        
-                <div class="col-md-1">Balance</div>        
-                <div class="col-md-2">actions <button class="btn btn-warning" (click)="createExerciseViewOpen()">
+                <th>Title</th>
+                <th>Description</th>
+                <th>Muscu</th>
+                <th>Cardio</th>        
+                <th>Balance</th>        
+                <th>actions <button class="btn btn-warning" (click)="createExerciseViewOpen()">
                       <i  class="fa fa-pencil"></i>
-                    </button></div>        
-        </div>
+                    </button>
+                </th>
+          </tr>        
+        </thead>
         
-        <div class="BodyTable row">
+        <tbody >
 
-          <div class="col-md-12">
+          
 
             
             
-              <div class="row" [ngClass]="{'RowTable':!editExercises.includes(exercise), 'RowTable-extended':editExercises.includes(exercise)}" (dblclick)="editExercise(exercise)" *ngFor="let exercise of exercisesList; let i =index" id={{i}}>
+              <tr (dblclick)="editExercise(exercise)" *ngFor="let exercise of exercisesList; let i =index" id={{i}}>
 
 
 
                  <ng-container *ngIf="!editExercises.includes(exercise) && !viewExercises.includes(exercise) ; else editTD"> 
-                  <div class="CellTable col-md-3">{{exercise.title}}</div>
-                  <div class="CellTable col-md-4">{{exercise.description}}</div>
-                  <div class="CellTable col-md-1">{{exercise.type.muscu}}</div>
-                  <div class="CellTable col-md-1">{{exercise.type.cardio}}</div>
-                  <div class="CellTable col-md-1">{{exercise.type.balance}}</div>
+                  <td>{{exercise.title}}</td>
+                  <td>{{exercise.description}}</td>
+                  <td>{{exercise.params.muscu}}</td>
+                  <td>{{exercise.params.cardio}}</td>
+                  <td>{{exercise.params.balance}}</td>
 
-                  <div class="CellTable col-md-2">
+                  <td>
 
                     <button class="btn btn-primary" (click)="viewExcerise(exercise)">
                       <i  class="fas fa-glasses"></i>
@@ -47,13 +50,13 @@
                       <i  class="fa fa-trash"></i>
                     </button>
 
-                  </div>  
+                  </td>  
                  </ng-container> 
                 
                 <ng-template #editTD>
 
                   <ng-container *ngIf="editExercises.includes(exercise) ; else viewExcerise">
-                    <div class="EditZone col-md-12">
+                    <td colspan="6">
                       <div class="row">
                         <div class="col-md-8 form-group">
                           <label for="title">Title</label>
@@ -80,21 +83,21 @@
 
 
                           <div class="form-check col-md-3">
-                            <ui-switch type="checkbox" size="small" name="muscu" id="muscu" (change)="editExercise($event, exercise)" [(ngModel)]="exercise.type.muscu"  class="form-control-input"></ui-switch>
-                            <!-- <input type="checkbox" name="muscu" id="muscu" (change)="editExercise($event, exercise)" [(ngModel)]="exercise.type.muscu"  class="form-control-input"> -->
+                            <ui-switch type="checkbox" size="small" name="muscu" id="muscu" (change)="editExercise($event, exercise)" [(ngModel)]="exercise.params.muscu"  class="form-control-input"></ui-switch>
+                            <!-- <input type="checkbox" name="muscu" id="muscu" (change)="editExercise($event, exercise)" [(ngModel)]="exercise.params.muscu"  class="form-control-input"> -->
                             <label class="switch-label form-check-label" for="muscu">Muscu</label>
                           </div>
                       
                         <div class="form-group col-md-3">
-                            <ui-switch type="checkbox" size="small" name="cardio" id="cardio" (change)="editExercise($event, exercise)" [(ngModel)]="exercise.type.cardio" class="form-control-input"></ui-switch>
+                            <ui-switch type="checkbox" size="small" name="cardio" id="cardio" (change)="editExercise($event, exercise)" [(ngModel)]="exercise.params.cardio" class="form-control-input"></ui-switch>
                             <label class="form-check-label" for="cardio">Cardio</label>
                         </div>
                         <div class="form-group col-md-3">
-                          <ui-switch type="checkbox" size="small" name="balance" id="balance" (change)="editExercise($event, exercise)" [(ngModel)]="exercise.type.balance" ></ui-switch>
+                          <ui-switch type="checkbox" size="small" name="balance" id="balance" (change)="editExercise($event, exercise)" [(ngModel)]="exercise.params.balance" ></ui-switch>
                             <label class="form-check-label" for="balance">Balance</label>
                         </div>
                         <div class="form-group col-md-3">
-                          <ui-switch type="checkbox" size="small" name="warmup" id="warmup" (change)="editExercise($event, exercise)" [(ngModel)]="exercise.type.warmup" ></ui-switch>
+                          <ui-switch type="checkbox" size="small" name="warmup" id="warmup" (change)="editExercise($event, exercise)" [(ngModel)]="exercise.params.warmup" ></ui-switch>
                             <label class="form-check-label" for="warmup">Warmup ideal</label>
                         </div>
                       </div>
@@ -133,8 +136,8 @@
                       <div class="row">
                         <div class="form-group col-md-6">
                             <label class="form-check-label" for="balance">Body part</label>
-                            <select multiple class="form-control" id="bodyPart" [(ngModel)]="exercise.type.bodyPart" (click)="editExercise($event, exercise)">
-                              <option *ngFor="let bp of bodyPart" [value]="bp" [selected]="exercise.type.bodyPart.includes(bp)">{{bp}}</option>  
+                            <select multiple class="form-control" id="bodyPart" [(ngModel)]="exercise.params.bodyPart" (click)="editExercise($event, exercise)">
+                              <option *ngFor="let bp of bodyPart" [value]="bp" [selected]="exercise.params.bodyPart.includes(bp)">{{bp}}</option>  
                             </select>
                             
                         </div>
@@ -147,10 +150,10 @@
                             
                         </div>
                       </div>
-                    </div>
+                    </td>
                   </ng-container>
                   <ng-template #viewExcerise>
-                    <div class="EditZone col-md-12">
+                    <td colspan="6">
                       <div class="row">
                         <div class="col-md-8">
                           {{exercise.title}}
@@ -181,21 +184,21 @@
 
 
                           <div class="form-check col-md-3">
-                            <ui-switch type="checkbox" size="small" name="muscu" id="muscu" (change)="editExercise($event, exercise)" [(ngModel)]="exercise.type.muscu"  class="form-control-input"></ui-switch>
-                            <!-- <input type="checkbox" name="muscu" id="muscu" (change)="editExercise($event, exercise)" [(ngModel)]="exercise.type.muscu"  class="form-control-input"> -->
+                            <ui-switch type="checkbox" size="small" name="muscu" id="muscu" (change)="editExercise($event, exercise)" [(ngModel)]="exercise.params.muscu"  class="form-control-input"></ui-switch>
+                            <!-- <input type="checkbox" name="muscu" id="muscu" (change)="editExercise($event, exercise)" [(ngModel)]="exercise.params.muscu"  class="form-control-input"> -->
                             <label class="switch-label form-check-label" for="muscu">Muscu</label>
                           </div>
                       
                         <div class="form-group col-md-3">
-                            <ui-switch type="checkbox" size="small" name="cardio" id="cardio" (change)="editExercise($event, exercise)" [(ngModel)]="exercise.type.cardio" class="form-control-input"></ui-switch>
+                            <ui-switch type="checkbox" size="small" name="cardio" id="cardio" (change)="editExercise($event, exercise)" [(ngModel)]="exercise.params.cardio" class="form-control-input"></ui-switch>
                             <label class="form-check-label" for="cardio">Cardio</label>
                         </div>
                         <div class="form-group col-md-3">
-                          <ui-switch type="checkbox" size="small" name="balance" id="balance" (change)="editExercise($event, exercise)" [(ngModel)]="exercise.type.balance" ></ui-switch>
+                          <ui-switch type="checkbox" size="small" name="balance" id="balance" (change)="editExercise($event, exercise)" [(ngModel)]="exercise.params.balance" ></ui-switch>
                             <label class="form-check-label" for="balance">Balance</label>
                         </div>
                         <div class="form-group col-md-3">
-                          <ui-switch type="checkbox" size="small" name="warmup" id="warmup" (change)="editExercise($event, exercise)" [(ngModel)]="exercise.type.warmup" ></ui-switch>
+                          <ui-switch type="checkbox" size="small" name="warmup" id="warmup" (change)="editExercise($event, exercise)" [(ngModel)]="exercise.params.warmup" ></ui-switch>
                             <label class="form-check-label" for="warmup">Warmup ideal</label>
                         </div>
                       </div>
@@ -204,8 +207,8 @@
                       <div class="row">
                         <div class="form-group col-md-6">
                             <label class="form-check-label" for="balance">Body part</label>
-                            <select readonly multiple class="form-control" id="bodyPart" [(ngModel)]="exercise.type.bodyPart" (click)="editExercise($event, exercise)">
-                              <option *ngFor="let bp of bodyPart" [value]="bp" [selected]="exercise.type.bodyPart.includes(bp)">{{bp}}</option>  
+                            <select readonly multiple class="form-control" id="bodyPart" [(ngModel)]="exercise.params.bodyPart" (click)="editExercise($event, exercise)">
+                              <option *ngFor="let bp of bodyPart" [value]="bp" [selected]="exercise.params.bodyPart.includes(bp)">{{bp}}</option>  
                             </select>
                             
                         </div>
@@ -220,7 +223,7 @@
                       </div>
 
 
-                    </div>
+                    </td>
 
 
                     
@@ -233,10 +236,11 @@
                  
                
 
-              </div>
+              </tr>
 
-          </div>
-        </div>
+          
+        </tbody>
+      </table>
         <div class="row pagination">
           <div class="col-md-2"></div>
           <div class="col-md-8">
@@ -246,10 +250,10 @@
                   <a class="page-link"  href="#" (click)="getExercice(pagesInfo.previousPage)">Previous</a>
                 </li>
                 <li *ngFor="let page of pagesInfo.pages" [ngClass]="{'page-item':true, 'active':page === pagesInfo.currentPage}">
-                  <a class="page-link" href="#" (click)="getExercice(page)">{{page}}</a>
+                  <a class="page-link"  (click)="getExercice(page)">{{page}}</a>
                 </li>
                 <li class="page-item" [ngClass]="{'disabled': pagesInfo.currentPage === pagesInfo.totalPages}" >
-                  <a class="page-link"  href="#" (click)="getExercice(pagesInfo.nextPage)">Next</a>
+                  <a class="page-link"  (click)="getExercice(pagesInfo.nextPage)">Next</a>
                 </li>
               </ul>
         </div>
@@ -257,7 +261,7 @@
           
         </div>
         </div>
-      </div>
+      
     </ng-container>
     <ng-template #viewCre>
       <div class="EditZone col-md-12">
@@ -288,21 +292,21 @@
 
 
                         <div class="form-check col-md-3">
-                          <ui-switch type="checkbox" size="small" name="muscu" id="muscu"  [(ngModel)]="newExercise.type.muscu"  class="form-control-input"></ui-switch>
-                          <!-- <input type="checkbox" name="muscu" id="muscu" (change)="editExercise($event, exercise)" [(ngModel)]="newExercise.type.muscu"  class="form-control-input"> -->
+                          <ui-switch type="checkbox" size="small" name="muscu" id="muscu"  [(ngModel)]="newExercise.params.muscu"  class="form-control-input"></ui-switch>
+                          <!-- <input type="checkbox" name="muscu" id="muscu" (change)="editExercise($event, exercise)" [(ngModel)]="newExercise.params.muscu"  class="form-control-input"> -->
                           <label class="switch-label form-check-label" for="muscu">Muscu</label>
                         </div>
                     
                       <div class="form-group col-md-3">
-                          <ui-switch type="checkbox" size="small" name="cardio" id="cardio"  [(ngModel)]="newExercise.type.cardio" class="form-control-input"></ui-switch>
+                          <ui-switch type="checkbox" size="small" name="cardio" id="cardio"  [(ngModel)]="newExercise.params.cardio" class="form-control-input"></ui-switch>
                           <label class="form-check-label" for="cardio">Cardio</label>
                       </div>
                       <div class="form-group col-md-3">
-                        <ui-switch type="checkbox" size="small" name="balance" id="balance"  [(ngModel)]="newExercise.type.balance" ></ui-switch>
+                        <ui-switch type="checkbox" size="small" name="balance" id="balance"  [(ngModel)]="newExercise.params.balance" ></ui-switch>
                           <label class="form-check-label" for="balance">Balance</label>
                       </div>
                       <div class="form-group col-md-3">
-                        <ui-switch type="checkbox" size="small" name="warmup" id="warmup"  [(ngModel)]="newExercise.type.warmup" ></ui-switch>
+                        <ui-switch type="checkbox" size="small" name="warmup" id="warmup"  [(ngModel)]="newExercise.params.warmup" ></ui-switch>
                           <label class="form-check-label" for="warmup">Warmup ideal</label>
                       </div>
                     </div>
@@ -341,8 +345,8 @@
                     <div class="row">
                       <div class="form-group col-md-6">
                           <label class="form-check-label" for="balance">Body part</label>
-                          <select multiple class="form-control" id="bodyPart" [(ngModel)]="newExercise.type.bodyPart" >
-                            <option *ngFor="let bp of bodyPart" [value]="bp" [selected]="newExercise.type.bodyPart.includes(bp)">{{bp}}</option>  
+                          <select multiple class="form-control" id="bodyPart" [(ngModel)]="newExercise.params.bodyPart" >
+                            <option *ngFor="let bp of bodyPart" [value]="bp" [selected]="newExercise.params.bodyPart.includes(bp)">{{bp}}</option>  
                           </select>
                           
                       </div>
@@ -362,7 +366,5 @@
 
     
   </div>
-  <div class="col-md-2">
-    
-  </div>
+
 </div>

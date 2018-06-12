@@ -1,0 +1,38 @@
+
+
+	
+	<div class="count-down-wrapper">
+		<div class="count-down">
+			<h1>Timer</h1>
+
+			<div class="lecteur">
+				<button class="btn btn-lg btn-success" (click)="startCountDown(durationSelected)">
+       				<i  class="fas fa-play-circle fa-3x"></i>
+    			</button>
+    			<button class="btn btn-lg btn-warning" (click)="pauseCountDown()">
+       				<i class="fas fa-pause fa-3x"></i>
+    			</button>
+    			<button class="btn btn-lg btn-danger" (click)="stopCountDown()">
+       				<i  class="fas fa-stop-circle fa-3x"></i>
+    			</button>
+			</div>
+			<div class="value-input row">
+				<div class="col-md-2"></div>
+				<div class="col-md-8"><ngb-timepicker [(ngModel)]="durationSelected" [seconds]=true></ngb-timepicker></div>
+				<div class="col-md-2"></div>
+				
+			</div>
+
+
+			<div class="">
+  					<ngb-progressbar type="warning" [value]="clockPurcentage" [striped]="true" [animated]="true"></ngb-progressbar>
+			</div>
+
+
+		</div>
+	</div>
+
+
+
+    
+

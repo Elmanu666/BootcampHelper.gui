@@ -20,7 +20,7 @@ export class ExerciseService {
   ) { }
 
 
-   createExercise(exercise: Exercise): Observable<any>{
+   createExercise(exercise : Exercise): Observable<any>{
     //returns the observable of http post request 
     return this.http.post(`${this.exerciseUrl}`, exercise);
   }
@@ -37,11 +37,15 @@ export class ExerciseService {
 
     getExercises(page: number): Observable<Exercise[]>{
     	let url = this.exerciseUrl+'?page='+page
+  //  	let url = this.exerciseUrl
+    	let config = {'params' : {'page' : page }};
     	return this.http.get(url)
     		.pipe(
 
     			map(res  => {
       			//Maps the response object sent from the server
+      			console.log('donnée envoyer pour le pager');
+      			console.log(res['data']);
 
           		this.pagerService.setPager(res["data"].pages, res["data"].page, res["data"].limit)
 

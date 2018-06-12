@@ -18,14 +18,15 @@ export class PagerService {
     setPager(totalPages: number, currentPage: number , pageSize: number){
 
         this.page.totalPages = totalPages;
-        console.log('nombre total de pages :');
-        console.log(totalPages)
+
+
         this.page.currentPage = currentPage;
         this.page.pageSize = pageSize;
         this.page.pages = _.range(1, totalPages+1);
-        this.page.nextPage = currentPage + 1;
+        this.page.nextPage = (<number> currentPage) + 1;
         this.page.previousPage = currentPage -1;
-        console.log(_.range(1, totalPages+1));
+        console.log('page :')
+        console.log(this.page);
 
     }
 
