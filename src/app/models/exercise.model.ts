@@ -2,7 +2,7 @@ class exercise {
     _id:string;
     title: string;
     description: string;
-    type :{ 
+    details :{ 
     	muscu : Boolean;
     	cardio : Boolean;
     	balance : Boolean;
@@ -24,7 +24,7 @@ class exercise {
 
     	this.title = ""
         this.description = ""
-        this.type = {muscu : false, cardio : false, balance: false, warmup: false, bodyPart : ['']}
+        this.details = {muscu : false, cardio : false, balance: false, warmup: false, bodyPart : ['']}
         this.media = {img: "", video :"", gif : ""}
         this.material = [""]
         this.hidden = false

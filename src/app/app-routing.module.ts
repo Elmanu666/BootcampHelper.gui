@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ExercisesComponent } from './exercises/exercises.component';
+import { ExerciseComponent } from './exercise/exercise.component';
 import { SessionRunComponent } from './session-run/session-run.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { loginComponent } from './login/login.component';
@@ -18,18 +18,18 @@ const routes: Routes = [
     path: 'login',
     component: loginComponent
   },
-  {
-    path: 'exercises',
-    component: ExercisesComponent,
-    canActivate: [
-      CanActivateExercisesGuard
-    ],
-  },
-  {
-    path: 'exercise',
-    component: ExercisesComponent,
+  // {
+  //   path: 'exercises',
+  //   component: ExerciseComponent,
+  //   canActivate: [
+  //     CanActivateExercisesGuard
+  //   ],
+  // },
+  // {
+  //   path: 'exercise',
+  //   component: ExerciseComponent,
 
-  },    
+  // },    
   {
     path: 'count-down',
     component: SessionRunComponent

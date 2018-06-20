@@ -32,8 +32,11 @@ export class BootcampHelperHeaderComponent implements OnInit {
   	var menuGuest:menu = new menu();
 
   	menuGuest.type='guest';
-  	menuGuest.link=[{'name':'home', 'adress':''}];
-
+  	menuGuest.link=[{'name':'home', 'adress':''}]
+    menuGuest.link.push({'name':'exercises', 'adress':'exercises'}); 
+    menuGuest.link.push({'name':'sessions', 'adress':'sessions'}); 
+    menuGuest.link.push({'name':'sessions list', 'adress':'sessions-list'}); 
+    
   	if(this.auth.isSignedIn()){
 
   		this.menuApp =menuAdmin;

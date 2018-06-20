@@ -1,3 +1,30 @@
-<p>
-  session-list works!
-</p>
+<div class="row">
+
+  <div class="col-md-12">
+
+ 
+      <table class="table">
+        <thead class="thead-dark bg-primary">
+          <tr>
+        
+                <th>Description</th>
+                <th>Attendees</th>
+                <th>Rounds number</th>
+                <th>Planned date</th>        
+ 
+          </tr>        
+        </thead>
+        
+        <tbody >
+          <tr (dblclick)="showSession(session._id)"  *ngFor="let session of sessionsList; let i =index" id={{i}}>
+            <td>{{session?.description || 'default'}}</td>
+            <td>{{session.attendees}}</td>
+            <td>{{session.round.length}}</td>
+            <td>{{session.plannedDate | date }}</td>
+          </tr>
+
+        </tbody>
+      </table>
+   
+  </div>
+</div>
