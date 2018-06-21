@@ -4,6 +4,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { ExercisesComponent } from './exercises/exercises.component';
 import { ExerciseComponent } from './exercise.component';
 import { ExerciseListComponent } from './exercise-list/exercise-list.component';
+import { ExerciseDisplayComponent } from './exercise-display/exercise-display.component';
+import { ExerciseCreateComponent } from './exercise-create/exercise-create.component';
 
 import { CanActivateExercisesGuard }     from '../guards/can-activate-exercises.guards';
 
@@ -18,6 +20,8 @@ const exerciseRoutes: Routes = [
           { path: 'list', component: ExercisesComponent },
           { path: 'list2', component: ExerciseListComponent },
           { path: 'list3', component: ExerciseComponent },
+          { path: 'create', component: ExerciseCreateComponent },
+          { path: 'detail/:id', component: ExerciseDisplayComponent },
 
         
       

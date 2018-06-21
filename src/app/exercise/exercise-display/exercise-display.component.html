@@ -1,0 +1,77 @@
+<div class="col-md-12" *ngIf="loaded">
+
+
+    <div class="row">
+      <div class="col-md-8">
+        {{exercise.title}}
+      </div>
+      <div class="col-md-4 ActionButtons">
+          <button class="btn btn-danger" (click)="deleteExercise(exercise)">
+            <i  class="fa fa-trash"></i>
+          </button>
+      </div>
+    </div>
+
+    <div class="row media">
+      <div class="image-container form-group col-md-3" *ngFor="let img of images">
+        <img  [src]="'http://localhost:3000/' + img.ImagePath" class="img-fluid img-thumbnail"  alt="">
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="form-group col-md-12">
+        {{exercise.description}}
+      </div>
+    </div>
+
+    <div class="checklist row">
+
+
+      <div class="form-check col-md-3">
+          <ui-switch type="checkbox" size="small" name="muscu" id="muscu" (change)="editExercise($event, exercise)" [(ngModel)]="exercise.details.muscu"  class="form-control-input"></ui-switch>
+
+          <label class="switch-label form-check-label" for="muscu">Muscu</label>
+      </div>
+    
+      <div class="form-group col-md-3">
+          <ui-switch type="checkbox" size="small" name="cardio" id="cardio" (change)="editExercise($event, exercise)" [(ngModel)]="exercise.details.cardio" class="form-control-input"></ui-switch>
+          <label class="form-check-label" for="cardio">Cardio</label>
+      </div>
+      <div class="form-group col-md-3">
+        <ui-switch type="checkbox" size="small" name="balance" id="balance" (change)="editExercise($event, exercise)" [(ngModel)]="exercise.details.balance" ></ui-switch>
+          <label class="form-check-label" for="balance">Balance</label>
+      </div>
+      <div class="form-group col-md-3">
+        <ui-switch type="checkbox" size="small" name="warmup" id="warmup" (change)="editExercise($event, exercise)" [(ngModel)]="exercise.details.warmup" ></ui-switch>
+          <label class="form-check-label" for="warmup">Warmup ideal</label>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="form-group col-md-6">
+          <label class="form-check-label" for="balance">Body part</label>
+          <select readonly multiple class="form-control" id="bodyPart" [(ngModel)]="exercise.details.bodyPart" (click)="editExercise($event, exercise)">
+            <option *ngFor="let bp of bodyPart" [value]="bp" [selected]="exercise.details.bodyPart.includes(bp)">{{bp}}</option>  
+          </select>
+          
+      </div>
+      <div class="form-group col-md-6">
+        <label class="form-check-label" for="balance">Material</label>
+           <select readonly multiple class="form-control" id="materialType" [(ngModel)]="exercise.material" (click)="editExercise($event, exercise)" >
+              <option *ngFor="let mt of materialType" [value]="mt" [selected]="exercise.material.includes(mt)">{{mt}}</option>
+
+          </select>
+          
+      </div>
+    </div>
+
+
+</div>
+ 
+
+
+  
+
+
+

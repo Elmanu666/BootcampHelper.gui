@@ -1,0 +1,28 @@
+<div class="container-fluid">
+	<div class="row">
+	  	<nav class="col-md-2 d-none d-md-block bg-light sidebar">
+	  		<div class="sidebar-sticky">
+	  			<ul class="nav flex-column">
+	  				<li class="nav-item">
+	  					<a class="nav-link" routerLink="/exercise/list2" href="*">
+	  						List
+						</a>
+	  				</li>
+					<li class="nav-link">
+	  					<a class="" routerLink="/exercise/create" href="*">
+	  						Create
+						</a>
+	  				</li>
+	 				<li class="nav-link">
+	  					<a class="" routerLink="/exercise/details" href="*">
+	  						Detail
+						</a>
+	  				</li>
+	  			</ul>
+	  		</div>
+	  	</nav>
+  		<main class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+  			<router-outlet></router-outlet>
+  		</main>
+  	</div>
+</div>

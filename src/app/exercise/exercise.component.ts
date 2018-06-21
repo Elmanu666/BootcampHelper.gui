@@ -4,12 +4,14 @@ import { Component } from '@angular/core';
 
 
 @Component({
-  template: `<div class="container"><nav> mes couilles mickey</nav>
-  			<router-outlet></router-outlet>
-  			</div>`,
+  templateUrl: './exercise.component.html',
+  styleUrls: ['./exercise.component.scss']
 
 
 })
+
+
+
 export class ExerciseComponent {
 
 

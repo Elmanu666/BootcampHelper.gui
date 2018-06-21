@@ -5,6 +5,7 @@ import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { PagerService } from '../../services/pages.service';
 import Page from '../../models/pages.model';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -19,7 +20,9 @@ export class ExerciseListComponent {
     //Private todoservice will be injected into the component by Angular Dependency Injector
     public toastr: ToastrService,
     private exerciseService: ExerciseService,
-    private pagerService: PagerService
+    private pagerService: PagerService,
+    private router : Router
+
 
   ) {
       }
@@ -77,6 +80,17 @@ export class ExerciseListComponent {
 
 
 		      })
+
+
+
+  }
+
+  displayExercise(id: Exercise['_id']){
+
+    console.log('display exercise click')
+
+    this.router.navigate(['exercise/detail/'+id]);
+
 
 
 

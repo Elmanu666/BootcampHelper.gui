@@ -1,7 +1,10 @@
 
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
-
+.body {
+    
+    font-weight: 500 !important;
+}
 
 .HeaderTable{
     border-top: 1px solid #DEE2E6;
@@ -91,6 +94,10 @@ a:not([href]) {
     
    margin-top: 0px !important; 
 }
+
+
+
+
 
 
 

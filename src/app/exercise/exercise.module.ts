@@ -11,6 +11,8 @@ import { FormsModule } from '@angular/forms';
 import { ExerciseListComponent} from './exercise-list/exercise-list.component';
 import { ExercisesComponent} from './exercises/exercises.component';
 import { ExerciseComponent} from './exercise.component';
+import { ExerciseDisplayComponent} from './exercise-display/exercise-display.component';
+import { ExerciseCreateComponent} from './exercise-create/exercise-create.component';
 
 import { FileUploadComponent } from '../file-upload/file-upload.component';
 
@@ -39,7 +41,9 @@ import { ExerciseRoutingModule } from './exercise-routing.module';
     ExerciseListComponent,
     ExercisesComponent,
     FileUploadComponent,
-    ExerciseComponent
+    ExerciseComponent,
+    ExerciseDisplayComponent,
+    ExerciseCreateComponent
 
   ]
 })

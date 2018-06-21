@@ -12,7 +12,7 @@ import { PagerService } from '../services/pages.service';
 export class ExerciseService {
 
   api_url = 'http://localhost:3000';
-  exerciseUrl = `${this.api_url}/api/exercises`;
+  exercisesUrl = `${this.api_url}/api/exercises`;
 
   constructor(
     private http: HttpClient,
@@ -22,12 +22,12 @@ export class ExerciseService {
 
    createExercise(exercise : Exercise): Observable<any>{
     //returns the observable of http post request 
-    return this.http.post(`${this.exerciseUrl}`, exercise);
+    return this.http.post(`${this.exercisesUrl}`, exercise);
   }
 
   //Read exercise, takes no arguments
   // getExercises(): Observable<Exercise[]>{
-  //   return this.http.get(this.exerciseUrl)
+  //   return this.http.get(this.exercisesUrl)
   //   .map(res  => {
   //     //Maps the response object sent from the server
         
@@ -36,8 +36,8 @@ export class ExerciseService {
   // }
 
     getExercises(page: number): Observable<Exercise[]>{
-    	let url = this.exerciseUrl+'?page='+page
-  //  	let url = this.exerciseUrl
+    	let url = this.exercisesUrl+'?page='+page
+  //  	let url = this.exercisesUrl
     	let config = {'params' : {'page' : page }};
     	return this.http.get(url)
     		.pipe(
@@ -53,20 +53,41 @@ export class ExerciseService {
       	return res["data"].docs as Exercise[];
     }) )
   }
+
+
+  getExercise(id:Exercise['_id']): Observable<Exercise>{
+
+    let url = this.exercisesUrl+'/'+id
+  //    let url = this.sessionUrl
+    
+    return this.http.get(url)
+        .pipe(
+
+          map(res  => {
+            //Maps the response object sent from the server        
+            return res["data"] as Exercise;
+      }) )
+
+
+
+
+  }
+
+
   //Update exercise, takes a exercise Object as parameter
   editExercise(exercise:Exercise){
 
   	console.log('service exercise Edit :')
   	console.log(exercise)
 
-    let editUrl = `${this.exerciseUrl}/${exercise._id}`
+    let editUrl = `${this.exercisesUrl}/${exercise._id}`
     //returns the observable of http put request 
     return this.http.put(editUrl, exercise);
   }
 
   deleteExercise(id:string):any{
     //Delete the object by the id
-    let deleteUrl = `${this.exerciseUrl}/${id}`
+    let deleteUrl = `${this.exercisesUrl}/${id}`
     return this.http.delete(deleteUrl)
     // .map(res  => {
     //   return res;
