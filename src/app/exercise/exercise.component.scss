@@ -12,8 +12,8 @@
 .sidebar-sticky {
     position: -webkit-sticky;
     position: sticky;
-    top: 48px;
-    height: calc(100vh - 48px);
+    top: 96px;
+    height: calc(100vh - 96px);
     padding-top: .5rem;
     overflow-x: hidden;
     overflow-y: auto;
@@ -22,4 +22,18 @@
 .nav-link {
     display: block;
     padding: .5rem 1rem;
+}
+
+.lat-menu-ico {
+	
+	margin-right : 4px;
+	width : 16px;
+
+}
+
+
+.lat-menu-nav {
+	
+	color : grey;
+
 }

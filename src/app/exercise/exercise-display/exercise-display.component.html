@@ -5,10 +5,15 @@
       <div class="col-md-8">
         {{exercise.title}}
       </div>
-      <div class="col-md-4 ActionButtons">
+        <div class="col-md-2 ActionButtons">
           <button class="btn btn-danger" (click)="deleteExercise(exercise)">
             <i  class="fa fa-trash"></i>
           </button>
+      </div>
+      <div class="col-md-2 ActionButtons">
+          <button class="btn btn-warning" (click)="editExercise(exercise)">
+            <i  class="fa fa-pencil"></i>
+        </button>
       </div>
     </div>
 
@@ -65,6 +70,8 @@
           
       </div>
     </div>
+
+
 
 
 </div>

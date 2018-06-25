@@ -16,16 +16,39 @@
        				<i  class="fas fa-stop-circle fa-3x"></i>
     			</button>
 			</div>
-			<div class="value-input row">
-				<div class="col-md-2"></div>
-				<div class="col-md-8"><ngb-timepicker [(ngModel)]="durationSelected" [seconds]=true></ngb-timepicker></div>
-				<div class="col-md-2"></div>
+			<div class="value-input form-groupe row">
+				<div class="col-4">
+					<label for="hour">Hours</label>
+					<input class="form-control" type="number" name="hour" id="hour" [(ngModel)]="durationSelected.hour">
+				</div>
+				<div class="col-4">
+					<label for="hour">Minutes</label>
+					<input class="form-control" type="number" name="minute" id="minute" [(ngModel)]="durationSelected.minute">
+				</div>
+				<div class="col-4">
+					<label for="hour">Seconds</label>
+					<input class="form-control" type="number" name="second" id="second" [(ngModel)]="durationSelected.second">
+				</div>
+<!-- 				<div class="col-md-8"><ngb-timepicker [(ngModel)]="durationSelected" [seconds]=true></ngb-timepicker></div> -->
+
 				
 			</div>
 
 
 			<div class="">
   					<ngb-progressbar type="warning" [value]="clockPurcentage" [striped]="true" [animated]="true"></ngb-progressbar>
+			</div>
+
+			<div class="">
+				{{durationSelected | json}}
+			</div>
+
+			<div class="">
+				<input type="number" name="clockPrecision" id="clockPrecision" [(ngModel)]="clockPrecision">{{clockPrecision}}
+			</div>
+
+			<div class="">
+				{{clockPurcentage}}
 			</div>
 
 

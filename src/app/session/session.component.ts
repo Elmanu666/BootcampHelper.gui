@@ -3,7 +3,7 @@ import { SessionService } from '../services/session.service';
 import Session from '../models/session.model';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { SessionDisplayComponent } from '../session-display/session-display.component';
+import { SessionDisplayComponent } from './session-display/session-display.component';
 
 import { ActivatedRoute, Router,  } from '@angular/router';
 
@@ -26,22 +26,22 @@ export class SessionComponent implements OnInit {
 
   ngOnInit() {
 
-  	let id = this.route.snapshot.paramMap.get('id');
+  // 	let id = this.route.snapshot.paramMap.get('id');
 
-  	console.log(id);
-
-
-  	this.sessionService.getSession(id)
-      .subscribe(session => {
-        //assign the todolist property to the proper http response
-        this.session = session;
-        console.log("on reçoit la session");
-        console.log(session);
+  // 	console.log(id);
 
 
+  // 	this.sessionService.getSession(id)
+  //     .subscribe(session => {
+  //       //assign the todolist property to the proper http response
+  //       this.session = session;
+  //       console.log("on reçoit la session");
+  //       console.log(session);
 
 
-      })
-  }
+
+
+  //     })
+  // }
 
 }

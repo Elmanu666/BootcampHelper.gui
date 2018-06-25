@@ -7,7 +7,7 @@ class menu {
     constructor(){
 
     	this.type = ""
-        this.link = [{'name':'home', 'adress':'/'}]
+        this.link = [{'name':'Home', 'adress':'/'}]
 
 
 

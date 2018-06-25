@@ -17,11 +17,12 @@ const exerciseRoutes: Routes = [
     children: [
       
 
-          { path: 'list', component: ExercisesComponent },
-          { path: 'list2', component: ExerciseListComponent },
+ //         { path: 'list', component: ExercisesComponent },
+          { path: 'list', component: ExerciseListComponent },
           { path: 'list3', component: ExerciseComponent },
           { path: 'create', component: ExerciseCreateComponent },
           { path: 'detail/:id', component: ExerciseDisplayComponent },
+          { path: 'edit/:id', component: ExerciseCreateComponent },
 
         
       

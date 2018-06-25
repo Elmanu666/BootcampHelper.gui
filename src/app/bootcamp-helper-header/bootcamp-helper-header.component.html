@@ -7,10 +7,10 @@
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav px-3">
       <li class="nav-item dropdown text-nowrap">
-        <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
          Menu 
        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <div class="dropdown-menu dropdown-menu-right"  aria-labelledby="navbarDropdown">
 
           <a *ngFor="let menu of menuApp.link;" class="dropdown-item" routerLink="/{{menu.adress}}" href="">{{menu.name}}</a>
         </div>

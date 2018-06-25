@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { ExerciseComponent } from './exercise/exercise.component';
-import { SessionRunComponent } from './session-run/session-run.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { loginComponent } from './login/login.component';
-import { CanActivateExercisesGuard } from './guards/can-activate-exercises.guards';
-import { BchSsessionsComponent } from './bch-ssessions/bch-ssessions.component';
-
+import { RouterModule, Routes } from "@angular/router";
+import { AppComponent } from "./app.component";
+//import { ExerciseListComponent } from "../exercise/exercise-list/exercise-list.component";
+//import { ExercisesComponent } from "../exercise/exercises/exercises.component";
+import { loginComponent } from "./login/login.component";
+import { PageNotFoundComponent } from "./page-not-found/page-not-found.component";
+import { CanActivateExercisesGuard } from "./guards/can-activate-exercises.guards";
 
 const routes: Routes = [
   {
@@ -20,34 +19,27 @@ const routes: Routes = [
   },
   // {
   //   path: 'exercises',
-  //   component: ExerciseComponent,
-  //   canActivate: [
-  //     CanActivateExercisesGuard
-  //   ],
+  //   component: ExercisesComponent
+  //   // canActivate: [
+  //   //   CanActivateExercisesGuard
+  //   // ],
   // },
   // {
   //   path: 'exercise',
-  //   component: ExerciseComponent,
+  //   loadChildren: 'app/exercise/exercise.module#ExerciseModule',
+    
 
-  // },    
-  {
-    path: 'count-down',
-    component: SessionRunComponent
-  },
-  {
-    path: 'sessions',
-    component: BchSsessionsComponent
-  },
+
   {
     path: '**',
     component: PageNotFoundComponent
   }
 ];
 
+
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
-  providers: []
+  exports : [RouterModule],
+  declarations: []
 })
-export class AppRoutingModule {
-}
+export class AppRoutingModule { }

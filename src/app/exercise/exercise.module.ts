@@ -45,6 +45,7 @@ import { ExerciseRoutingModule } from './exercise-routing.module';
     ExerciseDisplayComponent,
     ExerciseCreateComponent
 
-  ]
+  ],
+
 })
 export class ExerciseModule {}

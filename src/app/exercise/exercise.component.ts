@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+
+
 
 
 
@@ -13,6 +15,25 @@ import { Component } from '@angular/core';
 
 
 export class ExerciseComponent {
+
+
+
+	constructor(
+    //Private todoservice will be injected into the component by Angular Dependency Injector
+
+
+
+  ) {
+
+
+
+	  }
+
+
+
+
+
+
 
 
 

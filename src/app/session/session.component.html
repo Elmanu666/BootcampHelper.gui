@@ -1,4 +1,34 @@
-<ng-container *ngIf="session">
-	<app-session-display [session]="session"></app-session-display>
-</ng-container>
+<div class="container-fluid">
+	<div class="row">
+	  	<nav class="col-md-2 d-none d-md-block bg-light sidebar">
+	  		<div class="sidebar-sticky">
+	  			<ul class="nav flex-column">
+	  				<li class="nav-link">
+	  					
+	  					<a class="lat-menu-nav" routerLink="/session/list" href="*"><i class="fas fa-list lat-menu-ico"></i>List
+						</a>
+	  				</li>
+					<li class="nav-link">
+						
+	  					<a class="lat-menu-nav" routerLink="/session/create" href="*"><i class="far fa-file lat-menu-ico"></i>Create
+						</a>
+	  				</li>
+	 				<li class="nav-link">
+	 					
+	  					<a class="lat-menu-nav" routerLink="/session/details" href="*"><i class="fas fa-info-circle lat-menu-ico"></i>Detail
+						</a>
+	  				</li>
+	  			</ul>
+	  		</div>
+	  	</nav>
+  		<main class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+	
+
+			<router-outlet></router-outlet>
+		</main>
+	</div>
+
+</div>
+
+
 

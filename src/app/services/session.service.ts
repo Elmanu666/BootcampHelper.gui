@@ -69,6 +69,16 @@ export class SessionService {
   }
 
 
+  deleteSession(id: string):any{
+    //Delete the object by the id
+    let deleteUrl = `${this.sessionUrl}/${id}`
+    return this.http.delete(deleteUrl)
+    // .map(res  => {
+    //   return res;
+    // })
+  }
+
+
 
 
 

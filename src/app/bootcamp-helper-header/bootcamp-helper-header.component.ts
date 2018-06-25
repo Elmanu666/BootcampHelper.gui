@@ -25,7 +25,7 @@ export class BootcampHelperHeaderComponent implements OnInit {
   	var menuAdmin:menu = new menu();
 
   	menuAdmin.type='admin';
-  	menuAdmin.link=[{'name':'home', 'adress':''}];
+  	menuAdmin.link=[{'name':'Home', 'adress':''}];
   	menuAdmin.link.push({'name':'Exercise', 'adress':'exercise'});
 
 
@@ -34,7 +34,7 @@ export class BootcampHelperHeaderComponent implements OnInit {
   	menuGuest.type='guest';
 
     menuGuest.link.push({'name':'Exercise', 'adress':'exercise/list2'}); 
-    menuGuest.link.push({'name':'Session', 'adress':'sessions'}); 
+    menuGuest.link.push({'name':'Session', 'adress':'session'}); 
 
 
   	if(this.auth.isSignedIn()){

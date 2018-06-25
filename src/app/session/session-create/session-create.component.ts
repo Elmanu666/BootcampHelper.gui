@@ -1,21 +1,22 @@
 import { Component, OnInit, ViewContainerRef, ViewChild } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import Session from '../models/session.model';
-import Round from '../models/round.model';
+import Session from '../../models/session.model';
+import Round from '../../models/round.model';
 import { ToastrService } from 'ngx-toastr';
+import { SessionDisplayComponent } from '../session-display/session-display.component';
 
 
-import { ExerciseService } from '../services/exercise.service';
-import { SessionService } from '../services/session.service';
-import Exercise from '../models/exercise.model';
+import { ExerciseService } from '../../services/exercise.service';
+import { SessionService } from '../../services/session.service';
+import Exercise from '../../models/exercise.model';
 
 
 @Component({
   selector: 'app-root',
-  templateUrl: './bch-ssessions.component.html',
-  styleUrls: ['./bch-ssessions.component.scss']
+  templateUrl: './session-create.component.html',
+  styleUrls: ['./session-create.component.scss']
 })
-export class BchSsessionsComponent implements OnInit {
+export class SessionCreateComponent implements OnInit {
 
   @ViewChild('stepper') stepper;
 

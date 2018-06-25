@@ -34,8 +34,9 @@ import { CanActivateExercisesGuard } from './guards/can-activate-exercises.guard
 
 
 //module 
-import { AppRoutingModule } from './app-routing/app-routing.module';
+import { AppRoutingModule } from './app-routing.module';
 import { ExerciseModule } from './exercise/exercise.module';
+import { SessionModule } from './session/session.module';
 
 
 
@@ -50,14 +51,13 @@ import { AppComponent } from './app.component';
 //import { FileUploadComponent } from './file-upload/file-upload.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { BootcampHelperHeaderComponent } from './bootcamp-helper-header/bootcamp-helper-header.component';
-import { CountdownComponent } from './countdown/countdown.component';
-import { SessionRunComponent } from './session-run/session-run.component';
+
 import { loginComponent } from './login/login.component';
 
-import { BchSsessionsComponent } from './bch-ssessions/bch-ssessions.component';
-import { SessionListComponent } from "./session-list/session-list.component";
-import { SessionDisplayComponent } from './session-display/session-display.component';
+
 import { SessionComponent } from './session/session.component';
+import {CapitalizePipe} from "./pipes/capitalize.pipe";
+
 
 
 
@@ -83,17 +83,18 @@ import { SessionComponent } from './session/session.component';
 //    FileUploadComponent,
     PageNotFoundComponent,
     BootcampHelperHeaderComponent,
-    CountdownComponent,
-    SessionRunComponent,
+    
+
     loginComponent,
-    BchSsessionsComponent,
-    SessionDisplayComponent,
-    SessionListComponent,
+
     SessionComponent,
+    CapitalizePipe,
+
  //   SessionListComponent
   ],
   imports: [
  //   FileUploadComponent,
+     SessionModule,
     ExerciseModule,
     AppRoutingModule,
 //    SessionListComponent,
@@ -117,9 +118,11 @@ import { SessionComponent } from './session/session.component';
  	  MatExpansionModule,
      MatListModule,
      MatCardModule,
+
     NgbModule.forRoot(),
     ToastrModule.forRoot(),
   ],
+
   providers: [ExerciseService, PagerService, FileService, authService, userService, userSessionService, SessionService, CanActivateExercisesGuard],
   bootstrap: [AppComponent]
 })

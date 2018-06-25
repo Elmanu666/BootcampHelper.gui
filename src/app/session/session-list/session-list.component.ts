@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { SessionService } from '../services/session.service';
-import Session from '../models/session.model';
-import { PagerService } from '../services/pages.service';
+import { SessionService } from '../../services/session.service';
+import Session from '../../models/session.model';
+import { PagerService } from '../../services/pages.service';
 import { MatTableDataSource } from '@angular/material';
 
 import { ActivatedRoute, Router } from '@angular/router';
 
 
-import Page from '../models/pages.model';
+import Page from '../../models/pages.model';
 
 
 
@@ -61,7 +61,7 @@ export class SessionListComponent implements OnInit {
 
   	console.log('on a double le click');
   	console.log(id);
-  	this.router.navigate(['/session/'+id]);
+  	this.router.navigate(['/session/detail/'+id]);
 
   }
 

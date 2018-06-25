@@ -1,4 +1,4 @@
- <div>
+ <div *ngIf="loaded">
   <h3 mat-subheader>{{session.description}}</h3>
   <h5 mat-subheader>Planned date : {{session.plannedDate | date}}</h5>
   <h5 mat-subheader>Atendees : {{session.attendees}}</h5>
@@ -12,14 +12,15 @@
   			<h3 mat-subheader>Rest duration : {{round.restDuration}}</h3>
   			<h3 mat-subheader>Repeat : {{round.repeat}}</h3>
   		</div>
-  	<mat-list-item *ngFor="let exercise of round.exercices">
-    	
-    	<h4 mat-line>{{exercise.title}}</h4>
-    	<mat-icon mat-list-icon>accessibility_new</mat-icon>
-    	<p mat-line> {{round.drillsDuration }}s </p>
-  	</mat-list-item>
 
- 	</mat-list>
+    	<mat-list-item *ngFor="let exercise of round.exercices">
+      	
+      	<h4 mat-line>{{exercise.title}}</h4>
+      	<mat-icon mat-list-icon>accessibility_new</mat-icon>
+      	<p mat-line> {{round.drillsDuration }}s </p>
+    	</mat-list-item>
+
+ 	  </mat-list>
   </mat-card>
 
 
