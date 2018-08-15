@@ -15,7 +15,7 @@ export class SessionDisplayComponent implements OnInit {
 
 	errors: Array<string> =[];
 	session: SessionModel  ;
-  loaded : boolean = true;
+  loaded : boolean = false;
   idSession : SessionModel['_id'];
 
 
@@ -32,6 +32,7 @@ export class SessionDisplayComponent implements OnInit {
 
 
       this.idSession = this.route.snapshot.paramMap.get('id');
+
   
 
       this.sessionService.getSession(this.idSession)
@@ -53,18 +54,18 @@ export class SessionDisplayComponent implements OnInit {
     }
 
 
-    editSession(session : SessionModel){
+    editSession(){
 
-              this.router.navigate(['session/edit/'+session._id]);
+              this.router.navigate(['session/edit/'+this.idSession]);
 
 
 
 
     }
 
-    deleteSession (session: SessionModel){
+    deleteSession (){
 
-      this.sessionService.deleteSession(session._id).subscribe(res => {
+      this.sessionService.deleteSession(this.idSession).subscribe(res => {
         this.toastr.success('Delete succesful', 'Success!' , {timeOut: 2000});
 
     })
@@ -76,4 +77,4 @@ export class SessionDisplayComponent implements OnInit {
 
   }
 
-}
+

@@ -1,0 +1,32 @@
+.rest {
+	
+	background-color : #30A64A;
+
+}
+
+.drills {
+	
+
+	background-color : #C62637;
+}
+
+.countdown {
+	
+	margin : 3px;
+	border-radius:10px;
+	-moz-border-radius:10px;
+-webkit-border-radius:10px;
+}
+
+:host ::ng-deep .countdown h1 {
+	
+	color : #ffffff9e
+
+}
+
+:host ::ng-deep .count-down-wrapper{
+	
+	  height: 30vh !important;
+
+
+}

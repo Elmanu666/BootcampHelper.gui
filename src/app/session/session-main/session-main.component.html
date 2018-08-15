@@ -1,0 +1,49 @@
+<!-- <div>
+
+
+
+ 	<div [innerHtml]="htmlCode"></div>
+
+
+		<div class='menu-container'>
+
+			<menu-blocks  *ngFor="let m of menuByLine1" link="{{m.link}}" [ngClass]="{'block-xl':m.size ==2}">
+				
+					<ng-container still><i [ngClass]="m.ico"></i></ng-container>
+					<ng-container overlay>{{m.title}}</ng-container>
+				
+			</menu-blocks>
+
+				
+				<div  *ngFor="let m of menuByLine1; let i=index" class="block menuBlock" [ngClass]="{'block-xl':m.size ==2}" (mouseenter) ="mouseEnter(i)"  (mouseleave) ="mouseLeave(i)"><i [ngClass]="m.ico"></i>{{m.title}}</div>
+
+
+
+		</div>
+
+		<div class='menu-container'>
+
+				
+				<menu-blocks  *ngFor="let m of menuByLine2; let x=index"  link="{{m.link}}" [ngClass]="{'block-xl':m.size ==2}">
+					<ng-container still><i [ngClass]="m.ico"></i></ng-container>
+					<ng-container overlay>{{m.title}}</ng-container>
+				</menu-blocks>
+
+
+
+		</div>		
+
+
+
+		
+
+
+
+
+
+
+
+
+
+</div> -->
+<menuWithBlocks section="{{section}}"></menuWithBlocks>

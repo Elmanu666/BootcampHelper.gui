@@ -1,6 +1,6 @@
 <div class="container-fluid">
 	<div class="row">
-	  	<nav class="col-md-2 d-none d-md-block bg-light sidebar">
+	  	<nav class="col-md-2  bg-light sidebar" [@flyInOut]="lateralMenuStatus">
 	  		<div class="sidebar-sticky">
 	  			<ul class="nav flex-column">
 	  				<li class="nav-link">
@@ -18,10 +18,15 @@
 	  					<a class="lat-menu-nav" routerLink="/session/details" href="*"><i class="fas fa-info-circle lat-menu-ico"></i>Detail
 						</a>
 	  				</li>
+	 				<li class="nav-link">
+	 					
+	  					<a class="lat-menu-nav" routerLink="/session/run" href="*"><i class="fas fa-info-circle lat-menu-ico"></i>Detail
+						</a>
+	  				</li>
 	  			</ul>
 	  		</div>
 	  	</nav>
-  		<main class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+  		<main class="col-md-9">
 	
 
 			<router-outlet></router-outlet>

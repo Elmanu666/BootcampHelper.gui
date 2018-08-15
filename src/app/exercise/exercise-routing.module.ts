@@ -13,7 +13,7 @@ const exerciseRoutes: Routes = [
   {
     path: 'exercise',
     component: ExerciseComponent,
-   // canActivate: [CanActivateExercisesGuard],
+    canActivate: [CanActivateExercisesGuard],
     children: [
       
 

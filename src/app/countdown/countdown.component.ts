@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-countdown',
@@ -8,6 +8,14 @@ import { Component, OnInit, Input, Output } from '@angular/core';
 export class CountdownComponent implements OnInit {
 
 	@Input() duration: number ;
+	@Input() playerEnable, playEnable; pauseEnable; stopEnable: boolean = false;
+  	@Input() formEnable: boolean = false;
+  	@Input() progressBarEnable: boolean = true;
+	@Output() countDownStart = new EventEmitter<boolean>();
+	@Output() countDownStop = new EventEmitter<boolean>();
+	@Output() countDownPause = new EventEmitter<boolean>();
+	@Output() countDownFinished = new EventEmitter<boolean>();
+
 	durationSelected:{"hour":number, "minute":number, "second":number, "msecond" :number} ;
 	initialDuration: number = 30;
 	remainingDuration:number = 0;
@@ -15,9 +23,10 @@ export class CountdownComponent implements OnInit {
   	 private interval;
   	 private stop:boolean = false;
   	 private pause:boolean = false;
+  	 private start:boolean = false;
   	 clockPurcentage: number=0;
   	 private clockPrecision : number = 10;  
-  	 private playEnable; pauseEnable; stopEnable: boolean = false;
+
 
 
   constructor() {}
@@ -27,14 +36,38 @@ export class CountdownComponent implements OnInit {
 
   	this.durationSelected = {"hour":0, "minute":0, "second":30, "msecond" : 0};
   	this.playEnable = false;
+  	console.log('CountdownComponent')
+  	console.log(this.progressBarEnable);
   }
 
   startCountDown(){
 
-  	//this.duration = this.durationSelected;	
-  	this.tickTick(this.durationSelected);
-  	this.stop=false;
-  	this.pause=false;
+  	if (this.start){
+
+
+  		this.stop = true;
+
+  		setTimeout(()=>{
+	  		this.start=true;	
+	  		this.tickTick(this.durationSelected);
+	  		this.stop=false;
+	  		this.pause=false;
+
+
+  			}, 500)
+
+  	}
+
+  	else {
+  		  
+  		this.start=true;	
+  		this.tickTick(this.durationSelected);
+  		this.stop=false;
+  		this.pause=false;
+
+  	}
+  	//this.duration = this.durationSelected;
+
   }
 
   pauseCountDown(){
@@ -61,13 +94,19 @@ export class CountdownComponent implements OnInit {
 		console.log(duration);
 
 		this.duration = this.jsonToNumber(duration);
-		console.log(this.duration)
 		this.initialDuration = this.duration;
 		if (this.duration > 0) {
 			this.interval = setInterval(() => {
 				this.duration = this.duration - this.clockPrecision
 				if (this.duration <= 0 || this.stop || this.pause) {
 					clearInterval(this.interval);
+
+					this.stop ? this.countDownStop.emit(true) :'';
+					this.duration <=0 ? this.countDownFinished.emit(true): '';
+					this.pause ? this.countDownPause.emit(true):'';
+					this.start=false;
+					this.stop=false;
+					this.pause=false;
 
 					
 
@@ -76,6 +115,8 @@ export class CountdownComponent implements OnInit {
 				}
 
 				if (this.stop){
+
+					this.start=false
 					this.durationSelected.hour = 0;
 					this.durationSelected.minute = 0;
 					this.durationSelected.second = 0;
@@ -88,7 +129,6 @@ export class CountdownComponent implements OnInit {
 				else {
 
 				this.durationSelected = this.numberToJson(this.duration);
-				console.log(this.duration);
 				this.clockPurcentage = 100 - ((this.duration/this.initialDuration)*100);
 
 

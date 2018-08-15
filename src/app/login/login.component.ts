@@ -59,7 +59,7 @@ export class loginComponent implements OnInit {
             response['token'],
             response['name']
           );
-          this.router.navigate(['exercises']);
+          this.router.navigate(['exercise']);
         },
         (error) => {
           this.isBusy = false;

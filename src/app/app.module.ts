@@ -27,6 +27,8 @@ import { authService } from './services/auth.service';
 import { userService } from './services/user.service';
 import { SessionService } from './services/session.service';
 import { userSessionService } from './services/userSession.service';
+import { MaterialTypeService } from './services/materialType.service';
+import { BodyPartService } from './services/bodyPart.service';
 
 
 //Guards
@@ -56,7 +58,11 @@ import { loginComponent } from './login/login.component';
 
 
 import { SessionComponent } from './session/session.component';
+
+//pipe
 import {CapitalizePipe} from "./pipes/capitalize.pipe";
+
+
 
 
 
@@ -87,8 +93,10 @@ import {CapitalizePipe} from "./pipes/capitalize.pipe";
 
     loginComponent,
 
+
     SessionComponent,
     CapitalizePipe,
+
 
  //   SessionListComponent
   ],
@@ -123,7 +131,7 @@ import {CapitalizePipe} from "./pipes/capitalize.pipe";
     ToastrModule.forRoot(),
   ],
 
-  providers: [ExerciseService, PagerService, FileService, authService, userService, userSessionService, SessionService, CanActivateExercisesGuard],
+  providers: [ExerciseService,  PagerService, FileService, authService, userService, userSessionService, SessionService, CanActivateExercisesGuard, MaterialTypeService, BodyPartService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

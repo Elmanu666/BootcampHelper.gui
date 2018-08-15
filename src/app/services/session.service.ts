@@ -79,6 +79,16 @@ export class SessionService {
   }
 
 
+  editSession(session:Session){
+
+    console.log('service session Edit :')
+    console.log(session)
+
+    let editUrl = `${this.sessionsUrl}/${session._id}`
+    //returns the observable of http put request 
+    return this.http.put(editUrl, session);
+  }
+
 
 
 

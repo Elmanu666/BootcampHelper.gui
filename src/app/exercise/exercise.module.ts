@@ -19,6 +19,12 @@ import { FileUploadComponent } from '../file-upload/file-upload.component';
 
 import { ExerciseRoutingModule } from './exercise-routing.module';
 
+import { ExerciseTitleFilter } from '../pipes/exerciseTitleFilter.pipe';
+import { PagerComponent } from '../common/pager/pager.component';
+
+import {MatSliderModule} from '@angular/material/slider';
+
+
 
 // import { AdminComponent }           from './admin.component';
 // import { AdminDashboardComponent }  from './admin-dashboard.component';
@@ -34,7 +40,8 @@ import { ExerciseRoutingModule } from './exercise-routing.module';
     CommonModule,
     FormsModule,
     EditorModule,
-    ExerciseRoutingModule
+    ExerciseRoutingModule,
+    MatSliderModule
     
   ],
   declarations: [
@@ -43,7 +50,9 @@ import { ExerciseRoutingModule } from './exercise-routing.module';
     FileUploadComponent,
     ExerciseComponent,
     ExerciseDisplayComponent,
-    ExerciseCreateComponent
+    ExerciseCreateComponent,
+    ExerciseTitleFilter,
+    PagerComponent,
 
   ],
 

@@ -1,4 +1,4 @@
-<mat-horizontal-stepper [linear]="isLinear" #stepper>
+<mat-horizontal-stepper [linear]="isLinear" #stepper *ngIf="loaded">
   <mat-step >
     <form >
       <ng-template matStepLabel>Define your session</ng-template>
@@ -73,7 +73,7 @@
             </div>
             <div *ngFor="let exercise of round.exercices; let j =index">
       		  	<mat-form-field >
-    						<mat-select placeholder="Exercises"  (change)="updateExercises(i, j)" [(ngModel)]="round.exercices[j]" name="exercise-{{j}}">
+    						<mat-select placeholder="Exercises"  [(ngModel)]="round.exercices[j]" name="exercise-{{j}}">
       				    <mat-option *ngFor="let a of exercisesList; let v =index" [value]="a" >{{a.title}}</mat-option> 
     						</mat-select>
   					</mat-form-field>
@@ -89,10 +89,11 @@
   </mat-step>
   <mat-step>
     <ng-template matStepLabel>Summary</ng-template>
-    <!-- <app-session-sheet [session]="newSession"></app-session-sheet> -->
+    <app-session-sheet [session]="newSession"></app-session-sheet>
     <div>
       <button mat-button matStepperPrevious>Back</button>
       <button mat-button (click)="sessionSave()">Save</button>
     </div>
   </mat-step>
+
 </mat-horizontal-stepper>

@@ -34,11 +34,9 @@ export class AppComponent {
   ) {
       
 	  	 this.router.events.subscribe((res) => { 
-	  	 	console.log(res);
-    		console.log(this.router.url,"Current URL");
+
      		if (res instanceof NavigationEnd) {
-     			console.log('res.url');
-     			console.log(res.url);
+
  	            this.breadcrumbUrl(res.url);
            }
     		

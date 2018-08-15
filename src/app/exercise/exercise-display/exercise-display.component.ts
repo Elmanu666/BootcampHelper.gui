@@ -6,6 +6,7 @@ import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { FileService } from '../../services/file.service'
+import { PagerComponent } from '../../common/pager/pager.component'
 
 
 

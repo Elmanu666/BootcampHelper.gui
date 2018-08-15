@@ -47,10 +47,11 @@ export class ExerciseService {
       			console.log('donnée envoyer pour le pager');
       			console.log(res['data']);
 
-          		this.pagerService.setPager(res["data"].pages, res["data"].page, res["data"].limit)
+     //     		this.pagerService.setPager(res["data"].pages, res["data"].page, res["data"].limit)
 
         
-      	return res["data"].docs as Exercise[];
+   //     return res["data"].docs as Exercise[];
+      	return res["data"] as Exercise[];
     }) )
   }
 

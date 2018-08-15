@@ -1,0 +1,30 @@
+<div>
+
+		<div class='menu-container' [@flyInOut]>
+
+			<menu-blocks  *ngFor="let m of menuByLine1" link="{{m.link}}" [ngClass]="{'block-xl':m.size ==2}">
+				
+					<ng-container still><i [ngClass]="m.ico"></i></ng-container>
+					<ng-container overlay>{{m.title}}</ng-container>
+				
+			</menu-blocks>
+
+				
+
+
+		</div>
+
+		<div class='menu-container' [@flyInOut]>
+
+				
+				<menu-blocks  *ngFor="let m of menuByLine2; let x=index"  link="{{m.link}}" [ngClass]="{'block-xl':m.size ==2}">
+					<ng-container still><i [ngClass]="m.ico"></i></ng-container>
+					<ng-container overlay>{{m.title}}</ng-container>
+				</menu-blocks>
+
+
+
+		</div>		
+
+
+</div>

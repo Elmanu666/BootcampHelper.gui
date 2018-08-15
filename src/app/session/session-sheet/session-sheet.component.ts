@@ -12,7 +12,7 @@ export class SessionSheetComponent implements OnInit {
 	errors: Array<string> =[];
 	@Input() idSession: SessionModel['_id']  ;
   @Input() session : SessionModel;
-  loaded : boolean = false
+  loaded : boolean ;
 
 
 
@@ -21,6 +21,7 @@ export class SessionSheetComponent implements OnInit {
 
   ngOnInit() {
 
+    this.loaded = false;
 
   	console.log('session-display');
     console.log(this.idSession);
@@ -44,7 +45,7 @@ export class SessionSheetComponent implements OnInit {
       })
   }
 
-  else if (this.session != undefined){
+  else if (this.idSession == undefined && this.session != undefined){
 
     this.loaded=true;
 
@@ -59,8 +60,16 @@ export class SessionSheetComponent implements OnInit {
 
 
 
+    // ngOnChanges(changes: SimpleChanges){
+    //   if(changes.input){
+    //     console.log('input changed');
+    //   }
+    // }
+
+
+
 
 
   }
 
-}
+

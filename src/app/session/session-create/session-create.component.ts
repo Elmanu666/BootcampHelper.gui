@@ -4,6 +4,7 @@ import Session from '../../models/session.model';
 import Round from '../../models/round.model';
 import { ToastrService } from 'ngx-toastr';
 import { SessionDisplayComponent } from '../session-display/session-display.component';
+import { Router, ActivatedRoute } from '@angular/router';
 
 
 import { ExerciseService } from '../../services/exercise.service';
@@ -27,16 +28,22 @@ export class SessionCreateComponent implements OnInit {
   secondFormGroup: FormGroup;
   public newSession: Session;
   exercisesList: Exercise[];
+  loaded: boolean = false;
 
   constructor(
     private _formBuilder: FormBuilder,
     public toastr: ToastrService, vcr: ViewContainerRef,
     private exerciseService: ExerciseService,
     private sessionService: SessionService,
+      private router: Router,
+
+          private route: ActivatedRoute,
 
 
 
    ) { }
+
+  id : string;
 
   ngOnInit() {
 
@@ -44,12 +51,37 @@ export class SessionCreateComponent implements OnInit {
   	console.log(this.exercisesList);
 
 
-    // this.firstFormGroup = this._formBuilder.group({
-    //   firstCtrl: ['', Validators.required]
-    // });
-    // this.secondFormGroup = this._formBuilder.group({
-    //   secondCtrl: ['', Validators.required]
-    // });
+
+   this.id = this.route.snapshot.paramMap.get('id') ? this.route.snapshot.paramMap.get('id') : "create";
+
+    console.log(this.id);
+
+    if (this.id === "create") {
+
+          this.newSession = new Session();
+          this.loaded=true;
+
+
+    }
+    else {
+
+       this.sessionService.getSession(this.id)
+      .subscribe(session => {
+        //assign the todolist property to the proper http response
+        this.newSession = session;
+        //this.loaded = true
+        console.log("on reçoit la session");
+        console.log(session);
+
+        this.loaded = true;
+
+      })
+
+
+
+    }
+
+
 
      this.exerciseService.getExercises(1)
       .subscribe(exercises => {
@@ -61,7 +93,7 @@ export class SessionCreateComponent implements OnInit {
 
       })
 
-    this.newSession = new Session();
+    
     console.log(this.newSession);
   }
 
@@ -188,19 +220,44 @@ export class SessionCreateComponent implements OnInit {
 
 
       console.log('on est dans le submitSession')
+
+      if (this.id == 'create'){
+
+          this.sessionService.createSession(this.newSession).subscribe(res =>{
+            this.toastr.success('Creation succesful', 'Success!' , {timeOut: 2000});
+            this.stepper.reset();
+            this.newSession = new Session();
+            this.roundNb = 1 ;
+                 },err => {
+
+                console.error('error creation')
+
+            })
+         }
+
+
+         else {
+
+
+
+           
+
+       this.sessionService.editSession(this.newSession).subscribe(res => {
+          console.log('Update Succesful')
+          this.toastr.success('Update succesful', 'Success!' , {timeOut: 2000});
+          this.router.navigate(['session/list/']);
+
+        }, err => {
+
+          this.toastr.error('Update Unsuccesful', 'Error!' , {timeOut: 2000});
+        })
+
+
+
+
+         }
   
-
-      this.sessionService.createSession(this.newSession).subscribe(res =>{
-          this.toastr.success('Creation succesful', 'Success!' , {timeOut: 2000});
-          this.stepper.reset();
-          this.newSession = new Session();
-          this.roundNb = 1 ;
-      },err => {
-
-        console.error('error creation')
-
-      })
-    }
+      }
 
 
 
