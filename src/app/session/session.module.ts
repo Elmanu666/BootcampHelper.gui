@@ -16,6 +16,7 @@ import {SessionCreateComponent} from './session-create/session-create.component'
 import {SessionRunComponent} from './session-run/session-run.component';
 import {SessionSheetComponent} from './session-sheet/session-sheet.component';
 import {SessionMainComponent} from './session-main/session-main.component';
+import {SessionComponent} from './session.component';
 
 import { CountdownComponent } from '../countdown/countdown.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -24,8 +25,12 @@ import { SessionRoutingModule } from './session-routing.module';
 
 import { EscapeHtmlPipe } from '../pipes/keep-html.pipe';
 
-import { MenuBlocksComponent } from '../common/menu-blocks/menuBlocks.component';
-import { MenuComponent } from '../common/menu/menu.component';
+import {SharedModule} from '../common/sharedComponent.module'
+
+
+
+// import { MenuBlocksComponent } from '../common/menu-blocks/menuBlocks.component';
+// import { MenuComponent } from '../common/menu/menu.component';
 
 
 
@@ -53,12 +58,14 @@ import { MenuComponent } from '../common/menu/menu.component';
     MatIconModule,
     NgbModule,
     SessionRoutingModule,
+    SharedModule
 
 
     
     
   ],
   declarations: [
+    SessionComponent,
   	SessionDisplayComponent,
   	SessionListComponent,
   	SessionCreateComponent,
@@ -67,8 +74,7 @@ import { MenuComponent } from '../common/menu/menu.component';
   	CountdownComponent,
   	SessionSheetComponent,
     EscapeHtmlPipe,
-    MenuBlocksComponent,
-    MenuComponent
+
 
   ],
 

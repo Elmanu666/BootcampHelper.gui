@@ -5,12 +5,39 @@
 	    	<li class="breadcrumb-item" *ngFor="let breadcrumb of  breadcrumbs ; let i =index" [ngClass]=" {'active' : i === breadcrumbs.length -1 }">
 
 	    		<a *ngIf="i < breadcrumbs.length -1; else breadcrumbWLink" routerLink="{{breadcrumb.url}}" href="#">{{breadcrumb.title | capitalize}}</a>
-	    		<!-- <ng-template #breadcrumbWLink>{{breadcrumb.title | capitalize}}</ng-template> -->
 	    		<ng-template #breadcrumbWLink>{{breadcrumb.title}}</ng-template>
 	    	</li>
 	  	</ol>
   	</div>
 </div>
-<div class="container">
-  <router-outlet></router-outlet>  
+<div class="container-fluid main">
+	<div class="row">
+	  	<nav class="col-md-1  bg-light sidebar" [@flyInOut] *ngIf="lateralMenuStatus">
+	  		<div class="sidebar-sticky">
+	  			<ul class="nav flex-column">
+	  				<li class="nav-link" *ngFor="let m of menuSelected">
+	  					<a class="lat-menu-nav" routerLink="{{section}}/{{m.link}}" href="*">
+	  						<i class="lat-menu-ico" [ngClass]="m.ico"></i>{{m.title}}
+	  					</a>
+	  				</li>
+	  			</ul>
+	  		</div>
+	  	</nav>
+
+
+	<main class="col-md-11" [ngClass]="{'col-md-11' : lateralMenuStatus, 'col-md-12' : !lateralMenuStatus}">
+
+	
+<!-- 		<div class="row">
+
+		  	<div class="col-md-2"></div>
+
+	  		<main class="col-md-10">
+		 -->
+
+		<router-outlet></router-outlet>
+<!-- 			</main>
+		</div> -->
+	</main>
+	
 </div>

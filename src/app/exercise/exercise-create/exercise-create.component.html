@@ -1,96 +1,101 @@
-<ng-container *ngIf="exercise">
-<div class="row">
-    <div class="col-md-8 form-group">
-      <label for="title">Title</label>
-      <input type="text" name="title" id="title" (blur)="update(id)" [(ngModel)]="exercise.title" placeholder="Title" class="form-control">
-    </div>
-    <div class="col-md-4 ActionButtons">
+<div class="container" *ngIf="exercise">
+ 
 
-        <button *ngIf="id == 'create'" class="btn btn-success" (click)="create(exercise)">
-          <i  class="fa fa-check"></i>
-        </button>
-        <button *ngIf="id != 'create'" class="btn btn-danger" (click)="deleteExercise(exercise)">
-          <i  class="fa fa-trash"></i>
-        </button>
-    </div>
-</div>
+  <div class="row">
+        <div class="col-md-8 form-group">
+          <label for="title">Title</label>
+          <input type="text" name="title" id="title" (blur)="update(id)" [(ngModel)]="exercise.title" placeholder="Title" class="form-control">
+        </div>
+        <div class="col-md-4 ActionButtons">
 
-
-<div class="row">
-    <div class="form-group col-md-12">
-      <label for="description">Description</label>
-      <editor [(ngModel)]="exercise.description" (onBlur)="update(id)" name="description" id="description{{i}}" class="form-control"></editor>
-    </div>
-</div>
-
-                    
-<div class="checklist row">
-    <div class="form-check col-md-3">
-      <ui-switch type="checkbox" size="small" name="muscu" id="muscu" (change)="update(id)" [(ngModel)]="exercise.details.muscu"  class="form-control-input">
-      </ui-switch>
-
-      <label class="switch-label form-check-label" for="muscu">Muscu</label>
-    </div>
-                      
-    <div class="form-group col-md-3">
-        <ui-switch type="checkbox" size="small" name="cardio" id="cardio" (change)="update(id)" [(ngModel)]="exercise.details.cardio" class="form-control-input"></ui-switch>
-        <label class="form-check-label" for="cardio">Cardio</label>
-    </div>
-    <div class="form-group col-md-3">
-      <ui-switch type="checkbox" size="small" name="balance" id="balance" (change)="update(id)" [(ngModel)]="exercise.details.balance" ></ui-switch>
-        <label class="form-check-label" for="balance">Balance</label>
-    </div>
-    <div class="form-group col-md-3">
-      <ui-switch type="checkbox" size="small" name="warmup" id="warmup" (change)="update(id)" [(ngModel)]="exercise.details.warmup" ></ui-switch>
-        <label class="form-check-label" for="warmup">Warmup ideal</label>
-    </div>
+            <button *ngIf="id == 'create'" class="btn btn-success" (click)="create(exercise)">
+              <i  class="fa fa-check"></i>
+            </button>
+            <button *ngIf="id != 'create'" class="btn btn-danger" (click)="deleteExercise(exercise)">
+              <i  class="fa fa-trash"></i>
+            </button>
+        </div>
   </div>
+
+
+  <div class="row">
+        <div class="form-group col-md-12">
+          <label for="description">Description</label>
+          <editor [(ngModel)]="exercise.description" (onBlur)="update(id)" name="description" id="description{{i}}" class="form-control"></editor>
+        </div>
+  </div>
+
+                        
+  <div class="checklist row">
+      <div class="form-check col-md-3">
+        <ui-switch type="checkbox" size="small" name="muscu" id="muscu" (change)="update(id)" [(ngModel)]="exercise.details.muscu"  class="form-control-input">
+        </ui-switch>
+
+        <label class="switch-label form-check-label" for="muscu">Muscu</label>
+      </div>
+                        
+      <div class="form-group col-md-3">
+          <ui-switch type="checkbox" size="small" name="cardio" id="cardio" (change)="update(id)" [(ngModel)]="exercise.details.cardio" class="form-control-input"></ui-switch>
+          <label class="form-check-label" for="cardio">Cardio</label>
+      </div>
+      <div class="form-group col-md-3">
+        <ui-switch type="checkbox" size="small" name="balance" id="balance" (change)="update(id)" [(ngModel)]="exercise.details.balance" ></ui-switch>
+          <label class="form-check-label" for="balance">Balance</label>
+      </div>
+      <div class="form-group col-md-3">
+        <ui-switch type="checkbox" size="small" name="warmup" id="warmup" (change)="update(id)" [(ngModel)]="exercise.details.warmup" ></ui-switch>
+          <label class="form-check-label" for="warmup">Warmup ideal</label>
+      </div>
+  </div>
+
   <div class="row media">
-    <div class="form-group col-md-12">
-            <app-file-upload 
-              ExerciseId="{{exercise._id}}" 
-              type="exercise" 
-              maxFiles="4"
-              maxSize="2"
-              fileExt="JPG, GIF, PNG"
-              (uploadStatus) = "getImage(exercise._id)"
-        
-              >
-            </app-file-upload>
-    </div>
-</div>
+      <div class="form-group col-md-12">
+              <app-file-upload 
+                ExerciseId="{{exercise._id}}" 
+                type="exercise" 
+                maxFiles="4"
+                maxSize="2"
+                fileExt="JPG, GIF, PNG"
+                (uploadStatus) = "getImage(exercise._id)"
+          
+                >
+              </app-file-upload>
+      </div>
+  </div>
 
-<div class="row media">
-   
-    <div class="image-container form-group col-md-3" *ngFor="let img of images">
-      <img  [src]="'http://localhost:3000/' + img.ImagePath" class="img-fluid img-thumbnail"  alt="">
-      <a (click)="removeImage(img)"><i class="far fa-trash-alt"  style="font-size: 48px;"></i></a>
-      
 
-    </div>
-      
+  <div class="row media">
+     
+      <div class="image-container form-group col-md-3" *ngFor="let img of images">
+        <img  [src]="'http://localhost:3000/' + img.ImagePath" class="img-fluid img-thumbnail"  alt="">
+        <a (click)="removeImage(img)"><i class="far fa-trash-alt"  style="font-size: 48px;"></i></a>
         
+
+      </div>
+  </div>
+        
+  <div class="row">
+    <div class="form-group col-md-6">
+        <label class="form-check-label" for="balance">Body part</label>
+        <select multiple class="form-control" id="bodyPart" [(ngModel)]="exercise.details.bodyPart" (click)="update(id)">
+          <option *ngFor="let bp of bodyPart" [value]="bp" [selected]="exercise.details.bodyPart.includes(bp)">{{bp}}</option>  
+        </select>
+        
+  </div>
+  <div class="form-group col-md-6">
+      <label class="form-check-label" for="balance">Material</label>
+        <select multiple class="form-control" id="materialType" [(ngModel)]="exercise.material" (click)="update(id)" >
+            <option *ngFor="let mt of materialType" [value]="mt" [selected]="exercise.material.includes(mt)">{{mt}}</option>
+
+        </select>
+        
+  </div>
+     
+          
+
       
+    
+                          
 
   
 </div>
-                      
-<div class="row">
-  <div class="form-group col-md-6">
-      <label class="form-check-label" for="balance">Body part</label>
-      <select multiple class="form-control" id="bodyPart" [(ngModel)]="exercise.details.bodyPart" (click)="update(id)">
-        <option *ngFor="let bp of bodyPart" [value]="bp" [selected]="exercise.details.bodyPart.includes(bp)">{{bp}}</option>  
-      </select>
-      
-  </div>
-  <div class="form-group col-md-6">
-    <label class="form-check-label" for="balance">Material</label>
-       <select multiple class="form-control" id="materialType" [(ngModel)]="exercise.material" (click)="update(id)" >
-          <option *ngFor="let mt of materialType" [value]="mt" [selected]="exercise.material.includes(mt)">{{mt}}</option>
-
-      </select>
-      
-  </div>
-</div>
-</ng-container>
-

@@ -13,13 +13,11 @@ export const GeneralAnimations = [
 
 
   trigger('flyInOut', [
-    state('in', style({transform: 'translateX(0)'})),
-    transition('out => in', [
+    transition('void => *', [
       style({transform: 'translateX(-100%)'}),
       animate(300)
     ]),
-    state('out', style({display:'none'})),
-    transition('in => out', [
+    transition('* => void', [
       animate(300, style({transform: 'translateX(-100%)'}))
     ])
   ]),

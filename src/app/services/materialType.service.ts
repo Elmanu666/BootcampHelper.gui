@@ -15,7 +15,7 @@ export class MaterialTypeService {
   ) { 
 
 
-		this.materialType = ["elastic band","dumbbell", "Yoga ball","medcine ball", "TRX", "bench", "ball", "mate"];
+		this.materialType = ["elastic band","dumbbell", "Yoga ball","medecine ball", "bars", "weigth" , "bench", "ball", "mate", "other"];
 
 
 

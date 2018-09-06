@@ -29,6 +29,9 @@ import { SessionService } from './services/session.service';
 import { userSessionService } from './services/userSession.service';
 import { MaterialTypeService } from './services/materialType.service';
 import { BodyPartService } from './services/bodyPart.service';
+import { MenuService } from './services/menu.service';
+import { MaterialService } from './services/material.service';
+
 
 
 //Guards
@@ -39,44 +42,30 @@ import { CanActivateExercisesGuard } from './guards/can-activate-exercises.guard
 import { AppRoutingModule } from './app-routing.module';
 import { ExerciseModule } from './exercise/exercise.module';
 import { SessionModule } from './session/session.module';
+import { MaterialModule } from './material/material.module';
 
 
 
 //Component
 import { AppComponent } from './app.component';
-
-
-//import { ExercisesComponent } from './exercise/exercises/exercises.component';
-//import { ExerciseListComponent } from './exercise/exercise-list/exercise-list.component';
-
-
-//import { FileUploadComponent } from './file-upload/file-upload.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { BootcampHelperHeaderComponent } from './bootcamp-helper-header/bootcamp-helper-header.component';
 
+
 import { loginComponent } from './login/login.component';
+import { HomeComponent } from './home/home.component';
 
 
-import { SessionComponent } from './session/session.component';
+//import { SessionComponent } from './session/session.component';
 
 //pipe
 import {CapitalizePipe} from "./pipes/capitalize.pipe";
+import {SharedModule} from './common/sharedComponent.module'
 
 
 
 
 
-
-
-    
-    
-
-//import { AppComponent } from './app.component';
-
-
-
-
-//import { SessionListComponent } from './session-list/session-list.component';
 
 
 
@@ -85,35 +74,26 @@ import {CapitalizePipe} from "./pipes/capitalize.pipe";
 @NgModule({
   declarations: [
     AppComponent,
-//    ExercisesComponent,
-//    FileUploadComponent,
     PageNotFoundComponent,
     BootcampHelperHeaderComponent,
-    
-
+    HomeComponent,
     loginComponent,
-
-
-    SessionComponent,
-    CapitalizePipe,
-
-
- //   SessionListComponent
+//    SessionComponent,
+    CapitalizePipe,     
   ],
+
+
   imports: [
- //   FileUploadComponent,
-     SessionModule,
+    SessionModule,
     ExerciseModule,
+    MaterialModule,
     AppRoutingModule,
-//    SessionListComponent,
-   
     BrowserModule,
     UiSwitchModule,
     BrowserAnimationsModule,
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
-//    EditorModule,
     AngularFontAwesomeModule,
     MatIconModule,
  	  MatStepperModule,
@@ -124,14 +104,19 @@ import {CapitalizePipe} from "./pipes/capitalize.pipe";
  	  MatGridListModule,
  	  MatSelectModule,
  	  MatExpansionModule,
-     MatListModule,
-     MatCardModule,
-
+    MatListModule,
+    MatCardModule,
+    SharedModule,
     NgbModule.forRoot(),
     ToastrModule.forRoot(),
   ],
 
-  providers: [ExerciseService,  PagerService, FileService, authService, userService, userSessionService, SessionService, CanActivateExercisesGuard, MaterialTypeService, BodyPartService],
+
+  exports:[             
+
+    ],
+
+  providers: [MenuService, MaterialService, ExerciseService,  PagerService, FileService, authService, userService, userSessionService, SessionService, CanActivateExercisesGuard, MaterialTypeService, BodyPartService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

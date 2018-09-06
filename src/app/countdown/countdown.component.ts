@@ -8,7 +8,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 export class CountdownComponent implements OnInit {
 
 	@Input() duration: number ;
-	@Input() playerEnable, playEnable; pauseEnable; stopEnable: boolean = false;
+	@Input() playerEnable; playEnable; pauseEnable; stopEnable: boolean = false;
   	@Input() formEnable: boolean = false;
   	@Input() progressBarEnable: boolean = true;
 	@Output() countDownStart = new EventEmitter<boolean>();

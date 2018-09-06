@@ -6,6 +6,7 @@ import { ExerciseComponent } from './exercise.component';
 import { ExerciseListComponent } from './exercise-list/exercise-list.component';
 import { ExerciseDisplayComponent } from './exercise-display/exercise-display.component';
 import { ExerciseCreateComponent } from './exercise-create/exercise-create.component';
+import { ExerciseMainComponent } from './exercise-main/exercise-main.component';
 
 import { CanActivateExercisesGuard }     from '../guards/can-activate-exercises.guards';
 
@@ -13,16 +14,19 @@ const exerciseRoutes: Routes = [
   {
     path: 'exercise',
     component: ExerciseComponent,
-    canActivate: [CanActivateExercisesGuard],
+//    canActivate: [CanActivateExercisesGuard],
     children: [
       
 
- //         { path: 'list', component: ExercisesComponent },
+          { path: '', component: ExerciseMainComponent },
           { path: 'list', component: ExerciseListComponent },
           { path: 'list3', component: ExerciseComponent },
           { path: 'create', component: ExerciseCreateComponent },
+          { path: 'detail', component: ExerciseListComponent },
           { path: 'detail/:id', component: ExerciseDisplayComponent },
+          { path: 'edit', component: ExerciseListComponent },
           { path: 'edit/:id', component: ExerciseCreateComponent },
+
 
         
       

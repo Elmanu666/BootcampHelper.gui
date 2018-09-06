@@ -1,3 +1,6 @@
+<div class="row">
+  <div class="col-md-3"></div>
+  <div class="col-md-8">
     <div class="row">
         <div class="col-md-2 ActionButtons">
           <button class="btn btn-danger" (click)="deleteSession()">
@@ -13,3 +16,6 @@
     <div *ngIf="loaded">
         <app-session-sheet [session]="session"></app-session-sheet>
     </div>
+  </div>
+  <div class="col-md-1"></div>
+</div>

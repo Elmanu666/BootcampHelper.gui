@@ -15,11 +15,11 @@ export const MenuAnimations = [
   trigger('flyInOut', [
     state('in', style({transform: 'translateX(0)'})),
     transition('void => *', [
-      style({transform: 'translateX(-100%)'}),
+      style({transform: 'translateX(100%)'}),
       animate(1000)
     ]),
     transition('* => void', [
-      animate(1000, style({transform: 'translateX(100%)'}))
+      animate(1000, style({transform: 'translateX(-100%)'}))
     ])
   ]),
 

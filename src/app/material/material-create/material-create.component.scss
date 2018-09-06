@@ -1,0 +1,22 @@
+.has-danger input, .has-danger select{
+	
+
+	border-color: #DA3749;
+    border-left-width: 15px;
+}
+
+.has-success input, .has-danger select{
+	border-color: #30A64A;
+    border-left-width: 15px;
+}
+
+.form-control:disabled, .form-control[readonly] {
+    background-color: white;
+    opacity: 0.9;
+    border-color:white;
+}
+
+.view label::after{
+	
+	content : ' :';
+}

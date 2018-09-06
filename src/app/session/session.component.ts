@@ -19,7 +19,7 @@ import { ActivatedRoute, Router, NavigationEnd  } from '@angular/router';
 })
 export class SessionComponent implements OnInit {
 
-  lateralMenuStatus:string;  
+  lateralMenuStatus:boolean;  
 
 
   constructor(
@@ -34,7 +34,7 @@ export class SessionComponent implements OnInit {
          if (res instanceof NavigationEnd) {
 
                let params = res.url.split("/");
-               params.length > 2 ? this.lateralMenuStatus = 'in' : this.lateralMenuStatus ='out';
+               params.length > 2 ? this.lateralMenuStatus = true : this.lateralMenuStatus =false;
                console.log('params: ');
                console.log(params);
                console.log('res.url:');

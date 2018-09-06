@@ -1,11 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {MenuBlocksComponent} from '../../common/menu-blocks/menuBlocks.component';
+import {MenuComponent} from '../../common/menu/menu.component';
 
 
 
 @Component({
   selector: 'app-session-main',
-  template: '<menuWithBlocks section="{{section}}"></menuWithBlocks>',
+  templateUrl: './session-main.component.html',
   styleUrls: ['./session-main.component.scss'],
 })
 
@@ -14,11 +15,11 @@ import {MenuBlocksComponent} from '../../common/menu-blocks/menuBlocks.component
 export class SessionMainComponent implements OnInit {
 
 
-	menu : Array<{'title': string, 'link': string, 'icon':string, 'detail':string, 'size':number, 'line':number, 'color':string, 'ico':string, 'state':string}>;
-
+	section:string;
 
 	ngOnInit(){
 		this.section = 'session';
+	}
 	
 
 }

@@ -34,7 +34,7 @@ export class ExerciseCreateComponent {
 
   ngOnInit() {
 
-  	this.id = this.route.snapshot.paramMap.get('id') ? this.route.snapshot.paramMap.get('id') : "create";
+  	 this.route.snapshot.paramMap.get('id') ? this.id == this.route.snapshot.paramMap.get('id') : this.id = "create";
 
   	console.log(this.id);
 

@@ -67,13 +67,10 @@ export class SessionRunComponent implements OnInit {
 
 	startSession(){
 		this.started=true;
-		setTimeout(()=>{
-			this.initRound();
-
-		}), 500)
+		setTimeout(()=>{this.initRound()}, 500 ) ;
 
 
-	}
+	  }
 
 	initRound(){
 
@@ -356,6 +353,7 @@ export class SessionRunComponent implements OnInit {
 
 
 
+}
 }
 
 

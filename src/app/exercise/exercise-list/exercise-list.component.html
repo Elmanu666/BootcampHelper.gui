@@ -1,6 +1,7 @@
 
 
-<div class="row">
+<div class="row" *ngIf="exercisesListSliced && path == 'list'">
+
 	<div class="col-md-10">
 	<table class="table table-hover">
 		<thead class="thead-dark bg-primary">
@@ -15,7 +16,7 @@
 		     </tr>        
 		</thead>
 		<tbody [@tableLine]="exercisesListSliced.length">
-			<tr (dblclick)="displayExercise(exercise._id)" *ngFor="let exercise of exercisesListSliced ; let i =index" id={{i}}>
+			<tr (click)="displayExercise(exercise._id)" *ngFor="let exercise of exercisesListSliced ; let i =index" id={{i}}>
 				<td>{{exercise.title}}</td>
 	            <td>{{exercise.description}}</td>
 	            <td>{{exercise.details.muscu}}</td>
@@ -26,91 +27,141 @@
 			</tr> 
       	</tbody>
 	</table>
+	<app-pager *ngIf="pagesInfo.totalPages > 1" currentPage="pagesInfo.currentPage" totalPages="pagesInfo.totalPages"></app-pager>
 	</div>
-	<div class="col-md-2 searchBox" style="overflow-y: scroll">
+
+	<div class="col-md-2 searchBox ">
 		<div class="nav flex-column">
-			  <div class="form-group">
-    				<label for="textSearch">Search by text</label>
-    				<input (keyup)="exerciseFilterByText($event)" [(ngModel)]="searchText" class="form-control" placeholder="search text goes here" id="textSearch">
-    				<small id="emailHelp" class="form-text text-muted">Search on exercise title and description.</small>
-  				</div>
-<!-- 				<div class="form-group">
-    				<label for="start">Start display</label>
-    				<input type="number" class="form-control" [(ngModel)]="start" id="start" >
-  				</div> -->
-
+		  	<div class="form-group">
+				<label for="textSearch">Search by text</label>
+				<input (keyup)="exerciseFilterByText($event)" [(ngModel)]="searchText" class="form-control" placeholder="search text goes here" id="textSearch">
+				<small id="emailHelp" class="form-text text-muted">Search on exercise title and description.</small>
+				</div>
+			<div class="form-group">
+				<label for="nbDisplayItems">Number of display</label>
+				<input (change)="exerciseFilterByText($event)" type="number" (keyup)="exerciseFilterByText($event)" class="form-control" [(ngModel)]="nbDisplayItems" id="nbDisplayItems">
+				</div>
 				<div class="form-group">
-    				<label for="nbDisplayItems">Number of display</label>
-    				<input (change)="exerciseFilterByText($event)" type="number" (keyup)="exerciseFilterByText($event)" class="form-control" [(ngModel)]="nbDisplayItems" id="nbDisplayItems">
-  				</div>
-  				<div class="form-group">
-			      <label class="form-check-label" for="balance">Body part</label>
-			      <select multiple class="form-control" id="bodyPart" [(ngModel)]="bodyPartSelected" (click)="exerciseFilterByText($event)">
-			      	<option value="any" [selected]="bodyPartSelected.includes('any')">Any</option>
-			        <option *ngFor="let bp of bodyPart" [value]="bp" [selected]="bodyPartSelected.includes(bp)">{{bp}}</option>  
-			      </select>
-  				</div>
-  				 <div class="form-group">
-					<label class="form-check-label" for="balance">Material</label>
-			       <select multiple class="form-control" id="materialType" [(ngModel)]="materialTypeSelected" (click)="exerciseFilterByText($event)" >
-			       		<option value="indif" [selected]="materialTypeSelected.includes('indef')">Indif</option>
-			       		<option value="none" [selected]="materialTypeSelected.includes('none')">None</option>
-			       		<option value="any" [selected]="materialTypeSelected.includes('any')">Any</option>
+		      <label class="form-check-label" for="balance">Body part</label>
+		      <select multiple class="form-control" id="bodyPart" [(ngModel)]="bodyPartSelected" (click)="exerciseFilterByText($event)">
+		      	<option value="any" [selected]="bodyPartSelected.includes('any')">Any</option>
+		        <option *ngFor="let bp of bodyPart" [value]="bp" [selected]="bodyPartSelected.includes(bp)">{{bp}}</option>  
+		      </select>
+				</div>
+				 <div class="form-group">
+				<label class="form-check-label" for="balance">Material</label>
+		       <select multiple class="form-control" id="materialType" [(ngModel)]="materialTypeSelected" (click)="exerciseFilterByText($event)" >
+		       		<option value="indif" [selected]="materialTypeSelected.includes('indef')">Indif</option>
+		       		<option value="none" [selected]="materialTypeSelected.includes('none')">None</option>
+		       		<option value="any" [selected]="materialTypeSelected.includes('any')">Any</option>
 
-			          <option *ngFor="let mt of materialType" [value]="mt" [selected]="materialTypeSelected.includes(mt)">{{mt}}</option>
-			      </select>
-  				</div>
-  				<div class="form-group">
-					<label class="form-check-label" for="exTypeAct">Activate exercise type search</label>
-					<ui-switch type="checkbox" size="small" name="exTypeAct" id="exTypeAct" (click)="exerciseFilterByText($event)" [(ngModel)]="exerciseTypeSelected.criteriaActive" class="form-control-input"></ui-switch>
-  				</div>
-  				<div class="form-group" *ngIf="exerciseTypeSelected.criteriaActive">
-					<label class="form-check-label" for="warmup">Warmup</label>
-<!-- 					<ui-switch type="checkbox" size="small" name="warmup" id="warmup" (click)="exerciseFilterByText($event)" [(ngModel)]="exerciseTypeSelected.warmup" class="form-control-input"></ui-switch> -->
-					<mat-slider thumbLabel [displayWith]="formatLabel" name="warmup" id="warmup" tickInterval="1" min="0" max="2" class="form-control-input" [(ngModel)]="exerciseTypeSelected.warmup" (click)="exerciseFilterByText($event)"></mat-slider>
-  				</div>
-  				<div class="form-group" *ngIf="exerciseTypeSelected.criteriaActive">
-					<label class="form-check-label" for="Cardio">Cardio</label>
-<!-- 					<ui-switch type="checkbox" size="small" name="cardio" id="cardio" (click)="exerciseFilterByText($event)" [(ngModel)]="exerciseTypeSelected.cardio" class="form-control-input" class="form-control-input"></ui-switch> -->
-					<mat-slider thumbLabel [displayWith]="formatLabel" name="Cardio" id="Cardio" tickInterval="1" min="0" max="2" class="form-control-input" [(ngModel)]="exerciseTypeSelected.cardio" (click)="exerciseFilterByText($event)"></mat-slider>
-  				</div>
-  				<div class="form-group" *ngIf="exerciseTypeSelected.criteriaActive">
-					<label class="form-check-label" for="muscu">Muscu</label>
-<!-- 					<ui-switch type="checkbox" size="small" name="muscu" id="muscu" (click)="exerciseFilterByText($event)" [(ngModel)]="exerciseTypeSelected.muscu" class="form-control-input" class="form-control-input"></ui-switch> -->
-					<mat-slider thumbLabel [displayWith]="formatLabel" name="muscu" id="muscu" tickInterval="1" min="0" max="2" class="form-control-input" [(ngModel)]="exerciseTypeSelected.muscu" (click)="exerciseFilterByText($event)"></mat-slider>
-  				</div>
-  				<div class="form-group" *ngIf="exerciseTypeSelected.criteriaActive">
-					<label class="form-check-label" for="balance">Balance</label>
-<!-- 					<ui-switch type="checkbox" size="small" name="balance" id="balance" (click)="exerciseFilterByText($event)" [(ngModel)]="exerciseTypeSelected.balance" class="form-control-input" class="form-control-input"></ui-switch> -->
-					<mat-slider thumbLabel [displayWith]="formatLabel" name="balance" id="balance" tickInterval="1" min="0" max="2" class="form-control-input" [(ngModel)]="exerciseTypeSelected.balance" (click)="exerciseFilterByText($event)"></mat-slider>
-  				</div>
-			
-			
-			
+		          <option *ngFor="let mt of materialType" [value]="mt" [selected]="materialTypeSelected.includes(mt)">{{mt}}</option>
+		      </select>
+				</div>
+				<div class="form-group">
+				<label class="form-check-label" for="exTypeAct">Activate exercise type search</label>
+				<ui-switch type="checkbox" size="small" name="exTypeAct" id="exTypeAct" (click)="exerciseFilterByText($event)" [(ngModel)]="exerciseTypeSelected.criteriaActive" class="form-control-input"></ui-switch>
+				</div>
+				<div class="form-group" *ngIf="exerciseTypeSelected.criteriaActive">
+				<label class="form-check-label" for="warmup">Warmup</label>
+				<mat-slider thumbLabel [displayWith]="formatLabel" name="warmup" id="warmup" tickInterval="1" min="0" max="2" class="form-control-input" [(ngModel)]="exerciseTypeSelected.warmup" (click)="exerciseFilterByText($event)"></mat-slider>
+				</div>
+				<div class="form-group" *ngIf="exerciseTypeSelected.criteriaActive">
+				<label class="form-check-label" for="Cardio">Cardio</label>
+				<mat-slider thumbLabel [displayWith]="formatLabel" name="Cardio" id="Cardio" tickInterval="1" min="0" max="2" class="form-control-input" [(ngModel)]="exerciseTypeSelected.cardio" (click)="exerciseFilterByText($event)"></mat-slider>
+				</div>
+				<div class="form-group" *ngIf="exerciseTypeSelected.criteriaActive">
+				<label class="form-check-label" for="muscu">Muscu</label>
+				<mat-slider thumbLabel [displayWith]="formatLabel" name="muscu" id="muscu" tickInterval="1" min="0" max="2" class="form-control-input" [(ngModel)]="exerciseTypeSelected.muscu" (click)="exerciseFilterByText($event)"></mat-slider>
+				</div>
+				<div class="form-group" *ngIf="exerciseTypeSelected.criteriaActive">
+				<label class="form-check-label" for="balance">Balance</label>
+				<mat-slider thumbLabel [displayWith]="formatLabel" name="balance" id="balance" tickInterval="1" min="0" max="2" class="form-control-input" [(ngModel)]="exerciseTypeSelected.balance" (click)="exerciseFilterByText($event)"></mat-slider>
+				</div>	
 		</div>
 	</div>
 </div>
 
+<div class="grid-bth" *ngIf="path != 'list'">
+	
+	<div class="searchbox searchBoxTop">
+		  	<div class="form-group">
+				<label for="textSearch">Search by text</label>
+				<input (keyup)="exerciseFilterByText($event)" [(ngModel)]="searchText" class="form-control" placeholder="search text goes here" id="textSearch">
+				<small id="emailHelp" class="form-text text-muted">Search on exercise title and description.</small>
+				</div>
+			<div class="form-group">
+				<label for="nbDisplayItems">Number of display</label>
+				<input (change)="exerciseFilterByText($event)" type="number" (keyup)="exerciseFilterByText($event)" class="form-control" [(ngModel)]="nbDisplayItems" id="nbDisplayItems">
+				</div>
+				<div class="form-group">
+		      <label class="form-check-label" for="balance">Body part</label>
+		      <select multiple class="form-control" id="bodyPart" [(ngModel)]="bodyPartSelected" (click)="exerciseFilterByText($event)">
+		      	<option value="any" [selected]="bodyPartSelected.includes('any')">Any</option>
+		        <option *ngFor="let bp of bodyPart" [value]="bp" [selected]="bodyPartSelected.includes(bp)">{{bp}}</option>  
+		      </select>
+				</div>
+				 <div class="form-group">
+				<label class="form-check-label" for="balance">Material</label>
+		       <select multiple class="form-control" id="materialType" [(ngModel)]="materialTypeSelected" (click)="exerciseFilterByText($event)" >
+		       		<option value="indif" [selected]="materialTypeSelected.includes('indef')">Indif</option>
+		       		<option value="none" [selected]="materialTypeSelected.includes('none')">None</option>
+		       		<option value="any" [selected]="materialTypeSelected.includes('any')">Any</option>
 
-<app-pager *ngIf="pagesInfo.totalPages > 1" currentPage="pagesInfo.currentPage" totalPages="pagesInfo.totalPages"></app-pager>
-
-<!-- <div class="row">
-    <div class="col-md-2"></div>
-    <div class="col-md-8">
-       <nav aria-label="Page navigation"> 
-		<ul class="pagination justify-content-center" *ngIf="pagesInfo.totalPages > 1">
-        <li class="page-item" [ngClass]="{'disabled': pagesInfo.currentPage === 1}" >
-          <a class="page-link"  (click)="getExercice(pagesInfo.previousPage)">Previous</a>
-        </li>
-        <li *ngFor="let page of pagesInfo.pages" [ngClass]="{'page-item':true, 'active':page === pagesInfo.currentPage}">
-          <a class="page-link"  (click)="getExercice(page)">{{page}}</a>
-        </li>
-        <li class="page-item" [ngClass]="{'disabled': pagesInfo.currentPage === pagesInfo.totalPages}" >
-          <a class="page-link"  (click)="getExercice(pagesInfo.nextPage)">Next</a>
-        </li>
-      </ul>
-
-  	</div>
-  	<div class="col-md-2"> 
+		          <option *ngFor="let mt of materialType" [value]="mt" [selected]="materialTypeSelected.includes(mt)">{{mt}}</option>
+		      </select>
+				</div>
+				<div class="form-group">
+				<label class="form-check-label" for="exTypeAct">Activate exercise type search</label>
+				<ui-switch type="checkbox" size="small" name="exTypeAct" id="exTypeAct" (click)="exerciseFilterByText($event)" [(ngModel)]="exerciseTypeSelected.criteriaActive" class="form-control-input"></ui-switch>
+				</div>
+				<div class="form-group" *ngIf="exerciseTypeSelected.criteriaActive">
+				<label class="form-check-label" for="warmup">Warmup</label>
+				<mat-slider thumbLabel [displayWith]="formatLabel" name="warmup" id="warmup" tickInterval="1" min="0" max="2" class="form-control-input" [(ngModel)]="exerciseTypeSelected.warmup" (click)="exerciseFilterByText($event)"></mat-slider>
+				</div>
+				<div class="form-group" *ngIf="exerciseTypeSelected.criteriaActive">
+				<label class="form-check-label" for="Cardio">Cardio</label>
+				<mat-slider thumbLabel [displayWith]="formatLabel" name="Cardio" id="Cardio" tickInterval="1" min="0" max="2" class="form-control-input" [(ngModel)]="exerciseTypeSelected.cardio" (click)="exerciseFilterByText($event)"></mat-slider>
+				</div>
+				<div class="form-group" *ngIf="exerciseTypeSelected.criteriaActive">
+				<label class="form-check-label" for="muscu">Muscu</label>
+				<mat-slider thumbLabel [displayWith]="formatLabel" name="muscu" id="muscu" tickInterval="1" min="0" max="2" class="form-control-input" [(ngModel)]="exerciseTypeSelected.muscu" (click)="exerciseFilterByText($event)"></mat-slider>
+				</div>
+				<div class="form-group" *ngIf="exerciseTypeSelected.criteriaActive">
+				<label class="form-check-label" for="balance">Balance</label>
+				<mat-slider thumbLabel [displayWith]="formatLabel" name="balance" id="balance" tickInterval="1" min="0" max="2" class="form-control-input" [(ngModel)]="exerciseTypeSelected.balance" (click)="exerciseFilterByText($event)"></mat-slider>
+				</div>	
+		
 	</div>
-</div> -->
+	<div class="result">
+		<table class="table table-hover" *ngIf="exercisesListSliced">
+			<thead class="thead-dark bg-primary">
+				<tr>
+			      <th>Title</th>
+	              <th>Description</th>
+	              <th>Muscu</th>
+	              <th>Cardio</th>        
+	              <th>Balance</th>        
+	              <th>warmup</th>        
+
+			     </tr>        
+			</thead>
+			<tbody [@tableLine]="exercisesListSliced.length">
+				<tr (click)="jumpToExercise(exercise._id)" *ngFor="let exercise of exercisesListSliced ; let i =index" id={{i}}>
+					<td>{{exercise.title}}</td>
+		            <td>{{exercise.description}}</td>
+		            <td>{{exercise.details.muscu}}</td>
+		            <td>{{exercise.details.cardio}}</td>
+		            <td>{{exercise.details.balance}}</td>
+		            <td>{{exercise.details.warmup}}</td>
+		             
+				</tr> 
+	      	</tbody>
+		</table>
+	</div>
+	<app-pager *ngIf="pagesInfo.totalPages > 1" currentPage="pagesInfo.currentPage" totalPages="pagesInfo.totalPages"></app-pager>
+
+
+</div> 
+
+

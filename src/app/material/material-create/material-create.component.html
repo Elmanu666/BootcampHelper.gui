@@ -1,0 +1,110 @@
+<div class="container" *ngIf="ready">
+	<h1>Material</h1>
+	<div class="row">
+		<div class="col-md-6">
+			<form (ngSubmit)="onSubmit()" [formGroup]="materialForm">
+		
+				<div class="form-group" [ngClass]="{'has-danger': title.invalid && title.dirty,'has-success': title.valid && title.dirty, 'view': view}">		
+			        <label for="title">Title</label>
+			        <input type="text" class="form-control" id="title" formControlName="title"  >
+
+			         <div class="alert alert-danger" *ngIf="title.errors && (title.dirty || title.touched)">
+			         	
+		        			<p *ngIf="title.errors.required">First Name is required </p>
+		        			<p *ngIf="title.errors.minlength">Must be more than {{title.errors.minlength.requiredLength}} ({{title.errors.minlength.actualLength}}) </p>
+		        			<p *ngIf="title.errors.pattern">Pattern needed</p>
+		      		</div>
+
+
+		      	</div>
+		      	<div class="form-group" [ngClass]="{'has-danger': type.invalid && type.dirty,'has-success': type.valid && type.dirty, 'view' : view}">
+			        <label for="power">Material type</label>
+			        <select class="form-control" id="type" name="type" formControlName="type" >
+			          	<option *ngFor="let ty of materialType" [value]="ty">{{ty}}</option>
+			        </select>
+			        <div [hidden]="type.valid || type.pristine" class="alert alert-danger">
+			          Type is required
+			        </div>
+		      	</div>
+		      	<div class="form-group" [ngClass]="{'has-danger': description.invalid && description.dirty,'has-success': description.valid && description.dirty, 'view' : view}">
+			        <label for="name">Description</label>
+			        <input type="text" class="form-control" id="description" formControlName="description" >
+			        
+			        <div [hidden]="description.valid || description.pristine" class="alert alert-danger">
+			          Description is required
+			        </div>
+		      	</div>
+
+		      	<div class="form-group" [ngClass]="{'has-danger': weigth.invalid && weigth.dirty,'has-success': weigth.valid && weigth.dirty, 'view' : view}">
+			        <label for="name">Weigth (kg)</label>
+			        <input type="text" class="form-control" id="weigth" formControlName="weigth" >
+			        <div [hidden]="weigth.valid || weigth.pristine" class="alert alert-danger">
+			          Weigth is required
+			        </div>
+		      	</div>
+
+		      	<div class="form-group" [ngClass]="{'has-danger': length.invalid && length.dirty,'has-success': length.valid && length.dirty, 'view' : view}">
+			        <label for="name">Length (cm)</label>
+			        <input type="text" class="form-control" id="length" formControlName="length" >
+			        <div [hidden]="length.valid || length.pristine" class="alert alert-danger">
+			          Length is required
+			        </div>
+		      	</div>
+
+		      	<div class="form-group" [ngClass]="{'has-danger': size.invalid && size.dirty,'has-success': size.valid && size.dirty, 'view' : view}">
+			        <label for="name">Size </label>
+			        <select class="form-control" id="size" formControlName="size" >
+			          	<option *ngFor="let si of materialSize" [value]="si">{{si}}</option>
+			        </select>
+			        <div [hidden]="size.valid || size.pristine" class="alert alert-danger">
+			          Size is required
+			        </div>
+		      	</div>
+
+		      	<div class="form-group" [ngClass]="{'has-danger': strength.invalid && strength.dirty,'has-success': strength.valid && strength.dirty, 'view' : view}">
+			        <label for="name">Strength</label>
+			        <select class="form-control" id="strength" formControlName="strength" >
+			          	<option *ngFor="let si of materialSize" [value]="si">{{si}}</option>
+			        </select>
+			        <div [hidden]="strength.valid || strength.pristine" class="alert alert-danger">
+			          Strength is required
+			        </div>
+		      	</div>
+		      	<div class="form-group" [ngClass]="{'has-danger': quantity.invalid && quantity.dirty,'has-success': quantity.valid && quantity.dirty, 'view' : view}">
+			        <label for="name">Quantity</label>
+			        <input type="number" class="form-control" id="quantity" formControlName="quantity" [readonly]="view">
+			        <div [hidden]="quantity.valid || quantity.pristine" class="alert alert-danger">
+			          Strength is required
+			        </div>
+		      	</div>
+		      	<button *ngIf="!view" type="submit" class="btn" [disabled]="!materialForm.valid" [ngClass]="{'btn-danger' : !materialForm.valid, 'btn-success': materialForm.valid}">Submit</button>
+	 		</form>
+		</div>
+	    <div class="col-md-6">
+			
+		    <div class="row media">
+		       
+		        <div class="image-container form-group" *ngFor="let img of images">
+		          <img  [src]="'http://localhost:3000/' + img.ImagePath" class="img-fluid img-thumbnail"  alt="">
+		          <a (click)="removeImage(img)"><i class="far fa-trash-alt"  style="font-size: 48px;"></i></a>
+			    	</div>
+			</div>
+			<div class="row media" *ngIf="path == 'edit'">
+		        <div class="form-group col-md-12">
+		                <app-file-upload 
+		                  ExerciseId="{{material._id}}" 
+		                  type="material" 
+		                  maxFiles="4"
+		                  maxSize="2"
+		                  fileExt="JPG, GIF, PNG"
+		                  (uploadStatus) = "getImage(material._id)"
+		            
+		                  >
+		                </app-file-upload>
+		        </div>
+		    </div>
+
+
+	</div>
+
+</div>

@@ -38,6 +38,7 @@ export class MenuBlocksComponent implements OnInit {
 
   ngOnInit(){
     this.state='out';
+    
 
   }
   @Input() link: string ;
@@ -71,8 +72,9 @@ export class MenuBlocksComponent implements OnInit {
   }
 
   goTo(){
+  
 
-    this.router.navigate(['session/'+this.link]);
+    this.router.navigate([this.link]);
 
   }
 

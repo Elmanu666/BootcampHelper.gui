@@ -13,16 +13,18 @@ import { ExercisesComponent} from './exercises/exercises.component';
 import { ExerciseComponent} from './exercise.component';
 import { ExerciseDisplayComponent} from './exercise-display/exercise-display.component';
 import { ExerciseCreateComponent} from './exercise-create/exercise-create.component';
+import { ExerciseMainComponent} from './exercise-main/exercise-main.component';
 
-import { FileUploadComponent } from '../file-upload/file-upload.component';
 
 
 import { ExerciseRoutingModule } from './exercise-routing.module';
 
 import { ExerciseTitleFilter } from '../pipes/exerciseTitleFilter.pipe';
-import { PagerComponent } from '../common/pager/pager.component';
+//import { PagerComponent } from '../common/pager/pager.component';
 
 import {MatSliderModule} from '@angular/material/slider';
+
+import {SharedModule} from '../common/sharedComponent.module'
 
 
 
@@ -41,18 +43,20 @@ import {MatSliderModule} from '@angular/material/slider';
     FormsModule,
     EditorModule,
     ExerciseRoutingModule,
-    MatSliderModule
+    MatSliderModule,
+    SharedModule
     
   ],
   declarations: [
     ExerciseListComponent,
     ExercisesComponent,
-    FileUploadComponent,
     ExerciseComponent,
     ExerciseDisplayComponent,
     ExerciseCreateComponent,
+    ExerciseMainComponent,
     ExerciseTitleFilter,
-    PagerComponent,
+ //   PagerComponent,
+
 
   ],
 

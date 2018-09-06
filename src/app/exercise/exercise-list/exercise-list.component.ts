@@ -5,7 +5,7 @@ import { Component, OnInit, ViewContainerRef, ViewChildren, AfterViewInit, Query
 import { ToastrService } from 'ngx-toastr';
 import { PagerService } from '../../services/pages.service';
 import Page from '../../models/pages.model';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { PagerComponent } from '../../common/pager/pager.component';
 import { MaterialTypeService} from '../../services/materialType.service';
 import { BodyPartService} from '../../services/bodyPart.service';
@@ -44,6 +44,8 @@ export class ExerciseListComponent {
     private exerciseService: ExerciseService,
     private pagerService: PagerService,
     private router : Router,
+    private route: ActivatedRoute,
+
     public materialTypeService : MaterialTypeService,
     public bodyPartService : BodyPartService,
 
@@ -91,12 +93,18 @@ export class ExerciseListComponent {
   start :number;
   nbDisplayItems :number;
   pagesInfo : Page = new Page();
+  path : string;
 
 
 
 
   ngOnInit(): void {
     // this.nbItemsAftFiltered=0
+
+
+    this.path = this.route.snapshot.routeConfig.path
+    console.log('path');
+    console.log(this.path);
 
 
     this.start=0;
@@ -165,6 +173,13 @@ export class ExerciseListComponent {
     this.router.navigate(['exercise/detail/'+id]);
 
 
+
+
+  }
+
+  jumpToExercise(id: Exercise['_id']){
+
+    this.path=="edit" ? this.router.navigate(['exercise/edit/'+id]) : this.router.navigate(['exercise/detail/'+id]);
 
 
   }
@@ -300,8 +315,7 @@ export class ExerciseListComponent {
      this.exercisesListSliced = this.exercisesListFiltered.slice(this.start, this.nbDisplayItems);
      this.pagesInfo.totalPages = Math.ceil(this.exercisesListFiltered.length /this.nbDisplayItems);
      this.pagerService.setPager(this.pagesInfo.totalPages, this.pagesInfo.currentPage, this.pagesInfo.pageSize);
-     console.log('valeur de pages info');
-     console.log(this.pagesInfo);
+
 
 
 
@@ -338,8 +352,7 @@ export class ExerciseListComponent {
 
 
     submitExercise(event, exercise:Exercise){
-    	console.log('on est dans le submitExercise')
-    	console.log(event)
+
     if(event.keyCode ==13){
 
     	this.exerciseService.createExercise(exercise).subscribe(res =>{

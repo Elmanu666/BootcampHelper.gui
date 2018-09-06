@@ -1,0 +1,125 @@
+
+
+<div class="material"  [ngClass]="{'materialSearchTop': path != 'list', 'row' : path == 'list'}" *ngIf="materialsListSliced ">
+
+	<div [ngClass]="{'col-md-10': path == 'list', 'result': path != 'list'}">
+		<table class="table table-hover" *ngIf="materialsListSliced">
+			<thead class="thead-dark bg-primary">
+				<tr>
+			      <th>Title</th>
+	              <th>Description</th>
+	              <th>weigth</th>
+	              <th>length</th>        
+	              <th>type</th>        
+	              <th>quantity</th>    
+	              <th>strength</th>    
+	              <th>size</th>    
+			    </tr>        
+			</thead>
+			<tbody [@tableLine]="materialsListSliced.length">
+				<tr (click)="jumpToMaterial(material._id)" *ngFor="let material of materialsListSliced ; let i =index" id={{i}}>
+					<td>{{material.title}}</td>
+		            <td>{{material.description}}</td>
+		            <td>{{material.weigth}}</td>
+		            <td>{{material.length}}</td>
+		            <td>{{material.type}}</td>
+		            <td>{{material.quantity}}</td>
+		            <td>{{material.strength}}</td>
+		            <td>{{material.size}}</td>
+		             
+				</tr> 
+	      	</tbody>
+		</table>
+		<app-pager *ngIf="pagesInfo.totalPages > 1" currentPage="pagesInfo.currentPage" totalPages="pagesInfo.totalPages"></app-pager>
+	</div>
+
+	<div [ngClass]="{'col-md-2 searchbox': path == 'list', 'grid-bth': path != 'list'}">
+		<div [ngClass]="{'nav flex-column' : path == 'list', 'searchbox searchBoxTop': path != 'list'}">
+		  	<div class="form-group">
+				<label for="textSearch">Search by text</label>
+				<input (keyup)="materialFilter($event)" [(ngModel)]="searchCriteria.text" class="form-control" placeholder="search text goes here" id="textSearch">
+			</div>
+			<div class="form-group">
+				<label for="nbDisplayItems">Number of display</label>
+				<ion-range-slider  min="0" max="40"  [from]="nbDisplayItems" grid="true" grid_num="8" (onFinish)="updateFilter($event, 'nbItems')"></ion-range-slider>
+			</div>
+			<div class="filter_group">
+				<div class="filter-header">
+		      		<div class="filter_button" (click)="activeFilter('type')">
+		      			<span  [ngClass]="{'filter_title':!searchCriteria.type.active, 'filter_title_open' :searchCriteria.type.active }">Type :</span>
+		      			<span class="filter_title_result" *ngIf="!searchCriteria.type.active">Any</span>
+		      		</div>
+		      	</div>
+		      	<div class="form-group" *ngIf="searchCriteria.type.active">
+			      <select multiple class="form-control" id="materialType" [(ngModel)]="searchCriteria.type.value" (click)="materialFilter($event)">
+			        <option *ngFor="let bp of materialType" [value]="bp" [selected]="searchCriteria.type.value.includes(bp)">{{bp}}</option>  
+			      </select>
+		      	</div>
+			</div>
+			<div class="filter_group">	
+				<div class="filter-header">
+					<div class="filter_button" (click)="activeFilter('weigth')">
+						<span [ngClass]="{'filter_title':!searchCriteria.type.active, 'filter_title_open' :searchCriteria.type.active }" >Weigth :</span>
+						<span class="filter_title_result" *ngIf="!searchCriteria.weigth.active">Any</span>							
+					</div>
+				</div>
+				<div class="form-group" *ngIf="searchCriteria.weigth.active">
+					<ion-range-slider type="double"  postfix="kg" min="0" max="40"[from]="searchCriteria.weigth.min" [to]="searchCriteria.weigth.max" (onFinish)="updateFilter($event, weigth)"></ion-range-slider>  
+ 				</div>
+			</div>
+			<div class="filter_group" >
+				<div class="filter-header">
+					<div class="filter_button" (click)="activeFilter('length')">
+						<span [ngClass]="{'filter_title':!searchCriteria.type.active, 'filter_title_open' :searchCriteria.type.active }" >Length :</span><span class="filter_title_result" *ngIf="!searchCriteria.length.active">Any</span>
+					</div>
+				</div> 
+				<div class="form-group" *ngIf="searchCriteria.length.active">
+					<ion-range-slider type="double" min="0" max="200"  postfix=" cm" (onFinish)="updateFilter($event, 'length')"></ion-range-slider>
+				</div>
+
+			</div>
+			<div class="filter_group">
+				<div class="filter_header">
+					<div class="filter_button" (click)="activeFilter('quantity')">
+						<span class="filter_title" [ngClass]="{'filter_title':!searchCriteria.quantity.active, 'filter_title_open' :searchCriteria.quantity.active }">Quantity :</span>
+						<span class="filter_title_result" *ngIf="!searchCriteria.quantity.active">Any</span>
+					</div>
+				</div>
+				<div class="form-group" *ngIf="searchCriteria.quantity.active">
+					<ion-range-slider type="double" min="0" max="50"  (onFinish)="updateFilter($event, 'quantity')"></ion-range-slider> 
+				</div>
+			</div>
+			<div class="filter_group" >
+				<div class="filter_header" >
+					<div class="filter_button" (click)="activeFilter('strength')">
+						<span [ngClass]="{'filter_title':!searchCriteria.strength.active, 'filter_title_open' :searchCriteria.strength.active }">Strength :</span>
+						<span class="filter_title_result" *ngIf="!searchCriteria.strength.active">Any</span>
+					</div>
+				</div>
+				<div class="form-group" *ngIf="searchCriteria.strength.active">
+					<select multiple class="form-control"  [(ngModel)]="searchCriteria.strength.value" (click)="materialFilter($event)">
+				        <option *ngFor="let ms1 of materialSize" [value]="ms1" [selected]="searchCriteria.strength.value.includes == ms1">{{ms1}}</option>  
+			      	</select>
+			    </div>
+			</div>	
+			<div class="filter_group">
+
+				<div class="filter_header" (click)="activeFilter('size')">
+					<div class="filter_button" >
+						<span [ngClass]="{'filter_title':!searchCriteria.size.active, 'filter_title_open' :searchCriteria.size.active }">Size</span>
+						<span class="filter_title_result" *ngIf="!searchCriteria.size.active">Any</span>
+					</div>
+				</div>
+				<div class="form.group" *ngIf="searchCriteria.size.active">
+					<select multiple class="form-control" id="materialType" [(ngModel)]="searchCriteria.size.value" (click)="materialFilter($event)">
+				        <option *ngFor="let ms2 of materialSize" [value]="ms2" [selected]="searchCriteria.size.value == ms2">{{ms2}}</option>  
+			      	</select>
+		      	</div>
+
+			</div>	
+		</div>
+	
+</div>
+
+
+

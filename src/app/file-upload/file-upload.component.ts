@@ -63,6 +63,7 @@ export class FileUploadComponent implements OnInit {
 	}
 
 	saveFiles(files){
+		debugger;
 	  this.errors = []; // Clear error
 	  // Validate file size and allowed extensions
 	  if (files.length > 0 && (!this.isValidFiles(files))) {
@@ -73,7 +74,7 @@ export class FileUploadComponent implements OnInit {
 	        let formData: FormData = new FormData();
 
 
-	         formData.append('ExerciseId' , this.ExerciseId);
+	         formData.append('exerciseId' , this.ExerciseId);
 	         formData.append('type' , this.type);
 	        
 	        for (var j = 0; j < files.length; j++) {

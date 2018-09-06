@@ -10,11 +10,27 @@
 
 .breadcrumbTop{
     background-color: #E9ECEF;
-    position : sticky;
+    position : fixed;
     z-index : 120;
-    top : 48px;
+    top : 46px;
     width : 100%
 
+}
+
+.breadcrumb{
+    
+        margin-bottom: 0 !important;
+}
+
+.sidebar {
+        
+    position : initial !important;    
+
+}
+
+.main {
+    
+    margin-top : 94px;
 }
 
 .HeaderTable{
@@ -106,6 +122,45 @@ a:not([href]) {
    margin-top: 0px !important; 
 }
 
+.sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+    padding: 0;
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+}
+
+
+.sidebar-sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 96px;
+    height: calc(100vh - 96px);
+    padding-top: .5rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.nav-link {
+    display: block;
+    padding: .5rem 1rem;
+}
+
+.lat-menu-ico {
+    
+    margin-right : 4px;
+    width : 16px;
+
+}
+
+
+.lat-menu-nav {
+    
+    color : grey;
+
+}
 
 
 

@@ -33,7 +33,7 @@ export class BootcampHelperHeaderComponent implements OnInit {
 
   	menuGuest.type='guest';
 
-    menuGuest.link.push({'name':'Exercise', 'adress':'exercise/list'}); 
+    menuGuest.link.push({'name':'Exercise', 'adress':'exercise'}); 
     menuGuest.link.push({'name':'Session', 'adress':'session'}); 
 
 
