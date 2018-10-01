@@ -1,0 +1,79 @@
+<div class="row spacer-top">
+	<div class="col-md-4">
+		<div class="btn-group">
+			<div class="btn btn-primary" (click)="changePeriodCalendar('previous')">
+				Previous
+			</div>
+			<div class="btn btn-outline-secondary" (click)="changePeriodCalendar('today')">
+				Today
+			</div>
+			<div class="btn btn-primary" (click)="changePeriodCalendar('next')">
+				Next
+			</div>
+
+		</div>
+	</div>
+	<div class="col-md-4">
+		<h3>{{currentMonth}} {{refDate.getFullYear()}}</h3>
+	</div>
+</div>
+
+<div >
+	<div class="header">
+		<div class="header_day">
+			Sunday
+		</div>
+		<div class="header_day">
+			Monday
+		</div>
+		<div class="header_day">
+			Tuesday
+		</div>
+		<div class="header_day">
+			Wednesday
+		</div>
+		<div class="header_day">
+			Thursday
+		</div>
+		<div class="header_day">
+			Friday
+		</div>
+		<div class="header_day">
+			Saturday
+		</div>
+	</div>
+	<div class="cal_month_days" *ngIf="ready">
+		<div *ngFor="let m of ngCalendar; let i = index" class="weeks">
+			<div class="cal-month-cell-days">
+				<div  *ngFor="let d of m.days" class="days" (click)="displayCalMonthItems(i, d)" [ngClass]="{'today': todayDay == d.day && month == d.month, 'non_actual_month' : month != d.month, 'clickable': d.events.length > 0 } ">
+				 	<div class="day_container">
+				 		<span class="cal-badge-events-nb" *ngIf="d.events.length >0">{{d.events.length}}</span>
+				 		<span class="day_number" >{{d.day}}</span>
+				 	</div>
+				 	<div class="event_cal" *ngIf="d.events">
+				 		<div class="event" *ngFor="let e of d.events">
+				 		</div>
+				 		
+				 	</div>
+				</div>
+			</div>
+
+			<div class="cal-event-list" *ngIf="m.display">
+				<div class="cal-month-event-item" *ngFor="let ev of m.events">
+					<div class="cal-month-event-item-badge"><span></span></div>
+					<div class="cal-month-event-item-title"><span><a class="event-link" routerLink="{{ev.link}}">{{ev.title}}</a></span></div>
+					<div class="cal-month-event-item-action">
+						<span>
+							<a class="event-link" routerLink="/session/edit/{{ev.link}}" ><i class="fa fa-fw fa-pencil"></i></a>
+							<a class="event-link" routerLink="/session/display/{{ev.link}}" ><i class="fa fa-fw fa-times"></i></a>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+</div>

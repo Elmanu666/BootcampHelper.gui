@@ -18,12 +18,51 @@ export class PagerComponent implements OnChanges, OnInit {
 	@Input() totalPages: number ;
 	@Input() itemsPerpage: number ;
   private _totalPages:number;
+  private _currentPage:number;
+  private _itemsPerpage:number;
 
-  constructor(private pagerService:PagerService) { }
+
+  constructor(private pagerService:PagerService) { 
+
+       pagerService.totalPages$.subscribe(
+       page => {
+
+
+         this.pagesInfo = this.pagerService.getPager();
+         console.log('pager : change in totalPage detected')
+         console.log(this.pagesInfo);
+
+           }
+       )
+
+
+
+  }
 
   ngOnInit() {
 
-  	this.pagesInfo = this.pagerService.getPager();
+    if (this.currentPage == null && this.totalPages == null && this.itemsPerpage == null){
+
+      this.pagesInfo = this.pagerService.getPager();
+      this._totalPages= this.pagesInfo.totalPages;
+      this._currentPage= this.pagesInfo.currentPage;
+      this._itemsPerpage= this.pagesInfo.pageSize;
+
+
+    }
+    else {
+
+        this._totalPages= this.totalPages;
+        this._currentPage= this.currentPage;
+        this._itemsPerpage= this.itemsPerpage;
+
+    }
+
+ 
+    console.log(this.pagesInfo);
+    console.log(this._totalPages);
+    console.log(this._currentPage);
+    console.log(this._itemsPerpage);
 
 
   
@@ -31,8 +70,15 @@ export class PagerComponent implements OnChanges, OnInit {
 
   ngOnChanges(changes: SimpleChanges){
     this.pagesInfo = this.pagerService.getPager();
+    this._totalPages= this.pagesInfo.totalPages;
+    this._currentPage= this.pagesInfo.currentPage;
+    this._itemsPerpage= this.pagesInfo.pageSize;
+    debugger;
     console.log(changes);
     console.log(this.pagesInfo);
+    console.log(this._totalPages);
+    console.log(this._currentPage);
+    console.log(this._itemsPerpage);
     //this.pagesInfo.totalPages= this.totalPages;
     
 
@@ -42,9 +88,10 @@ export class PagerComponent implements OnChanges, OnInit {
   pageSelect(page:number){
 
   	this.pagerService.setCurrentPage(page);
+    this._currentPage = page;
   	this.pagesInfo.currentPage = page;
 
-  	  	console.log(this.pagesInfo);
+  	 console.log(this.pagesInfo);
 
 
   }

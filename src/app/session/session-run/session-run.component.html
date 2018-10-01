@@ -1,8 +1,13 @@
 
-<div class="row">
-	<div class="col-md-3"></div>
-	<div class="col-md-8">
-		<div class="row" *ngIf="loaded && !started">
+<div classe="row spacer-top" *ngIf="calendar">
+ <ng-calendar [events]="eventsSession" *ngIf="loaded" (periodChange)="changeDate($event)"></ng-calendar>
+</div>
+
+
+
+
+<ng-container *ngIf="!calendar && loaded && !started && !sessionFinished">
+	<div class="row spacer-top" >
 			<div class="col-md-4"></div>
 			<div class="col-md-4">
 				<button  [@flyDown] class="btn btn-lg btn-success" (click)="startSession()">
@@ -10,99 +15,149 @@
 			    </button>
 			</div>
 			<div class="col-md-4"></div>
-
-
-
-
-
-		</div>
-
-
-		<div  class="row" *ngIf="loaded && !started">
-			<app-session-sheet [@flyInOut] [idSession]="idSession"></app-session-sheet>
-		</div>
-
-
-
-		<div *ngIf="loaded && started">
-			<div class="row" >
-				<div class="col-md-1"></div>
-				<div class="col-md-11" [@fadeIn] >
-					<h2> {{session.round[currentExercise.round].title}} : ({{currentExercise.round + 1}}/{{session.round.length}})</h2>
-					<h3> Repeat : {{currentExercise.repeat }} of {{session.round[currentExercise.round].repeat}}</h3>
-					<h4> Exercises : {{currentExercise.exercise +1}} of {{session.round[currentExercise.round].exercices.length}} </h4>
-				</div>
-
-
-			</div>
-
-			<div class="row">
-				<div class="col-md-12 countdown" [@flyDown] [ngClass]="{ 'drills': started && currentExercise.drills, 'rest' : started && !currentExercise.drills, '': !started && !currentExercise.drills}">
-		        	<app-countdown (countDownFinished)="nextExercise('auto')" [progressBarEnable]="progressBar"></app-countdown>
-		        </div>
-		    </div>
-
-			<div class="row">
-				<div class="col-md-4"></div>
-				<div class="col-md-4" align="center">
-					<div class="lecteur">
-						<button [@flyInOut] *ngIf="!roundsStarted" class="btn btn-lg btn-success" (click)="startRounds()">
-		       				<i  class="fas fa-play-circle fa-3x"></i>
-		    			</button>
-		    			<button [@flyInOut] *ngIf="roundsStarted" class="btn btn-lg btn-warning" (click)="pauseRounds()">
-		       				<i class="fas fa-pause fa-3x"></i>
-		    			</button>
-		    			<button [@flyinOutRight] class="btn btn-lg btn-danger" (click)="stopRounds()">
-		       				<i  class="fas fa-stop-circle fa-3x"></i>
-		    			</button>
-					</div>
-				</div>
-				<div class="col-md-4"></div>
-
-
-			</div>
-
-
-		    <div class="row">
-		    	<div class="col-md-12">
-			        <button [@fadeIn] class="btn btn-lg btn-success" (click)="previousExercise('manual')">
-			       		<i class="fas fa-chevron-left"></i>
-			    	</button>
-			    	<button [@fadeIn] class="btn btn-lg btn-success" (click)="nextExercise('manual')">
-						<i class="fas fa-chevron-right"></i>		    	
-					</button>
-
-		    	</div>
-		    </div>
-		    <div class="row">
-		    	<div class="col-md-12">
-		    	<ng-container *ngFor="let round of session.round; let i =index">
-			      <!-- <mat-card  *ngFor="let round of session.round; let i =index" [ngStyle]="{'display':i === this.currentExercise.round ? 'block' : 'none' }"> -->
-			      <mat-card   *ngIf="i=== this.currentExercise.round">
-
-			  			<mat-list>
-					  		<h1 mat-subheader>{{round.title}}</h1>
-
-
-					    	<!-- <mat-list-item [@flyInOut] *ngFor="let exercise of round.exercices; let j =index" [ngStyle]="{'display':j === this.currentExercise.exercise ? 'block' : 'none' }"> -->
-					    	
-					    	<ng-container *ngFor="let exercise of round.exercices; let j =index">
-						    	<mat-list-item [@flyInOut] *ngIf="j=== this.currentExercise.exercise"  >
-						      	
-						      	<h1 mat-line>{{exercise.title}}</h1>
-						      	<p mat-line> {{exercise.description }}s </p>
-						    	</mat-list-item>
-					    	</ng-container>
-
-					 	</mat-list>
-					</mat-card>
-				</ng-container>
-
-		    	</div>
-
-
-			</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+				<app-session-sheet [@flyInOut] [idSession]="idSession" [vertical]=false></app-session-sheet>
 		</div>
 	</div>
-	<div class="col-md-1"></div>
+</ng-container>
+
+
+
+
+
+
+<div *ngIf="!calendar && started && loaded && !sessionFinished">
+	<div class="row spacer-top" >
+		<div class="col-md-4 session-main-info-block" [@fadeIn]><h2> Repeat : {{currentExercise.repeat }} of {{session.round[currentExercise.round].repeat}}</h2></div>
+		<div class="col-md-4 session-main-info-block" [@fadeIn] ><h2> {{session.round[currentExercise.round].title}} : ({{currentExercise.round + 1}}/{{session.round.length}})</h2></div>
+		<div class="col-md-4 session-main-info-block" [@fadeIn]><h2> Exercises : {{currentExercise.exercise +1}} of {{session.round[currentExercise.round].exercices.length}} </h2></div>
+
+	</div>
+
+	<div *ngIf="!roundsStarted">
+		<div class="row">
+			<div class="col-md-12">
+				<button  [@flyDown] class="btn btn-lg btn-success" (click)="startRounds()">
+			       		Start round
+			    </button>
+
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4"></div>
+			<div class="col-md-4">
+				<mat-card >
+
+			        <mat-list>
+			          <h2 mat-subheader>{{session.round[currentExercise.round].title}}</h2>
+			          <div class="session-timing">
+			            <h3 mat-subheader>Exercises duration : {{session.round[currentExercise.round].drillsDuration}}</h3>
+			            <h3 mat-subheader>Rest duration : {{session.round[currentExercise.round].restDuration}}</h3>
+			            <h3 mat-subheader>Repeat : {{session.round[currentExercise.round].repeat}}</h3>
+			          </div>
+
+			          <mat-list-item *ngFor="let exercise of session.round[currentExercise.round].exercices">
+			            
+			            <h4 mat-line>{{exercise.title}}</h4>
+			            <mat-icon mat-list-icon>accessibility_new</mat-icon>
+			            <p mat-line> {{session.round[currentExercise.round].drillsDuration }}s </p>
+			          </mat-list-item>
+
+			        </mat-list>
+		      	</mat-card>
+
+
+			</div>
+			<div class="col-md-4"></div>
+			
+		</div>
+
+
+
+	</div>
+
+	<div class="row space-around-timer" *ngIf="roundsStarted">
+		<div class="col-md-3"></div>
+		<div class="col-md-6 countdown" [@flyDown] [ngClass]="{ 'drills': started && currentExercise.drills, 'rest' : started && !currentExercise.drills, '': !started && !currentExercise.drills}">
+        	<app-countdown (countDownFinished)="nextExercise('auto')" [progressBarEnable]="progressBar"></app-countdown>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+
+	<div class="row" *ngIf="roundsStarted">
+		<div class="col-md-4"></div>
+		<div class="col-md-4" align="center">
+			<div class="lecteur">
+				<button [@flyInOut] *ngIf="!roundsStarted" class="btn btn-lg btn-success" (click)="startRounds()">
+       				<i  class="fas fa-play-circle fa-3x"></i>
+    			</button>
+    			<button *ngIf="roundsStarted" class="btn btn-lg btn-warning" (click)="pauseRounds()">
+       				<i class="fas fa-pause fa-3x"></i>
+    			</button>
+    			<button [@flyinOutRight] class="btn btn-lg btn-danger" (click)="stopRounds()">
+       				<i  class="fas fa-stop-circle fa-3x"></i>
+    			</button>
+			</div>
+		</div>
+		<div class="col-md-4"></div>
+
+
+	</div>
+
+
+    <div class="row" *ngIf="roundsStarted">
+    	<div class="col-md-12">
+	        <button [@fadeIn] class="btn btn-lg btn-success" (click)="previousExercise('manual')">
+	       		<i class="fas fa-chevron-left"></i>
+	    	</button>
+	    	<button [@fadeIn] class="btn btn-lg btn-success" (click)="nextExercise('manual')">
+				<i class="fas fa-chevron-right"></i>		    	
+			</button>
+
+    	</div>
+    </div>
+    <div class="row" *ngIf="roundsStarted">
+    	<div class="col-md-12">
+    	<ng-container *ngFor="let round of session.round; let i =index">
+	      <!-- <mat-card  *ngFor="let round of session.round; let i =index" [ngStyle]="{'display':i === this.currentExercise.round ? 'block' : 'none' }"> -->
+	      	<div class="jumbotron"   *ngIf="i=== this.currentExercise.round">
+
+
+
+
+			    	<!-- <mat-list-item [@flyInOut] *ngFor="let exercise of round.exercices; let j =index" [ngStyle]="{'display':j === this.currentExercise.exercise ? 'block' : 'none' }"> -->
+			    	
+			    	<ng-container *ngFor="let exercise of round.exercices; let j =index">
+				    	<div class="container" [@flyInOut] *ngIf="j=== this.currentExercise.exercise"  >
+				      	
+					      	<h1 class="display-4">{{exercise.title}}</h1>
+					      	<p class="lead"> {{exercise.description }} </p>
+				    	</div >
+			    	</ng-container>
+
+			
+			</div >
+		</ng-container>
+
+    	</div>
+
+
+	</div>
+</div>
+
+<div *ngIf="sessionFinished">
+	<div class="jumbotron">
+
+	
+	    	<div class="container" >
+		      	<h1 class="display-4">Congrats Session finished</h1>
+		      	<p class="lead"> you spend XXX and did XX drills</p>
+	    	</div >
+ 
+
+			
+	</div >
+	
 </div>

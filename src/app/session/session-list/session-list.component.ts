@@ -3,6 +3,8 @@ import { SessionService } from '../../services/session.service';
 import Session from '../../models/session.model';
 import { PagerService } from '../../services/pages.service';
 import { MatTableDataSource } from '@angular/material';
+import { PagerComponent } from '../../common/pager/pager.component';
+
 import {
   trigger,
   state,
@@ -62,7 +64,19 @@ export class SessionListComponent implements OnInit {
   		private route: ActivatedRoute,
     	private router: Router,
 
+
 		) { 
+
+         pagerService.currentPage$.subscribe(
+       page => {
+
+         console.log('Material list : current page changed value')
+         this.page != page ? (this.page=page, this.getSessions()) : '';
+         
+
+
+           }
+       )
 
 
 
@@ -73,8 +87,23 @@ export class SessionListComponent implements OnInit {
   page: number=1;
   pagesInfo : Page = new Page();
   loaded : boolean = false;
+  path: string;
 
   ngOnInit(): void {
+
+        this.path = this.route.snapshot.routeConfig.path
+
+
+    this.getSessions();
+
+
+
+      }
+
+
+  getSessions(){
+
+    this.loaded=false;
 
     this.sessionService.getSessions(this.page)
       .subscribe(sessions => {
@@ -88,25 +117,17 @@ export class SessionListComponent implements OnInit {
       })
 
 
+  }
 
-      }
+  sessionJump(id:Session['_id']){
 
-
-  showSession(id:number){
-
-    console.log('on a double le click');
-    console.log(id);
-    this.router.navigate(['/session/detail/'+id]);
+    this.path == 'edit' ? this.router.navigate(['/session/edit/'+id]):'';
+    this.path == 'view' ? this.router.navigate(['/session/detail/'+id]):'';
+    this.path == 'list' ? this.router.navigate(['/session/view/'+id]):'';
 
   }
 
-  runSession(id:number){
 
-  	console.log('on a clické');
-  	console.log(id);
-  	this.router.navigate(['/session/run/'+id]);
-
-  }
 
 
   

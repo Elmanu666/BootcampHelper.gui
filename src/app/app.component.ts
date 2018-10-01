@@ -23,7 +23,6 @@ import { MenuService } from './services/menu.service';
 
 })
 export class AppComponent {
-  styleUrls: ['./app.component.scss']
   
   breadcrumb : string;
   breadcrumbs : [{'url':string, 'title':string}]

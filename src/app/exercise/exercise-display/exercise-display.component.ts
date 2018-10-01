@@ -26,6 +26,7 @@ export class ExerciseDisplayComponent {
     	private fileService : FileService,
 
   	) { }
+  id: string;
 	images : File;
   exercise: Exercise;
   bodyPart: string[] = ["Abs", "Biceps", "Triceps", "Glutes", "Legs", "Shoulders", "Oblics", "Chest (middle)", "Chest (high)", "Chest (low)" ];
@@ -34,12 +35,18 @@ export class ExerciseDisplayComponent {
 
   ngOnInit() {
 
-  	let id = this.route.snapshot.paramMap.get('id');
+  //	let id = this.route.snapshot.paramMap.get('id');
 
-  	console.log(this.loaded);
+    this.id == this.route.snapshot.paramMap.get('id') ? this.route.snapshot.paramMap.get('id') : this.id = "select";
+
+    if (this.id == 'select'){
 
 
-  	this.exerciseService.getExercise(id)
+    }
+
+    else {
+
+     this.exerciseService.getExercise(this.id)
       .subscribe(exercise => {
         //assign the todolist property to the proper http response
         this.exercise = exercise;
@@ -52,6 +59,14 @@ export class ExerciseDisplayComponent {
 
 
       })
+
+    }
+
+
+  	console.log(this.loaded);
+
+
+
   }
 
   deleteExercise(exercise:Exercise){

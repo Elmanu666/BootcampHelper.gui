@@ -10,7 +10,10 @@ export class PagerService {
 
         public page : Pages;
         private currentPageSource = new Subject<number>();
+        private totalPageSource = new Subject<number>();
+        private oldTotalPages : number;
         currentPage$ = this.currentPageSource.asObservable();
+        totalPages$ = this.totalPageSource.asObservable();
 
 
       constructor(
@@ -21,6 +24,9 @@ export class PagerService {
 
     setPager(totalPages: number, currentPage: number , pageSize: number){
 
+        
+
+        this.oldTotalPages = this.page.totalPages ;
         this.page.totalPages = totalPages;
 
 
@@ -32,6 +38,11 @@ export class PagerService {
         console.log('page :')
         console.log(this.page);
         this.currentPageSource.next(currentPage);
+        if (totalPages != this.oldTotalPages){
+                  this.totalPageSource.next(totalPages);
+
+        }
+  
 
     }
 

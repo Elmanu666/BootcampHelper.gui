@@ -1,8 +1,8 @@
-<div class="row"  *ngIf="loaded">
+<div class="row spacer-top"  *ngIf="loaded">
 
-  <div class="col-md-2"></div>
 
-  <div class="col-md-10">
+
+  <div class="col-md-12">
 
  
       <table class="table table-hover">
@@ -19,7 +19,7 @@
         
         <tbody [@tableLine]="sessionsList.length">
 
-            <tr  (dblclick)="showSession(session._id)" (click)="runSession(session._id)" *ngFor="let session of sessionsList; let i =index" id={{i}}>
+            <tr  (click)="sessionJump(session._id)"  *ngFor="let session of sessionsList; let i =index" id={{i}}>
               <td>{{session?.description || 'default'}}</td>
               <td>{{session.attendees}}</td>
               <td>{{session.round.length}}</td>
@@ -29,7 +29,9 @@
 
         </tbody>
       </table>
+  <app-pager *ngIf="pagesInfo.totalPages > 1" currentPage="pagesInfo.currentPage" totalPages="pagesInfo.totalPages"></app-pager>
+
    
   </div>
-  <div class="col-md-2"></div>
+
 </div>

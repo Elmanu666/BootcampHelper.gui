@@ -1,7 +1,13 @@
 
+<div class="row spacer-top">
+  <div class="col-md-4">
+  </div>
+  <div class="col-md-4">
+    <button type="button" (click)="copySession()" class="btn btn-success"><i class="far fa-copy"></i></button>
+  </div>
+</div>
 <div class="row">
-  <div class="col-md-2"></div>
-  <div class="col-md-10">
+  <div class="col-md-12">
     <mat-horizontal-stepper [linear]="isLinear" #stepper *ngIf="loaded">
       <mat-step >
         <form >
@@ -52,7 +58,7 @@
             					<input matInput placeholder="Round title"   [(ngModel)]="round.title" name="roundTitle{{i}}">
           					</mat-form-field>
     			      </mat-panel-title>
-
+ 
     			    </mat-expansion-panel-header>
                 <div>
       		  			<mat-form-field >
@@ -79,7 +85,42 @@
           				    <mat-option *ngFor="let a of exercisesList; let v =index" [value]="a" >{{a.title}}</mat-option> 
         						</mat-select>
       					</mat-form-field>
+              </div>
+              <div class="round-configurator">
+                <div class="exercise-selector" >
+                  <div class="exercise-items" *ngFor="let exercise of exercisesList" draggable="true"  (dragstart)="dragStart($event, exercise._id)" >
+                    <div class="exercise-info">
+                                          {{exercise.title}}
+
+
+                    </div>
+                  </div>
                 </div>
+                <div class="rounds-container">
+                  <div class="rounds" *ngFor="let rd of newSession.round; let i=index" >
+                    <div class="form-group" >
+                      <label for="repeat">Number of repeat</label>
+                      <input type="number" class="form-control" id="repeat"  [(ngModel)]="rd.repeat">
+                    </div>
+
+                    <div class="form-group" >
+                      <label for="drillsDuration">Rest Duration</label>
+                      <input type="number" class="form-control" id="restDuration" [(ngModel)]="rd.restDuration">
+                    </div>
+                    <div class="form-group" >
+                      <label for="drillsDuration">Drill Duration</label>
+                      <input type="number" class="form-control" id="drillsDuration" [(ngModel)]="rd.drillsDuration">
+                    </div>
+                    <div class="exercise-selected" [ngClass]="dropAreaClass" (dragover)="dragOver($event)"  (dragleave)="dragLeave($event)" (drop)="drop($event)">
+                      <div class="exercise-dropzone-area">
+                      </div>
+                      <div class="exerciseItemsSelected" *ngFor="let exec of rd.exercices">
+                        {{exec.title}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
     			  </mat-expansion-panel>
     			</mat-accordion>

@@ -40,6 +40,7 @@ export class MaterialService {
    // 	let url = this.materialUrl
   //  	let url = this.materialUrl
     	let config = {'params' : {'page' : page }};
+      
     	return this.http.get(url)
     		.pipe(
 

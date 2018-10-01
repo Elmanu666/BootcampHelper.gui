@@ -13,6 +13,7 @@ export class SessionSheetComponent implements OnInit {
 	@Input() idSession: SessionModel['_id']  ;
   @Input() session : SessionModel;
   loaded : boolean ;
+  @Input()  vertical : boolean ;
 
 
 
@@ -21,11 +22,14 @@ export class SessionSheetComponent implements OnInit {
 
   ngOnInit() {
 
-    this.loaded = false;
+    console.log('vertical');
+    console.log(this.vertical);
 
-  	console.log('session-display');
-    console.log(this.idSession);
-  	console.log(this.session);
+    this.loaded = false;
+    this.vertical == undefined ? this.vertical = true : '';
+
+    console.log('vertical');
+    console.log(this.vertical);
 
 
     if (this.idSession != undefined){

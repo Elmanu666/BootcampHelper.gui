@@ -56,7 +56,7 @@ export class MaterialListComponent {
      pagerService.currentPage$.subscribe(
        page => {
 
-
+         console.log('Material list : current page changed value')
          this.currentPage = page;
          this.start= (page-1)*this.nbDisplayItems;
 
@@ -237,10 +237,15 @@ activeFilter(filter:string){
 
      }
 
-
+     this.start=0
      this.materialsListSliced = this.materialsListFiltered.slice(this.start, this.nbDisplayItems);
      this.pagesInfo.totalPages = Math.ceil(this.materialsListFiltered.length /this.nbDisplayItems);
+     this.pagesInfo.pageSize = this.nbDisplayItems;
      this.pagerService.setPager(this.pagesInfo.totalPages, this.pagesInfo.currentPage, this.pagesInfo.pageSize);
+
+     console.log('filter updated');
+     console.log(this.pagesInfo.totalPages);
+
 
 
 

@@ -10,6 +10,14 @@
 	background-color : #C62637;
 }
 
+.session-main-info-block{
+	
+	display : flex;
+	justify-content: center;
+
+
+}
+
 .countdown {
 	
 	margin : 3px;
@@ -29,4 +37,11 @@
 	  height: 30vh !important;
 
 
+}
+
+.space-around-timer{
+	
+
+	padding-top : 2rem;
+	padding-bottom : 1rem;
 }

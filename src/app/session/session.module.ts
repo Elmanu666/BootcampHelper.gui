@@ -26,6 +26,10 @@ import { SessionRoutingModule } from './session-routing.module';
 import { EscapeHtmlPipe } from '../pipes/keep-html.pipe';
 
 import {SharedModule} from '../common/sharedComponent.module'
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { CalendarComponent } from '../calendar/calendar.component';
+
 
 
 
@@ -58,7 +62,12 @@ import {SharedModule} from '../common/sharedComponent.module'
     MatIconModule,
     NgbModule,
     SessionRoutingModule,
-    SharedModule
+    SharedModule,
+    
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory
+    })
 
 
     
@@ -74,6 +83,7 @@ import {SharedModule} from '../common/sharedComponent.module'
   	CountdownComponent,
   	SessionSheetComponent,
     EscapeHtmlPipe,
+    CalendarComponent,
 
 
   ],

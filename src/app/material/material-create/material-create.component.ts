@@ -197,7 +197,7 @@ export class MaterialCreateComponent {
     	.subscribe(retApi => {
             //assign the todolist property to the proper http response
             this.images = retApi.data.docs;
-            console.log('retour api image');
+            console.log('retour api image' +id);
             console.log(this.images)
             
 

@@ -29,6 +29,7 @@ export class SessionCreateComponent implements OnInit {
   public newSession: Session;
   exercisesList: Exercise[];
   loaded: boolean = false;
+  dropAreaClass : string;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -47,14 +48,11 @@ export class SessionCreateComponent implements OnInit {
 
   ngOnInit() {
 
-  	console.log(this.users);
-  	console.log(this.exercisesList);
 
 
 
    this.id = this.route.snapshot.paramMap.get('id') ? this.route.snapshot.paramMap.get('id') : "create";
 
-    console.log(this.id);
 
     if (this.id === "create") {
 
@@ -70,8 +68,7 @@ export class SessionCreateComponent implements OnInit {
         //assign the todolist property to the proper http response
         this.newSession = session;
         //this.loaded = true
-        console.log("on reçoit la session");
-        console.log(session);
+
 
         this.loaded = true;
 
@@ -95,6 +92,18 @@ export class SessionCreateComponent implements OnInit {
 
     
     console.log(this.newSession);
+  }
+
+
+  copySession(){
+    this.id = "create";
+    this.newSession._id = "";
+    this.newSession.plannedDate = new Date();
+    this.newSession.executionDate = null;
+    this.toastr.success('Copy succesful : don t forget to save', 'Success!' , {timeOut: 2000});
+
+
+
   }
 
 
@@ -258,6 +267,61 @@ export class SessionCreateComponent implements OnInit {
          }
   
       }
+
+
+  dragOver(event :any){
+    event.preventDefault();
+    event.stopPropagation();
+
+    this.dropAreaClass = 'dropOver';
+  }
+
+  dragLeave(event : any){
+    event.preventDefault();
+    event.stopPropagation();
+
+    this.dropAreaClass = 'dropOut';
+
+
+
+  }
+
+  drop(event: any){
+    event.preventDefault();
+    event.stopPropagation();
+
+    console.log(event)
+    console.log('drop');
+
+    console.log(event.dataTransfer.getData("_id"));
+
+    for (var i = 0 ; i < this.exercisesList.length; i++){
+
+      this.exercisesList[i]._id== event.dataTransfer.getData("_id") ?   this.newSession.round[0].exercices.length == 0 ?this.newSession.round[0].exercices[0] = this.exercisesList[i] :  this.newSession.round[0].exercices.push(this.exercisesList[i]) :'';
+
+
+    }
+
+
+
+
+
+  }
+
+  drag(event : any){
+    event.preventDefault();
+
+    console.log(event);
+
+
+  }
+
+  dragStart(event : any, id :Exercise['_id']){
+
+
+    event.dataTransfer.effectAllowed = "copy";
+    event.dataTransfer.setData("_id", id); 
+  }
 
 
 

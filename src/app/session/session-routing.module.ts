@@ -21,8 +21,11 @@ const sessionRoutes: Routes = [
           { path: 'list', component: SessionListComponent },
           { path: 'create', component: SessionCreateComponent },
           { path: 'detail/:id', component: SessionDisplayComponent },
+          { path: 'detail', component: SessionListComponent },
           { path: 'edit/:id', component: SessionCreateComponent },
+          { path: 'edit', component: SessionListComponent },
           { path: 'run/:id', component: SessionRunComponent },
+          { path: 'run', component: SessionRunComponent },
 //          { path: 'count-down', component: SessionRunComponent },
 
         
