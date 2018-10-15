@@ -7,6 +7,7 @@ import { SessionDisplayComponent } from '../session-display/session-display.comp
 import { Router, ActivatedRoute } from '@angular/router';
 
 
+
 import { ExerciseService } from '../../services/exercise.service';
 import { SessionService } from '../../services/session.service';
 import Exercise from '../../models/exercise.model';
@@ -36,9 +37,8 @@ export class SessionCreateComponent implements OnInit {
     public toastr: ToastrService, vcr: ViewContainerRef,
     private exerciseService: ExerciseService,
     private sessionService: SessionService,
-      private router: Router,
-
-          private route: ActivatedRoute,
+    private router: Router,
+    private route: ActivatedRoute,
 
 
 
@@ -145,6 +145,11 @@ export class SessionCreateComponent implements OnInit {
   	
 
 
+  }
+
+  sort(){
+
+    console.log('sorting!!')
   }
 
     updateExercisesNumber(id){
@@ -297,7 +302,7 @@ export class SessionCreateComponent implements OnInit {
 
     for (var i = 0 ; i < this.exercisesList.length; i++){
 
-      this.exercisesList[i]._id== event.dataTransfer.getData("_id") ?   this.newSession.round[0].exercices.length == 0 ?this.newSession.round[0].exercices[0] = this.exercisesList[i] :  this.newSession.round[0].exercices.push(this.exercisesList[i]) :'';
+      this.exercisesList[i]._id == event.dataTransfer.getData("_id") ?   ( this.newSession.round[0].exercices.length < 1 ? this.newSession.round[0].exercices[0] = this.exercisesList[i] :  this.newSession.round[0].exercices.push(this.exercisesList[i]) ):'';
 
 
     }

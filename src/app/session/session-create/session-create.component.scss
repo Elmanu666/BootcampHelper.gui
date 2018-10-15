@@ -29,3 +29,68 @@
 }
 
 .dropOut {}
+
+
+.box {
+  background: #BADA55;
+  border: 1px solid black;
+  padding: 10px 20px;
+  display: inline-block;
+
+  &.dragging {
+    background: coral;
+  }
+
+  &.sortable.dragging {
+    background: none;
+    border: 1px dashed black;
+    color: transparent;
+  }
+}
+
+.area {
+  background: #C0FFEE;
+  padding: 40px;
+}
+
+button {
+  margin-top: 20px;
+}
+
+ul {
+  display: inline-flex;
+  margin: 0;
+  padding: 0;
+  flex-direction: column;
+
+  &.horizontal {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+
+.dropzone {
+  padding: 20px;
+  margin: 20px 0;
+  background: lightgray;
+  min-height: 200px;
+  border: 1px solid black;
+
+  &.dropzone-activated {
+    border: 1px solid red;
+  }
+
+  &.dropzone-entered {
+    background-color: #efefef;
+  }
+}
+
+.exercise-selector{
+	padding: 20px;
+  	margin: 20px 20px 20px 0px;
+   	max-height: 150px;
+   	overflow-x:scroll;
+   	overflow-y:scroll;
+
+}
+

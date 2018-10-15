@@ -30,6 +30,9 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { CalendarComponent } from '../calendar/calendar.component';
 
+import { DraggableModule } from '../common/draggable/draggable.module';
+
+
 
 
 
@@ -63,6 +66,7 @@ import { CalendarComponent } from '../calendar/calendar.component';
     NgbModule,
     SessionRoutingModule,
     SharedModule,
+    DraggableModule,
     
     CalendarModule.forRoot({
       provide: DateAdapter,
