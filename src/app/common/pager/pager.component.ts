@@ -73,7 +73,7 @@ export class PagerComponent implements OnChanges, OnInit {
     this._totalPages= this.pagesInfo.totalPages;
     this._currentPage= this.pagesInfo.currentPage;
     this._itemsPerpage= this.pagesInfo.pageSize;
-    debugger;
+    
     console.log(changes);
     console.log(this.pagesInfo);
     console.log(this._totalPages);

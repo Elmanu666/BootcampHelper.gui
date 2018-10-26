@@ -13,6 +13,7 @@ export class DraggableHelperDirective implements OnInit, OnDestroy {
   //private positionStrategy = new GlobalPositionStrategy();
   private startPosition?: { x: number; y: number };
 
+
   constructor(private draggable: DraggableDirective,
               private templateRef: TemplateRef<any>,
               private viewContainerRef: ViewContainerRef,
@@ -20,7 +21,7 @@ export class DraggableHelperDirective implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-  	debugger;
+  	
     this.draggable.dragStart.subscribe(event => this.onDragStart(event));
     this.draggable.dragMove.subscribe(event => this.onDragMove(event));
     this.draggable.dragEnd.subscribe(() => this.onDragEnd());
@@ -29,6 +30,8 @@ export class DraggableHelperDirective implements OnInit, OnDestroy {
     this.overlayRef = this.overlay.create({
       positionStrategy: this.positionStrategy
     });
+
+
   }
 
   ngOnDestroy(): void {

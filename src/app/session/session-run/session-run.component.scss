@@ -45,3 +45,43 @@
 	padding-top : 2rem;
 	padding-bottom : 1rem;
 }
+
+
+
+.exercise-list-container{
+	display:flex;
+	justify-content:flex-start;
+	flex-wrap:wrap;
+
+}
+.exercise-list{
+
+
+}
+
+.exercise-list-alt{
+	padding-left:1rem;
+	margin-left:1rem;
+	border-left-style: dashed;
+	border-left-color:#E9ECEF;
+	border-left-width: 0.2rem;
+
+
+
+
+}
+
+.exercise-list-user{
+	padding-left:16px;
+	padding-right:10px;
+
+}
+
+
+.card-round{
+	display:flex;
+	justify-content:center;
+	flex-wrap:wrap;
+
+
+}

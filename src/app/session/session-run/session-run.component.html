@@ -17,7 +17,7 @@
 			<div class="col-md-4"></div>
 	</div>
 	<div class="row">
-		<div class="col-md-12">
+		<div class="col-md-12 card-round">
 				<app-session-sheet [@flyInOut] [idSession]="idSession" [vertical]=false></app-session-sheet>
 		</div>
 	</div>
@@ -38,16 +38,18 @@
 
 	<div *ngIf="!roundsStarted">
 		<div class="row">
-			<div class="col-md-12">
+			<div class="col-md-5"></div>
+			<div class="col-md-2">
 				<button  [@flyDown] class="btn btn-lg btn-success" (click)="startRounds()">
 			       		Start round
 			    </button>
 
 			</div>
+			<div class="col-md-5"></div>
 		</div>
 		<div class="row">
-			<div class="col-md-4"></div>
-			<div class="col-md-4">
+			<div class="col-md-2"></div>
+			<div class="col-md-8 card-round">
 				<mat-card >
 
 			        <mat-list>
@@ -57,20 +59,33 @@
 			            <h3 mat-subheader>Rest duration : {{session.round[currentExercise.round].restDuration}}</h3>
 			            <h3 mat-subheader>Repeat : {{session.round[currentExercise.round].repeat}}</h3>
 			          </div>
-
-			          <mat-list-item *ngFor="let exercise of session.round[currentExercise.round].exercices">
-			            
-			            <h4 mat-line>{{exercise.title}}</h4>
-			            <mat-icon mat-list-icon>accessibility_new</mat-icon>
-			            <p mat-line> {{session.round[currentExercise.round].drillsDuration }}s </p>
-			          </mat-list-item>
-
+			          <div class="exercise-list-container">
+			          	<div class="exercise-list">
+			          	  <div class="exercise-list-user"><span *ngFor="let usr of session.round[currentExercise.round].exercisesMainUser">{{usr}}</span></div>
+				          <mat-list-item *ngFor="let exercise of session.round[currentExercise.round].exercices">
+				            <h4 mat-line>{{exercise.title}}</h4>
+				            <mat-icon mat-list-icon>accessibility_new</mat-icon>
+				            <p mat-line> {{session.round[currentExercise.round].drillsDuration }}s </p>
+				          </mat-list-item>
+				        </div>
+				        <div class="exercise-list-alt">
+				        	<ng-container *ngFor="let exrcAlts of session.round[currentExercise.round].exercisesAlternatives">
+				        	  <div class="exercise-list-user"><span *ngFor="let usr of exrcAlts.users">{{usr}}</span></div>
+					          <mat-list-item *ngFor="let exAlt of exrcAlts.exercises">
+					          	
+					            <h4 mat-line>{{exAlt.title}}</h4>
+					            <mat-icon mat-list-icon>accessibility_new</mat-icon>
+					            <p mat-line> {{session.round[currentExercise.round].drillsDuration }}s </p>
+					          </mat-list-item>
+					        </ng-container>
+				        </div>
+				      </div>
 			        </mat-list>
 		      	</mat-card>
 
 
 			</div>
-			<div class="col-md-4"></div>
+			<div class="col-md-2"></div>
 			
 		</div>
 
@@ -130,11 +145,26 @@
 			    	<!-- <mat-list-item [@flyInOut] *ngFor="let exercise of round.exercices; let j =index" [ngStyle]="{'display':j === this.currentExercise.exercise ? 'block' : 'none' }"> -->
 			    	
 			    	<ng-container *ngFor="let exercise of round.exercices; let j =index">
-				    	<div class="container" [@flyInOut] *ngIf="j=== this.currentExercise.exercise"  >
-				      	
-					      	<h1 class="display-4">{{exercise.title}}</h1>
-					      	<p class="lead"> {{exercise.description }} </p>
-				    	</div >
+				    	<div class="on-going-exercises" [@flyInOut] *ngIf="j=== this.currentExercise.exercise">
+				    		<div class="container"   >
+				      			<span class="user" *ngFor="let usr of round.exercisesMainUser">{{usr}}</span>
+					      		<h1 class="display-4">{{exercise.title}}</h1>
+					      		<p class="lead"> {{exercise.description }} </p>
+				    		</div >
+				    		<ng-container *ngFor="let exAl of round.exercisesAlternatives">
+
+				    				<div class="container">
+				    					<span class="user" *ngFor="let usrAlt of exAl.users">{{usrAlt}}</span>
+				    					<h1 class="display-4">{{exAl.exercises[j].title}}</h1>
+				    					<p class="lead"> {{exAl.exercises[j].description }} </p>
+
+				    				</div>
+
+
+				    		</ng-container>
+				    			
+				    		
+				    	</div>
 			    	</ng-container>
 
 			

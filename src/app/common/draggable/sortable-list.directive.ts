@@ -1,4 +1,4 @@
-import { AfterContentInit, ContentChildren, Directive, EventEmitter, Output, QueryList } from '@angular/core';
+import { AfterContentInit, ElementRef, ContentChildren, Directive, EventEmitter, Output, QueryList } from '@angular/core';
 import { SortableDirective } from './sortable.directive';
 import { DroppableDirective } from './droppable.directive';
 
@@ -31,7 +31,7 @@ export class SortableListDirective implements AfterContentInit {
 
   @Output() sort = new EventEmitter<SortEvent>();
 
-  sortableItemsNumber: number;
+  private sortablesOld : QueryList<ElementRef>;
 
   private clientRects: ClientRect[];
 
@@ -39,27 +39,17 @@ export class SortableListDirective implements AfterContentInit {
 
   ngAfterContentInit(): void {
 
-    this.sortableItemsNumber = this.sortables.length;
+    
+
+    //this.sortableItemsNumber = this.sortables.length;
+
+    this.updateSortablesOld();
+    //this.sortables_old = this.sortables;
+
     this.sortables.changes.subscribe(() => {
-
-      if (this.sortables.length < this.sortableItemsNumber) {
-
-      }
-
-      else if (this.sortables.length > this.sortableItemsNumber) {
-
-        this.addSortables();
-
-      }
-
-      this.sortableItemsNumber = this.sortables.length;
-
-
+      this.addSortables();
 
     })
-
-
-
     this.sortables.forEach(sortable => {
       sortable.dragStart.subscribe(() => this.measureClientRects());
       sortable.dragMove.subscribe(event => this.detectSorting(sortable, event));
@@ -70,7 +60,7 @@ export class SortableListDirective implements AfterContentInit {
 
     // var j = 0;
 
-    // debugger;
+    
 
     //  this.sortables.forEach(sortable => {
     //    if(i<)
@@ -84,11 +74,39 @@ export class SortableListDirective implements AfterContentInit {
     //   sortable.dragMove.subscribe(event => this.detectSorting(sortable, event));
     // });
 
-    var sortable = this.sortables.last;
+    // var sortable = this.sortables.last;
+    var sortable = this.sortables.filter(srt => {
+      
+      var t = true;
+        this.sortablesOld.forEach(sortableOld =>{
+          if (sortableOld.element.nativeElement === srt.element.nativeElement){
 
-    sortable.dragStart.subscribe(() => this.measureClientRects());
-    sortable.dragMove.subscribe(event => this.detectSorting(sortable, event));
+           t = false;
 
+          }
+          else {
+
+            t == true ? t = true : t= false;
+            
+          }
+
+
+
+        })
+        return t;
+
+    });
+
+        sortable.forEach(sortable => {
+
+            sortable.dragStart.subscribe(() => this.measureClientRects());
+            sortable.dragMove.subscribe(event => this.detectSorting(sortable, event));
+          })
+  }
+
+  private updateSortablesOld(){
+
+    this.sortablesOld = this.sortables.map(rslt => rslt)
 
 
   }

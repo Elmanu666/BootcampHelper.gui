@@ -22,16 +22,8 @@ export class SessionSheetComponent implements OnInit {
 
   ngOnInit() {
 
-    console.log('vertical');
-    console.log(this.vertical);
-
     this.loaded = false;
     this.vertical == undefined ? this.vertical = true : '';
-
-    console.log('vertical');
-    console.log(this.vertical);
-
-
     if (this.idSession != undefined){
       console.log('on passe dans l-appel de l-api dans session-sheet')
 
@@ -39,41 +31,56 @@ export class SessionSheetComponent implements OnInit {
       .subscribe(session => {
         //assign the todolist property to the proper http response
         this.session = session;
-        console.log("on reçoit la session");
-        console.log(session);
+        
+//        this.defineUserMainExercise();
         this.loaded=true;
 
-
-
-
       })
-  }
-
-  else if (this.idSession == undefined && this.session != undefined){
-
-    this.loaded=true;
-
-
-
-
-  }
-
-
-
     }
 
-
-
-    // ngOnChanges(changes: SimpleChanges){
-    //   if(changes.input){
-    //     console.log('input changed');
-    //   }
-    // }
-
-
-
-
-
+    else if (this.idSession == undefined && this.session != undefined){
+      this.loaded=true;
+    }
   }
+
+
+  // defineUserMainExercise(){
+
+  //   var sessionTmp = this.session.round.map(rd =>{
+  //           if (rd.exercisesAlternatives.length > 0){
+  //             var users = new Array();
+
+  //             rd.exercisesAlternatives.forEach(excAlt =>
+  //               excAlt.users.forEach(user=>
+
+  //                 users.push(user)
+  //                 )
+
+  //               )
+  //             var userMain = this.session.attendees.filter(attendee =>{
+
+  //                  return !(users.include(attendee))
+  //             }
+
+             
+  //               )
+
+  //           rd.userMainExercises = userMain;
+  //           }
+
+
+
+  //             return rd;
+      
+
+  //         }
+    
+
+
+  //     )
+  }
+
+
+}
 
 

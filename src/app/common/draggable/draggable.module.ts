@@ -10,6 +10,7 @@ import { SortableListDirective } from './sortable-list.directive';
 import { DropzoneDirective } from "./dropzone.directive";
 import { DroppableDirective } from "./droppable.directive";
 import { DroppableService } from './droppable.service';
+import { DraggableHandlerDirective } from './draggable-handler.directive';
 
 @NgModule({
   imports: [
@@ -17,6 +18,7 @@ import { DroppableService } from './droppable.service';
     OverlayModule
   ],
   declarations: [
+    DraggableHandlerDirective,
   	DraggableDirective, 
   	MovableDirective, 
   	MovableAreaDirective, 
@@ -24,9 +26,10 @@ import { DroppableService } from './droppable.service';
   	SortableDirective,
     SortableListDirective,
     DropzoneDirective,
-    DroppableDirective 
+    DroppableDirective
     ],
   exports: [
+    DraggableHandlerDirective,
   	DraggableDirective, 
   	MovableDirective, 
   	MovableAreaDirective, 
@@ -34,7 +37,7 @@ import { DroppableService } from './droppable.service';
     SortableListDirective,
     SortableDirective,
     DropzoneDirective,
-    DroppableDirective
+    DroppableDirective,
     ],
   providers :[
   	DroppableService

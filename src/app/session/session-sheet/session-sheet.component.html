@@ -12,14 +12,30 @@
   			<h3 mat-subheader>Rest duration : {{round.restDuration}}</h3>
   			<h3 mat-subheader>Repeat : {{round.repeat}}</h3>
   		</div>
+      <div class="exercise-list-container">
+        <div class="exercise-list">
+          <h5 cmat-subheader *ngFor="let user of round.exercisesMainUser">
+                <i *ngFor="let user of round.exercisesMainUser">{{user}}</i>
+          </h5>
+        	<mat-list-item *ngFor="let exercise of round.exercices">
+          	
+          	<h3 mat-line>{{exercise.title}}</h3>
+          	<mat-icon mat-list-icon>accessibility_new</mat-icon>
+          	<p mat-line> {{round.drillsDuration }}s </p>
+        	</mat-list-item>
+        </div>
 
-    	<mat-list-item *ngFor="let exercise of round.exercices">
-      	
-      	<h4 mat-line>{{exercise.title}}</h4>
-      	<mat-icon mat-list-icon>accessibility_new</mat-icon>
-      	<p mat-line> {{round.drillsDuration }}s </p>
-    	</mat-list-item>
-
+        <div class="exercise-list-alt" *ngFor="let excAlt of round.exercisesAlternatives">
+          <h5 cmat-subheader *ngFor="let user of round.exercisesMainUser">
+                <i *ngFor="let user of round.exercisesMainUser">{{user}}</i>
+          </h5>
+            <mat-list-item *ngFor="let exercise of excAlt.exercises">
+              <h4 mat-line>{{exercise.title}}</h4>
+              <mat-icon mat-list-icon>accessibility_new</mat-icon>
+              <p mat-line> {{round.drillsDuration }}s </p>
+            </mat-list-item>
+        </div>
+      </div>      
  	  </mat-list>
   </mat-card>
 
@@ -52,14 +68,30 @@
             <h3 mat-subheader>Rest duration : {{round.restDuration}}</h3>
             <h3 mat-subheader>Repeat : {{round.repeat}}</h3>
           </div>
-
-          <mat-list-item *ngFor="let exercise of round.exercices">
-            
-            <h4 mat-line>{{exercise.title}}</h4>
-            <mat-icon mat-list-icon>accessibility_new</mat-icon>
-            <p mat-line> {{round.drillsDuration }}s </p>
-          </mat-list-item>
-
+          <div class="exercise-list-container">
+            <div class="exercise-list">
+              <div class="exercise-list-user">
+                <h3 cmat-subheader *ngFor="let usr of round.exercisesMainUser">
+                    {{usr}}
+                </h3>
+              </div>  
+              <mat-list-item *ngFor="let exercise of round.exercices">                
+                <h4 mat-line>{{exercise.title}}</h4>
+                <mat-icon mat-list-icon>accessibility_new</mat-icon>
+                <p mat-line> {{round.drillsDuration }}s </p>
+              </mat-list-item>
+            </div>
+            <div class="exercise-list-alt" *ngFor="let excAlt of round.exercisesAlternatives">
+                <h3 cmat-subheader *ngFor="let user of excAlt.users">
+                  {{user}}
+                </h3>
+                <mat-list-item *ngFor="let exercise of excAlt.exercises">
+                  <h4 mat-line>{{exercise.title}}</h4>
+                  <mat-icon mat-list-icon>accessibility_new</mat-icon>
+                  <p mat-line> {{round.drillsDuration }}s </p>
+                </mat-list-item>
+            </div>
+          </div>
         </mat-list>
       </mat-card>
     </div>

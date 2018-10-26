@@ -259,7 +259,7 @@ export class SessionRunComponent implements OnInit {
 
 
     }
-    debugger;
+  
 
 
   }
@@ -389,7 +389,7 @@ export class SessionRunComponent implements OnInit {
 
   nextExercise(event:string){
 
-    debugger;
+    
 
 //end of the session 
   	if ( this.currentExercise.round == this.session.round.length -1 && this.currentExercise.exercise == this.session.round[this.currentExercise.round].exercices.length-1 && this.currentExercise.repeat == this.session.round[this.currentExercise.round].repeat){

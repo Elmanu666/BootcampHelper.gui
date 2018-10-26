@@ -121,9 +121,11 @@ export class SessionListComponent implements OnInit {
 
   sessionJump(id:Session['_id']){
 
+   
+
     this.path == 'edit' ? this.router.navigate(['/session/edit/'+id]):'';
-    this.path == 'view' ? this.router.navigate(['/session/detail/'+id]):'';
-    this.path == 'list' ? this.router.navigate(['/session/view/'+id]):'';
+    this.path == 'detail' ? this.router.navigate(['/session/detail/'+id]):'';
+    this.path == 'list' ? this.router.navigate(['/session/detail/'+id]):'';
 
   }
 

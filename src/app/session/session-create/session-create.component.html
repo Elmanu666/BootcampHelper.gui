@@ -25,7 +25,7 @@
     		  			<mat-datepicker #picker></mat-datepicker>
     			</mat-form-field>
     		</mat-grid-tile>
-      		<mat-grid-tile>
+      	<mat-grid-tile>
       			<mat-form-field>
       				<mat-select placeholder="Participants" [(ngModel)]="newSession.attendees" multiple name="newSession.attendees">
         			<mat-option *ngFor="let user of users" [value]="user">{{user}}</mat-option>
@@ -49,89 +49,94 @@
       <mat-step [stepControl]="secondFormGroup">
 
           <ng-template matStepLabel>Configure rounds</ng-template>
-          	
-    			<mat-accordion *ngFor="let round of newSession.round; let i =index" >
-    			  <mat-expansion-panel>
-    			    <mat-expansion-panel-header>
-    			      <mat-panel-title>
-    			          	<mat-form-field>
-            					<input matInput placeholder="Round title"   [(ngModel)]="round.title" name="roundTitle{{i}}">
-          					</mat-form-field>
-    			      </mat-panel-title>
- 
-    			    </mat-expansion-panel-header>
-                <div>
-      		  			<mat-form-field >
-      		    			<input matInput type="number" placeholder="number of repeat" [(ngModel)]="round.repeat" min="1" max="20" name="round.repeat">
-      		    			<mat-error *ngIf="round.repeat < 1 || round.repeat > 8 ">Min nb: 1</mat-error>
-      		  			</mat-form-field>
+          	<div class="accordion"  >
+              <div class="card" *ngFor="let round of newSession.round; let i =index" >
+                <div class="card-header" >
+                  <h5 class="mb-0">
+                        <mat-form-field>
+                        <input matInput placeholder="Round title"   [(ngModel)]="round.title" name="roundTitle{{i}}">
+                      </mat-form-field>
+                  </h5>
+                  <i (click)="roundChange(i)" class="fa" [ngClass]="{'active':activAccordion == i, 'inActive': activAccordion != i}"></i>
+                </div >
+                <div class="card-body" [@cardBody] *ngIf="activAccordion == i" [ngClass]="{'accordion-inactive': activAccordion != i}">
+                  <div class="rounds-container">
+                    <mat-form-field >
+                      <input matInput type="number" placeholder="number of repeat" [(ngModel)]="round.repeat" min="1" max="20" name="round.repeat">
+                      <mat-error *ngIf="round.repeat < 1 || round.repeat > 8 ">Min nb: 1</mat-error>
+                    </mat-form-field>
 
-      		  			<mat-form-field >
-      		    			<input matInput type="number" placeholder="drills duration" [(ngModel)]="round.drillsDuration" min="1" max="90" name="round.drillsDuration">
-      		    			<mat-error *ngIf="round.drillsDuration < 10 || round.drillsDuration > 90 ">Min nb: 1</mat-error>
-      		  			</mat-form-field>
-      		  			<mat-form-field >
-      		    			<input matInput type="number" placeholder="rest duration" [(ngModel)]="round.restDuration" min="1" max="20" name="round.restDuration">
-      		    			<mat-error *ngIf="round.restDuration < 5 || round.restDuration > 20 ">Min nb: 1</mat-error>
-      		  			</mat-form-field>
-      		  			<mat-form-field >
-      		    			<input matInput type="number" placeholder="number of exercises" (change)="updateExercisesNumber(i)" [(ngModel)]="round.exercisesNumber" min="0" max="20" name="round.exercisesNumber">
-      		    			<mat-error *ngIf="round.exercisesNumber < 1 || round.exercisesNumber > 10 ">Min nb: 1</mat-error>
-      		  			</mat-form-field>
-                </div>
-                <div *ngFor="let exercise of round.exercices; let j =index">
-          		  	<mat-form-field >
-        						<mat-select placeholder="Exercises"  [(ngModel)]="round.exercices[j]" name="exercise-{{j}}">
-          				    <mat-option *ngFor="let a of exercisesList; let v =index" [value]="a" >{{a.title}}</mat-option> 
-        						</mat-select>
-      					</mat-form-field>
-              </div>
-
-              <div class="round-configurator">
-                <div class="exercise-selector" >
-                  <div class="exercise-items" *ngFor="let exercise of exercisesList" draggable="true"  (dragstart)="dragStart($event, exercise._id)" >
-                    <div class="exercise-info">
-                                          {{exercise.title}}
-
-
-                    </div>
+                    <mat-form-field >
+                      <input matInput type="number" placeholder="drills duration" [(ngModel)]="round.drillsDuration" min="1" max="90" name="round.drillsDuration">
+                      <mat-error *ngIf="round.drillsDuration < 10 || round.drillsDuration > 90 ">Min nb: 1</mat-error>
+                    </mat-form-field>
+                    <mat-form-field >
+                      <input matInput type="number" placeholder="rest duration" [(ngModel)]="round.restDuration" min="1" max="20" name="round.restDuration">
+                      <mat-error *ngIf="round.restDuration < 5 || round.restDuration > 20 ">Min nb: 1</mat-error>
+                    </mat-form-field>
+                    <mat-form-field >
+                      <input matInput type="number" placeholder="number of exercises" (change)="updateExercisesNumber(i)" [(ngModel)]="round.exercisesNumber" min="0" max="20" name="round.exercisesNumber">
+                      <mat-error *ngIf="round.exercisesNumber < 1 || round.exercisesNumber > 10 ">Min nb: 1</mat-error>
+                    </mat-form-field>
                   </div>
-                </div>
-                <div class="rounds-container">
-                  <div class="exercise-selected dropzone" [ngClass]="dropAreaClass" (dragover)="dragOver($event)"  (dragleave)="dragLeave($event)" (drop)="drop($event)">
-                      <div class="exercise-dropzone-area">
+                  <div class="round-configurator">
+                    <div class="exercise-selector-container">
+                      <div class="exercise-selector-header">
+                        <h6>Exercises selector :</h6>
+                        <span>Drag and drop to the rigth panel</span>
+                      </div>
+                      <div class="exercise-selector list-group" >
+                        <ul>
+                          <li class="exercise-items list-group-item" *ngFor="let exercise of exercisesList" draggable="true"  (dragstart)="dragExercise($event, exercise._id)"  (dragend)="dropExercise($event, exercise._id)">
+                                                  {{exercise.title}}
+                          </li>
+                        </ul>
+                      </div>
+                      </div>
+                    <div class="rounds-exercises-container">
+                      <div class="header exercise-selector-header">
+                        <button type="button" (click)="addAlternative(i)" class="btn btn-success btn-sm"><i class="fas fa-plus"></i></button>
+                        <span *ngFor="let user of round.exercisesMainUser">{{user}}</span>
+                      </div>
+                      <div class="exercise-selected dropzone" [ngClass]="dropAreaClass" (dragover)="dragOver($event)"  (dragleave)="dragLeave($event)" (drop)="drop($event, i, 'main', 0)">
+                          <ul appSortableList (sort)="sort($event, i, 'main', 0) ">
+                            <li class="exerciseItemsSelected box" *ngFor="let exec of round.exercices; let v=index" appSortable>
+                              <i class="fas fa-bars"  appDraggableHandler></i>
+                              {{exec.title}} 
+                              <i class="fas fa-times delete" (click)="deleteExerciseSelected(i, v, 'main', 0)"></i>
+                              <div class="box" *appDraggableHelper>{{exec.title}}</div>
+                          </li>
+                          </ul>
                       </div>
 
-                      <ul appSortableList (sort)="sort($event) ">
-                        <li class="exerciseItemsSelected box" *ngFor="let exec of round.exercices" appSortable>
-                        {{exec.title}}
-                          <div class="box" *appDraggableHelper>{{exec.title}}</div>
-                      </li>
-                      </ul>
-              </div>
-                </div>
-<!--                 <div class="rounds-container">
-                  <div class="rounds" *ngFor="let rd of newSession.round; let i=index" >
-                    <div class="form-group" >
-                      <label for="repeat">Number of repeat</label>
-                      <input type="number" class="form-control" id="repeat"  [(ngModel)]="rd.repeat">
+                    </div>
+                    <div class="rounds-exercises-container" *ngFor="let exAlt of round.exercisesAlternatives; let j = index" >
+                        <div class="header exercise-selector-header" >
+                          <mat-form-field>
+                            <mat-select placeholder="Participants" [(ngModel)]="newSession.round[i].exercisesAlternatives[j].users" multiple name="newSession.attendees" (selectionChange)="altUserSelection($event, {'round': i, 'exrAlt': j})">
+                            <mat-option *ngFor="let user of newSession.attendees" [value]="user">{{user}}</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                          <button type="button" (click)="deleteExercisesAlternatives(i,j)" class="btn btn-success btn-sm"><i class="far fa-trash-alt"></i></button>
+                        </div>
+                        <div class="exercise-selected dropzone" [ngClass]="dropAreaClass" (dragover)="dragOver($event)"  (dragleave)="dragLeave($event)" (drop)="drop($event, i, 'alt', j)">
+                            <ul appSortableList (sort)="sort($event, i, 'alt', j) ">
+                              <li class="exerciseItemsSelected box" *ngFor="let execAlt of exAlt.exercises; let v =index" appSortable>
+                                <i class="fas fa-bars"  appDraggableHandler></i>
+                                {{execAlt.title}} 
+                                <i class="fas fa-times delete" (click)="deleteExerciseSelected(i, v, 'alt', j)"></i>
+                                <div class="box" *appDraggableHelper>{{execAlt.title}}</div>
+                            </li>
+                            </ul>
+                        </div>             
+                      
                     </div>
 
-                    <div class="form-group" >
-                      <label for="drillsDuration">Rest Duration</label>
-                      <input type="number" class="form-control" id="restDuration" [(ngModel)]="rd.restDuration">
-                    </div>
-                    <div class="form-group" >
-                      <label for="drillsDuration">Drill Duration</label>
-                      <input type="number" class="form-control" id="drillsDuration" [(ngModel)]="rd.drillsDuration">
-                    </div>
-                    
                   </div>
-                </div> -->
-              </div>
+                </div>
+              </div >
+          </div>
 
-    			  </mat-expansion-panel>
-    			</mat-accordion>
           <div>
             <button mat-button matStepperPrevious>Back</button>
             <button mat-button matStepperNext>Next</button>

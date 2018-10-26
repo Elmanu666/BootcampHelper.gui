@@ -10,7 +10,10 @@ class round {
     	drillsDuration : number;
     	restDuration : number;
         repeat:number;
-    	exercices : [Exercise];
+        exercices : [Exercise];
+        exercisesAlternatives : [{'users': [string], 'exercises': Exercise}];
+        exercisesMainUser : [string];
+    	
 
 
     	constructor (){
@@ -22,7 +25,9 @@ class round {
     		this.restDuration = 10;
     		this.repeat=3;
     		this.exercices = [new Exercise()];
-
+            this.exercisesAlternatives = new Array();
+            this.exercisesAlternativesUsers = new Array();
+            this.exercisesMainUser = new Array();
 
        	}
 
