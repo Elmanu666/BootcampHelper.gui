@@ -31,7 +31,7 @@ export class SortableListDirective implements AfterContentInit {
 
   @Output() sort = new EventEmitter<SortEvent>();
 
-  private sortablesOld : QueryList<ElementRef>;
+  private sortablesOld : QueryList<SortableDirective>;
 
   private clientRects: ClientRect[];
 
@@ -106,7 +106,7 @@ export class SortableListDirective implements AfterContentInit {
 
   private updateSortablesOld(){
 
-    this.sortablesOld = this.sortables.map(rslt => rslt)
+    this.sortablesOld = this.sortables
 
 
   }

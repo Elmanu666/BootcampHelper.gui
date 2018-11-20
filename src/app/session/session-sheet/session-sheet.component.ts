@@ -44,41 +44,7 @@ export class SessionSheetComponent implements OnInit {
   }
 
 
-  // defineUserMainExercise(){
 
-  //   var sessionTmp = this.session.round.map(rd =>{
-  //           if (rd.exercisesAlternatives.length > 0){
-  //             var users = new Array();
-
-  //             rd.exercisesAlternatives.forEach(excAlt =>
-  //               excAlt.users.forEach(user=>
-
-  //                 users.push(user)
-  //                 )
-
-  //               )
-  //             var userMain = this.session.attendees.filter(attendee =>{
-
-  //                  return !(users.include(attendee))
-  //             }
-
-             
-  //               )
-
-  //           rd.userMainExercises = userMain;
-  //           }
-
-
-
-  //             return rd;
-      
-
-  //         }
-    
-
-
-  //     )
-  }
 
 
 }

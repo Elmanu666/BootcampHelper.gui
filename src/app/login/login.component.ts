@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { userService } from '../services/user.service';
+import { UserService } from '../services/user.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { authService } from '../services/auth.service';
 import { Router } from '@angular/router';
@@ -18,7 +18,7 @@ export class loginComponent implements OnInit {
   public showInputErrors = false;
 
   constructor(
-    private api: userService,
+    private api: UserService,
     private auth: authService,
     private fb: FormBuilder,
     private router: Router

@@ -10,23 +10,22 @@ class round {
     	drillsDuration : number;
     	restDuration : number;
         repeat:number;
-        exercices : [Exercise];
-        exercisesAlternatives : [{'users': [string], 'exercises': Exercise}];
-        exercisesMainUser : [string];
+        exercices : Exercise[];
+        exercisesAlternatives : {'users': string[], 'exercises': Exercise[]}[];
+        exercisesMainUser : string[];
     	
 
 
     	constructor (){
 
 
-    		this.title = "A modifer";
+    		this.title = "A modifier";
     		this.exercisesNumber = 1;
     		this.drillsDuration = 50;
     		this.restDuration = 10;
     		this.repeat=3;
     		this.exercices = [new Exercise()];
             this.exercisesAlternatives = new Array();
-            this.exercisesAlternativesUsers = new Array();
             this.exercisesMainUser = new Array();
 
        	}

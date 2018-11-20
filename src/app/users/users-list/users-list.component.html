@@ -1,3 +1,32 @@
-<p>
-  users-list works!
-</p>
+<div class="">
+	<div [ngClass]="{'col-md-10': path == 'list', 'result': path != 'list'}">
+		<table class="table table-hover" *ngIf="usersListSliced">
+			<thead class="thead-dark bg-primary">
+				<tr>
+			      <th>User Name</th>
+	              <th>Name</th>
+	              <th>familyName</th>
+	              <th>Date of birth</th>        
+	              <th>sex</th>        
+	              <th>Wrigth</th>    
+	              <th>Height</th>    
+  
+			    </tr>        
+			</thead>
+			<tbody [@tableLine]="usersListSliced.length">
+				<tr (click)="jumpToUser(user._id)" *ngFor="let user of usersListSliced ; let i =index" id={{i}}>
+					<td>{{user.username}}</td>
+		            <td>{{user.name}}</td>
+		            <td>{{user.familyName}}</td>
+		            <td>{{user.dateOfBirth}}</td>
+		            <td>{{user.sex}}</td>
+		            <td>{{user.weigth}}</td>
+		            <td>{{user.height}}</td>
+
+		             
+				</tr> 
+	      	</tbody>
+		</table>
+		<app-pager *ngIf="pagesInfo.totalPages > 1" currentPage="pagesInfo.currentPage" totalPages="pagesInfo.totalPages"></app-pager>
+	</div>
+</div>

@@ -96,32 +96,13 @@ export class MaterialCreateComponent {
 
 			this.route.snapshot.routeConfig.path.slice(0,6) == 'detail' ? this.view = true: this.view = false;
 			this.path = this.route.snapshot.routeConfig.path.split("/")[0];
-
-			console.log('view : '+ this.view);
-			console.log(this.path);
-
-
 		 	this.materialSize=['XXS','XS','S', 'M', 'L', 'XL', 'XXL'];
-
 		 	this.materialType=this.materialTypeService.getMaterialType();
-
-
 		  	this.route.snapshot.paramMap.get('id') ? this.id =  this.route.snapshot.paramMap.get('id') : this.id = null;
 		  	
-
-
-
-
-
-
-
-
-
 		  	if (this.id == null){
 
 		  		this.material = new Material();
-		  		
-		  	//	this.createFormControls();
 		  		this.createFormControls();
 		  		this.formInit();
 		  		this.ready = true;
@@ -134,32 +115,17 @@ export class MaterialCreateComponent {
 		  		.subscribe(material => {
 
         			this.material = material;
-        			console.log(material),
-        			
         			this.createFormControls();
-        			this.formInit();
-       
+        			this.formInit();       
         			this.getImage(this.material._id);
         			this.ready=true;
-
-
-
-
       				})
-
- 
-
-
 		  	}
-
-
-
 	}
 
 
 
 	createFormControls(){
-
 		this.title = new FormControl({value:this.material.title, disabled:this.view}, [Validators.required, Validators.minLength(5)]);
 		this.type = new FormControl({value:this.material.type, disabled: this.view}, Validators.required);
 		this.description = new FormControl({value:this.material.description, disabled: this.view}, Validators.required);
@@ -168,27 +134,22 @@ export class MaterialCreateComponent {
 		this.size = new FormControl({value:this.material.size, disabled: this.view});
 		this.strength = new FormControl({value:this.material.strength, disabled: this.view});
 		this.quantity = new FormControl({value:this.material.quantity, disabled: this.view}, Validators.required);
-
-
-
 	}
 
 
 	formInit(){
 
-		  	this.materialForm = new FormGroup({
-		        title: this.title,
-		        type : this.type,
-		        description : this.description,
-		        weigth : this.weigth,
-		        length : this.length,
-		        size : this.size,
-		        quantity : this.quantity,
-		        strength : this.strength,
-		    });
+	  	this.materialForm = new FormGroup({
+	        title: this.title,
+	        type : this.type,
+	        description : this.description,
+	        weigth : this.weigth,
+	        length : this.length,
+	        size : this.size,
+	        quantity : this.quantity,
+	        strength : this.strength,
+	    });
 		
-
-
 
 	}
 

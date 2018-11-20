@@ -1,3 +1,11 @@
-<p>
-  users-create works!
-</p>
+<div class="container" *ngIf="ready">
+	<div class="row">
+		<div class="col-md-6">
+			<h1>User</h1>
+			<app-dynamic-form [questions]="questionsUsers" (saveForm)="userSave($event)" [disable]="viewMode"></app-dynamic-form>
+		</div>
+		<div class="col-md-6">
+		</div>
+	</div>
+</div>
+

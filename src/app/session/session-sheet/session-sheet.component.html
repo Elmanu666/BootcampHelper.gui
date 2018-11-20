@@ -26,8 +26,8 @@
         </div>
 
         <div class="exercise-list-alt" *ngFor="let excAlt of round.exercisesAlternatives">
-          <h5 cmat-subheader *ngFor="let user of round.exercisesMainUser">
-                <i *ngFor="let user of round.exercisesMainUser">{{user}}</i>
+          <h5 cmat-subheader>
+                <i *ngFor="let user of excAlt.users">{{user}}</i>
           </h5>
             <mat-list-item *ngFor="let exercise of excAlt.exercises">
               <h4 mat-line>{{exercise.title}}</h4>

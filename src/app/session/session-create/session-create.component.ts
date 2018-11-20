@@ -1,24 +1,20 @@
 import { Component, OnInit, ViewContainerRef, ViewChild } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import Session from '../../models/session.model';
-import Round from '../../models/round.model';
+import { trigger, state, style, animate, transition, query, stagger } from '@angular/animations';
+import { Router, ActivatedRoute } from '@angular/router';
+
 import { ToastrService } from 'ngx-toastr';
 import { SessionDisplayComponent } from '../session-display/session-display.component';
-import { Router, ActivatedRoute } from '@angular/router';
-import {
-  trigger,
-  state,
-  style,
-  animate,
-  transition,
-  query,
-  stagger,
-} from '@angular/animations';
 
 
 
+import { UserService } from '../../services/user.service';
 import { ExerciseService } from '../../services/exercise.service';
 import { SessionService } from '../../services/session.service';
+
+import Session from '../../models/session.model';
+import Round from '../../models/round.model';
+//import User from '../../models/user.model';
 import Exercise from '../../models/exercise.model';
 
 function remove(item: string, list: string[]) {
@@ -44,22 +40,26 @@ function remove(item: string, list: string[]) {
 
         ],
 })
+
+
 export class SessionCreateComponent implements OnInit {
 
 
 
-  @ViewChild('stepper') stepper;
 
-	isLinear = false;
-	users = ['Manu', 'Charly'];
-	roundNb = 1;
+
+	isLinear:boolean = false;
+	users : any[];
+	roundNb :number = 1;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
-  public newSession: Session;
+  newSession: Session;
   exercisesList: Exercise[];
   loaded: boolean = false;
   dropAreaClass : string;
   activAccordion:number;
+
+  @ViewChild('stepper') stepper;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -68,6 +68,7 @@ export class SessionCreateComponent implements OnInit {
     private sessionService: SessionService,
     private router: Router,
     private route: ActivatedRoute,
+    private userService :UserService,
 
 
 
@@ -76,6 +77,13 @@ export class SessionCreateComponent implements OnInit {
   id : string;
 
   ngOnInit() {
+
+    this.userService.getUsers()
+      .subscribe(users =>{
+        this.users = users;
+
+
+      })
 
    this.activAccordion = 0;
    this.id = this.route.snapshot.paramMap.get('id') ? this.route.snapshot.paramMap.get('id') : "create";
@@ -148,12 +156,12 @@ export class SessionCreateComponent implements OnInit {
 
       })
 
-      this.newSession.round[idRound].exercisesAlternatives[exAltId] = tmp;
+      this.newSession.round[idRound].exercisesAlternatives[exAltId].exercises = tmp;
 
     }
   }
 
-  sort(event: SortEvent, roundId:number, type:string, excAltId:number) {
+  sort(event: any, roundId:number, type:string, excAltId:number) {
    
    if(type ==='main'){
     const current = this.newSession.round[roundId].exercices[event.currentIndex];
@@ -215,17 +223,7 @@ export class SessionCreateComponent implements OnInit {
 
       
       var newRound =  new Round();
-     
-        // roundtype[0]['title']="A modifier";
-        // roundtype[0]['exercisesNumber'] = 0;
-        // roundtype[0]['drillsDuration'] = 0;
-        // roundtype[0]['restDuration'] = 0;
-        // roundtype[0]['repeat']=0;
-        // roundtype[0]['exercices']=[""];
-
-
-
-        this.newSession.round.push(newRound);    
+      this.newSession.round.push(newRound);    
   }
 
   sessionSave(){
@@ -274,22 +272,67 @@ export class SessionCreateComponent implements OnInit {
     event.preventDefault();
     event.stopPropagation();
     
+    
     if(type == 'main'){
       for (var i = 0 ; i < this.exercisesList.length; i++){
 
-        this.exercisesList[i]._id == event.dataTransfer.getData("_id") ?   ( this.newSession.round[id].exercices.length < 1 ? this.newSession.round[id].exercices[0] = this.exercisesList[i] :  this.newSession.round[id].exercisesNumber > this.newSession.round[id].exercices.length ? this.newSession.round[id].exercices.push(this.exercisesList[i]) : this.newSession.round[id].exercices[this.newSession.round[id].exercices.length-1] = this.exercisesList[i]):'';
+//        this.exercisesList[i]._id == event.dataTransfer.getData("_id") ?   ( this.newSession.round[id].exercices.length < 1 ? this.newSession.round[id].exercices[0] = this.exercisesList[i] :  this.newSession.round[id].exercisesNumber > this.newSession.round[id].exercices.length ? this.newSession.round[id].exercices.push(this.exercisesList[i]) : this.newSession.round[id].exercices[this.newSession.round[id].exercices.length-1] = this.exercisesList[i]):'';
+        this.exercisesList[i]._id == event.dataTransfer.getData("_id") ?  this.addExercise(this.exercisesList[i], id, type, idAtl) :'';
       }
 
     }
     else if(type=='alt'){
        for (var i = 0 ; i < this.exercisesList.length; i++){
-              this.exercisesList[i]._id == event.dataTransfer.getData("_id") ?   ( this.newSession.round[id].exercisesAlternatives[idAtl].exercises.length < 1 ? this.newSession.round[id].exercisesAlternatives[idAtl].exercises[0] = this.exercisesList[i] :  this.newSession.round[id].exercisesNumber > this.newSession.round[id].exercisesAlternatives[idAtl].exercises.length ? this.newSession.round[id].exercisesAlternatives[idAtl].exercises.push(this.exercisesList[i]) : this.newSession.round[id].exercisesAlternatives[idAtl].exercises[this.newSession.round[id].exercisesAlternatives.length-1] = this.exercisesList[i]):'';
-         }
+              this.exercisesList[i]._id == event.dataTransfer.getData("_id") ?   this.addExercise(this.exercisesList[i], id, type, idAtl) :''
+        }
 
     }
 
 
     this.dropAreaClass = 'dropOut';
+  }
+
+  addExercise(exercise:Exercise, id : number, type: string, idAtl : number){
+
+    //try to find the first empty exercise in the list
+
+    var successed = false
+
+    if (type=='main'){
+      for (var i=0; i< this.newSession.round[id].exercices.length; i++){
+        if (this.newSession.round[id].exercices[i].title== '' && successed == false){
+
+            this.newSession.round[id].exercices[i]=exercise;
+            successed = true;
+            break;
+
+        }
+      }
+
+    }
+    // in case all exercise has been already selected we swap with the last one in the list
+    if (type=='alt'){
+      for (var i=0; i< this.newSession.round[id].exercisesAlternatives[idAtl].exercises.length; i++){
+        if (this.newSession.round[id].exercisesAlternatives[idAtl].exercises[i].title== '' && successed == false){
+
+            this.newSession.round[id].exercisesAlternatives[idAtl].exercises[i]=exercise;
+            successed = true;
+            break;
+
+        }
+      }
+
+    }
+
+
+    if (successed == false){
+      type == 'main' ? this.newSession.round[id].exercices[this.newSession.round[id].exercices.length - 1]=exercise : this.newSession.round[id].exercisesAlternatives[idAtl].exercises[this.newSession.round[id].exercisesAlternatives[idAtl].exercises.length -1]=exercise;
+
+    }
+
+  //  this.newSession.round[id].exercices.length < 1 ? this.newSession.round[id].exercices[0] = this.exercisesList[i] :  this.newSession.round[id].exercisesNumber > this.newSession.round[id].exercices.length ? this.newSession.round[id].exercices.push(this.exercisesList[i]) : this.newSession.round[id].exercices[this.newSession.round[id].exercices.length-1] = this.exercisesList[i]):'';
+
+
   }
 
   drag(event : any){
@@ -306,7 +349,7 @@ export class SessionCreateComponent implements OnInit {
     event.target.classList.add('active'); 
   }
 
-  dropExercise(){
+  dropExercise(event : any){
 
     
     event.target.classList.remove('active'); 
@@ -324,12 +367,12 @@ export class SessionCreateComponent implements OnInit {
     // typeof this.newSession.round[id].exercisesAlternatives =='undefined' ? this.newSession.round[id].exercisesAlternatives = new Array() :"";
     // typeof this.newSession.round[id].exercisesAlternativesUsers =='undefined' ? this.newSession.round[id].exercisesAlternativesUsers = new Array() :"";
     typeof this.newSession.round[id].exercisesAlternatives =='undefined' ? this.newSession.round[id].exercisesAlternatives = new Array() :"";
-    this.newSession.round[id].exercisesAlternatives.length >= this.newSession.attendees.length-1 ? this.toastr.warning('Max exercises alternatives per round reached' , {timeOut: 2000}) : this.addAlternativeToRound(id); 
+    this.newSession.round[id].exercisesAlternatives.length >= this.newSession.attendees.length-1 ? this.toastr.warning('Max exercises alternatives per round reached' , 'warning !', {timeOut: 2000}) : this.addAlternativeToRound(id); 
   }
 
   addAlternativeToRound(id){
     if (this.newSession.round[id].exercisesAlternatives.length==0){
-        this.newSession.round[id].exercisesAlternatives[0] = new Array();
+    //    this.newSession.round[id].exercisesAlternatives[0] = new Array();
         this.newSession.round[id].exercisesAlternatives[0] = { 'users' : new Array(), 'exercises' : new Array()};
         this.newSession.round[id].exercices.map(exc =>
             {
@@ -338,7 +381,7 @@ export class SessionCreateComponent implements OnInit {
     }
     else {
       var lt = this.newSession.round[id].exercisesAlternatives.length;
-      this.newSession.round[id].exercisesAlternatives[lt] = new Array();
+    //  this.newSession.round[id].exercisesAlternatives[lt] = new Array();
       this.newSession.round[id].exercisesAlternatives[lt] = { 'users' : new Array(), 'exercises' : new Array()};
       this.newSession.round[id].exercices.map(exc =>  {
             this.newSession.round[id].exercisesAlternatives[lt].exercises.push(exc);
@@ -350,14 +393,15 @@ export class SessionCreateComponent implements OnInit {
   deleteExercisesAlternatives(roundId:number,excAAltId:number){
     if (this.newSession.round[roundId].exercisesAlternatives.length==1){
       this.newSession.round[roundId].exercisesAlternatives = new Array();
-      this.newSession.round[roundId].exercicesMainUser = new Array();
+      this.newSession.round[roundId].exercisesMainUser = new Array();
     }
     else {
-      var t = this.newSession.round[roundId].exercisesAlternatives.filter(exc=>{
+      var t = new Array();
+      t = this.newSession.round[roundId].exercisesAlternatives.filter(exc=>{
        !(exc.exercises == this.newSession.round[roundId].exercisesAlternatives[excAAltId].exercises);
       });
       this.newSession.round[roundId].exercisesAlternatives = t ;
-      this.defineMainExerciseUser()
+      this.defineMainExerciseUser(roundId)
     }
   }
 
@@ -375,9 +419,54 @@ export class SessionCreateComponent implements OnInit {
         return !(this.newSession.round[roundId].exercisesAlternatives.map(exrcAlt=>{
           exrcAlt.users.includes(attendee)
         }))
-      this.newSession.round[roundId].exercisesMainUser = att;  
+
       })
+      this.newSession.round[roundId].exercisesMainUser = att;  
     }
+  }
+
+  setRoundPreconfiguration(event:any, id:number){
+    debugger;
+
+    switch(event.value){
+
+      case 1:{
+        this.newSession.round[id].drillsDuration = 30;
+        this.newSession.round[id].restDuration  = 5;
+        this.newSession.round[id].repeat  = 3;
+        this.newSession.round[id].exercisesNumber  = 7;
+        this.updateExercisesNumber(id);
+        this.newSession.round[id].title  == '' || 'A modifier' || 'Warm up' || 'Round' || 'Warm down' ? this.newSession.round[id].title  = 'Warm up': '';
+        break;
+
+      }
+
+      case 2:{
+        this.newSession.round[id].drillsDuration = 50;
+        this.newSession.round[id].restDuration  = 10;
+        this.newSession.round[id].repeat  = 3;
+        this.newSession.round[id].exercisesNumber  = 3;
+        this.updateExercisesNumber(id);
+        this.newSession.round[id].title  == '' || 'A modifier' || 'Warm up' || 'Round' || 'Warm down' ? this.newSession.round[id].title  = 'Round': '';
+        break;
+
+      }
+
+      case 3:{
+        this.newSession.round[id].drillsDuration = 30;
+        this.newSession.round[id].restDuration  = 5;
+        this.newSession.round[id].repeat  = 3;
+        this.newSession.round[id].exercisesNumber  = 3;
+        this.updateExercisesNumber(id);
+        this.newSession.round[id].title  == '' || 'A modifier' || 'Warm up' || 'Round' || 'Warm down' ? this.newSession.round[id].title  = 'Warm down': '';
+        break;
+
+      }
+
+
+    }
+
+
   }
 
 }

@@ -28,7 +28,7 @@
       	<mat-grid-tile>
       			<mat-form-field>
       				<mat-select placeholder="Participants" [(ngModel)]="newSession.attendees" multiple name="newSession.attendees">
-        			<mat-option *ngFor="let user of users" [value]="user">{{user}}</mat-option>
+        			<mat-option *ngFor="let user of users" [value]="user.username">{{user.username}}</mat-option>
       				</mat-select>
     			</mat-form-field>
     		</mat-grid-tile>
@@ -57,6 +57,17 @@
                         <input matInput placeholder="Round title"   [(ngModel)]="round.title" name="roundTitle{{i}}">
                       </mat-form-field>
                   </h5>
+                  <mat-form-field>
+                    <mat-select placeholder="PreConfigurer" name="PreConfigurer" (selectionChange)="setRoundPreconfiguration($event, i)">
+                      <mat-option [value]="0">- None -</mat-option>
+                      <mat-option [value]="1">Warm up</mat-option>
+                      <mat-option [value]="2">Round</mat-option>
+                      <mat-option [value]="3">Warm down</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+
+
                   <i (click)="roundChange(i)" class="fa" [ngClass]="{'active':activAccordion == i, 'inActive': activAccordion != i}"></i>
                 </div >
                 <div class="card-body" [@cardBody] *ngIf="activAccordion == i" [ngClass]="{'accordion-inactive': activAccordion != i}">

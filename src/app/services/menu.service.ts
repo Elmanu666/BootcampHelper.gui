@@ -36,7 +36,11 @@ export class MenuService {
               {'title':'Session', 'section':'' , 'link':'session', 'icon': null, 'detail': 'blabla', 'size':2, 'line':0, 'color': 'grey','ico':'fas fa-globe', 'state': 'inactive'},
               {'title':'Material','section':'', 'link':'material', 'icon': null, 'detail': 'blabla', 'size':2,  'line':1, 'color': 'grey','ico':'fas fa-warehouse', 'state': 'inactive'},
               {'title':'User', 'section':'' , 'link':'user', 'icon': null, 'detail': 'blabla', 'size':2, 'line':1, 'color': 'blue','ico':'fas fa-users', 'state': 'inactive'},
-          
+              {'title':'Edit', 'section':'user', 'link':'edit', 'icon': null, 'detail': 'blabla', 'size':2, 'line':0, 'color':'blue', 'ico':'fas fa-dumbbell', 'state': 'inactive'},
+              {'title':'List', 'section':'user','link':'list', 'icon': null, 'detail': 'blabla', 'size':2, 'line':0, 'color': 'grey', 'ico':'far fa-list-alt', 'state': 'inactive'},
+              {'title':'View','section':'user', 'link':'detail', 'icon': null, 'detail': 'blabla', 'size':2,  'line':1, 'color': 'blue','ico':'far fa-eye', 'state': 'inactive'},
+              {'title':'Create', 'section':'user' , 'link':'create', 'icon': null, 'detail': 'blabla', 'size':2, 'line':1, 'color': 'grey','ico':'far fa-plus-square', 'state': 'inactive'},
+           
           ]
 
        }

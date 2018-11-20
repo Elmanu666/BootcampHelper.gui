@@ -1,0 +1,20 @@
+<div [formGroup]="form" class="form-group" [ngClass]="{'view' : disable}">
+  <label [attr.for]="question.key" >{{question.label}} </label>
+ 
+  <div [ngSwitch]="question.controlType">
+ 
+    <input *ngSwitchCase="'textbox'" [formControlName]="question.key" [id]="question.key" [type]="question.type" class="form-control">
+ 
+    <select [id]="question.key" *ngSwitchCase="'dropdown'" [formControlName]="question.key" class="form-control">
+      <option *ngFor="let opt of question.options" [value]="opt.key">{{opt.value}}</option>
+    </select>
+
+<!--     <input *ngSwitchCase="'simpleRange'" type="range" class="custom-range" min="{{question.options.min}}" max="{{question.options.max}}" step="{{question.options.step}}" [id]="question.key" [formControlName]="question.key">     -->
+	<ion-range-slider  *ngSwitchCase="'simpleRange'" [min]="question.options.min" [max]="question.options.max"  [from]="question.value" grid="true" [step]="question.options.step" [id]="question.key"  [from]="question.value"  (onFinish)="rangeValueUpdate($event)"></ion-range-slider>
+<!-- 	<input *ngSwitchCase="'simpleRange'" class="hidden-input" [formControlName]="question.key" [id]="question.key" [type]="question.type" class="form-control"> -->
+
+ 
+  </div> 
+ 
+  <div class="errorMessage" *ngIf="!isValid && !disable">{{question.label}} is required</div>
+</div>

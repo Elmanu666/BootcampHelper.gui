@@ -1,0 +1,13 @@
+<div>
+  <form (ngSubmit)="onSubmit()" [formGroup]="form">
+ 
+    <div *ngFor="let question of questions" class="form-group">
+      <app-question [question]="question" [form]="form" [disable]="disable"></app-question>
+    </div>
+ 
+    <div class="form-row" *ngIf="!disable">
+      <button type="submit" [disabled]="!form.valid" ngClass="{'btn-success':form.valid , 'disabled':!form.valid}">Save</button>
+    </div>
+  </form>
+ 
+</div>

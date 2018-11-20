@@ -24,7 +24,7 @@ import { ExerciseService } from './services/exercise.service';
 import { PagerService } from './services/pages.service';
 import { FileService } from './services/file.service';
 import { authService } from './services/auth.service';
-import { userService } from './services/user.service';
+import { UserService } from './services/user.service';
 import { SessionService } from './services/session.service';
 import { userSessionService } from './services/userSession.service';
 import { MaterialTypeService } from './services/materialType.service';
@@ -43,7 +43,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { ExerciseModule } from './exercise/exercise.module';
 import { SessionModule } from './session/session.module';
 import { MaterialModule } from './material/material.module';
-
+import { UsersModule } from './users/users.module';
+        
 
 
 //Component
@@ -87,6 +88,7 @@ import {SharedModule} from './common/sharedComponent.module'
     SessionModule,
     ExerciseModule,
     MaterialModule,
+    UsersModule,
     AppRoutingModule,
     BrowserModule,
     UiSwitchModule,
@@ -116,7 +118,7 @@ import {SharedModule} from './common/sharedComponent.module'
 
     ],
 
-  providers: [MenuService, MaterialService, ExerciseService,  PagerService, FileService, authService, userService, userSessionService, SessionService, CanActivateExercisesGuard, MaterialTypeService, BodyPartService],
+  providers: [MenuService, MaterialService, ExerciseService,  PagerService, FileService, authService, UserService, userSessionService, SessionService, CanActivateExercisesGuard, MaterialTypeService, BodyPartService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
