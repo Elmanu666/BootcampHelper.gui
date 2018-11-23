@@ -17,7 +17,7 @@
           <h5 cmat-subheader *ngFor="let user of round.exercisesMainUser">
                 <i *ngFor="let user of round.exercisesMainUser">{{user}}</i>
           </h5>
-        	<mat-list-item *ngFor="let exercise of round.exercices">
+        	<mat-list-item *ngFor="let exercise of round.exercises">
           	
           	<h3 mat-line>{{exercise.title}}</h3>
           	<mat-icon mat-list-icon>accessibility_new</mat-icon>
@@ -75,7 +75,7 @@
                     {{usr}}
                 </h3>
               </div>  
-              <mat-list-item *ngFor="let exercise of round.exercices">                
+              <mat-list-item *ngFor="let exercise of round.exercises">                
                 <h4 mat-line>{{exercise.title}}</h4>
                 <mat-icon mat-list-icon>accessibility_new</mat-icon>
                 <p mat-line> {{round.drillsDuration }}s </p>

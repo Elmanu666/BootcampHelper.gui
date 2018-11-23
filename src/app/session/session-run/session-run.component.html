@@ -32,7 +32,7 @@
 	<div class="row spacer-top" >
 		<div class="col-md-4 session-main-info-block" [@fadeIn]><h2> Repeat : {{currentExercise.repeat }} of {{session.round[currentExercise.round].repeat}}</h2></div>
 		<div class="col-md-4 session-main-info-block" [@fadeIn] ><h2> {{session.round[currentExercise.round].title}} : ({{currentExercise.round + 1}}/{{session.round.length}})</h2></div>
-		<div class="col-md-4 session-main-info-block" [@fadeIn]><h2> Exercises : {{currentExercise.exercise +1}} of {{session.round[currentExercise.round].exercices.length}} </h2></div>
+		<div class="col-md-4 session-main-info-block" [@fadeIn]><h2> Exercises : {{currentExercise.exercise +1}} of {{session.round[currentExercise.round].exercises.length}} </h2></div>
 
 	</div>
 
@@ -62,7 +62,7 @@
 			          <div class="exercise-list-container">
 			          	<div class="exercise-list">
 			          	  <div class="exercise-list-user"><span *ngFor="let usr of session.round[currentExercise.round].exercisesMainUser">{{usr}}</span></div>
-				          <mat-list-item *ngFor="let exercise of session.round[currentExercise.round].exercices">
+				          <mat-list-item *ngFor="let exercise of session.round[currentExercise.round].exercises">
 				            <h4 mat-line>{{exercise.title}}</h4>
 				            <mat-icon mat-list-icon>accessibility_new</mat-icon>
 				            <p mat-line> {{session.round[currentExercise.round].drillsDuration }}s </p>
@@ -142,9 +142,9 @@
 
 
 
-			    	<!-- <mat-list-item [@flyInOut] *ngFor="let exercise of round.exercices; let j =index" [ngStyle]="{'display':j === this.currentExercise.exercise ? 'block' : 'none' }"> -->
+			    	<!-- <mat-list-item [@flyInOut] *ngFor="let exercise of round.exercises; let j =index" [ngStyle]="{'display':j === this.currentExercise.exercise ? 'block' : 'none' }"> -->
 			    	
-			    	<ng-container *ngFor="let exercise of round.exercices; let j =index">
+			    	<ng-container *ngFor="let exercise of round.exercises; let j =index">
 				    	<div class="on-going-exercises" [@flyInOut] *ngIf="j=== this.currentExercise.exercise">
 				    		<div class="container"   >
 				      			<span class="user" *ngFor="let usr of round.exercisesMainUser">{{usr}}</span>

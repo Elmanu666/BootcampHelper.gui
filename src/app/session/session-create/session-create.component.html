@@ -111,7 +111,7 @@
                       </div>
                       <div class="exercise-selected dropzone" [ngClass]="dropAreaClass" (dragover)="dragOver($event)"  (dragleave)="dragLeave($event)" (drop)="drop($event, i, 'main', 0)">
                           <ul appSortableList (sort)="sort($event, i, 'main', 0) ">
-                            <li class="exerciseItemsSelected box" *ngFor="let exec of round.exercices; let v=index" appSortable>
+                            <li class="exerciseItemsSelected box" *ngFor="let exec of round.exercises; let v=index" appSortable>
                               <i class="fas fa-bars"  appDraggableHandler></i>
                               {{exec.title}} 
                               <i class="fas fa-times delete" (click)="deleteExerciseSelected(i, v, 'main', 0)"></i>
