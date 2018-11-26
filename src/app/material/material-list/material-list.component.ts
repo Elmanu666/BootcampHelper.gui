@@ -10,6 +10,8 @@ import { PagerComponent } from '../../common/pager/pager.component';
 import { MaterialTypeService} from '../../services/materialType.service';
 import { BodyPartService} from '../../services/bodyPart.service';
 import { trigger, state, style, animate, transition, query, stagger } from '@angular/animations';
+import { environment } from '../../../environments/environment';
+
 
 
 @Component({
@@ -98,8 +100,6 @@ export class MaterialListComponent {
 
   ngOnInit(): void {
     // this.nbItemsAftFiltered=0
-
-
     this.path = this.route.snapshot.routeConfig.path
 
     this.materialSize=['XXS','XS','S', 'M', 'L', 'XL', 'XXL'];

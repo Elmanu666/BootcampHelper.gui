@@ -6,13 +6,15 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import {Response} from '@angular/http';
 import { Injectable } from '@angular/core';
 import { PagerService } from '../services/pages.service';
+import { environment } from '../../environments/environment';
+
 
 
 @Injectable()
 export class ExerciseService {
 
-  api_url = 'http://localhost:3000';
-  exercisesUrl = `${this.api_url}/api/exercises`;
+  api_url = environment.apiUrl || 'http://localhost:3000/api/';
+  exercisesUrl = `${this.api_url}exercises`;
 
   constructor(
     private http: HttpClient,

@@ -5,6 +5,8 @@ import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http'
 import {Response} from '@angular/http';
 import { Injectable } from '@angular/core';
 import { PagerService } from '../services/pages.service';
+import { environment } from '../../environments/environment';
+
 
 
 
@@ -12,9 +14,9 @@ import { PagerService } from '../services/pages.service';
 @Injectable()
 export class SessionService {
 
-	api_url = 'http://localhost:3000';
-    sessionsUrl = `${this.api_url}/api/sessions`;
-  	sessionUrl = `${this.api_url}/api/session`;
+	api_url = environment.apiUrl || 'http://localhost:3000/api/';
+  sessionsUrl = `${this.api_url}sessions`;
+  sessionUrl = `${this.api_url}session`;
 
   constructor(
     private http: HttpClient,

@@ -5,6 +5,8 @@ import User from '../models/user.model';
 import { map } from 'rxjs/operators';
 import {Response} from '@angular/http';
 import { PagerService } from '../services/pages.service';
+import { environment } from '../../environments/environment';
+
 
 
 
@@ -14,7 +16,7 @@ import { PagerService } from '../services/pages.service';
 
 export class UserService {
 
-	_baseURL: string = 'http://localhost:3000/api/user/'
+	_baseURL: string = environment.apiUrl+'user/' || 'http://localhost:3000/api/user/'
 
   	constructor(
 	  	private http: HttpClient,

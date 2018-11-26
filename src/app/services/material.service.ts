@@ -6,13 +6,15 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import {Response} from '@angular/http';
 import { Injectable } from '@angular/core';
 import { PagerService } from '../services/pages.service';
+import { environment } from '../../environments/environment';
+
 
 
 @Injectable()
 export class MaterialService {
 
-  api_url = 'http://localhost:3000';
-  materialUrl = `${this.api_url}/api/material`;
+  api_url = environment.apiUrl || 'http://localhost:3000/api/';
+  materialUrl = `${this.api_url}material`;
 
   constructor(
     private http: HttpClient,
