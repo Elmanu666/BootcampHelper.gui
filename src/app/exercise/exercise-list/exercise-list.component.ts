@@ -10,6 +10,8 @@ import { PagerComponent } from '../../common/pager/pager.component';
 import { MaterialTypeService} from '../../services/materialType.service';
 import { BodyPartService} from '../../services/bodyPart.service';
 import { trigger, state, style, animate, transition, query, stagger } from '@angular/animations';
+import { NgxSpinnerService } from 'ngx-spinner';
+
 
 
 @Component({
@@ -45,7 +47,7 @@ export class ExerciseListComponent {
     private pagerService: PagerService,
     private router : Router,
     private route: ActivatedRoute,
-
+    private spinner:NgxSpinnerService,
     public materialTypeService : MaterialTypeService,
     public bodyPartService : BodyPartService,
 
@@ -101,10 +103,9 @@ export class ExerciseListComponent {
   ngOnInit(): void {
     // this.nbItemsAftFiltered=0
 
-
+    this.spinner.show();
     this.path = this.route.snapshot.routeConfig.path
-    console.log('path');
-    console.log(this.path);
+
 
 
     this.start=0;
@@ -125,20 +126,37 @@ export class ExerciseListComponent {
 
 
     this.exerciseService.getExercises(1)
-      .subscribe(exercises => {
-        this.exercisesList = exercises;
-        this.exercisesListFiltered = exercises;
-        this.exercisesListSliced =  this.exercisesList.slice(this.start, this.start+this.nbDisplayItems);
-        let totalPages = Math.ceil(exercises.length /this.nbDisplayItems);
-        this.pagerService.setPager(totalPages, 1 , this.nbDisplayItems);
-        this.pagesInfo.totalPages = totalPages;
-        this.pagesInfo.currentPage = 1;
-        this.pagesInfo.pageSize = this.nbDisplayItems;
+      .subscribe(
+        exercises => {
+
+          setTimeout(() => {
+
+                this.spinner.hide();
+                }, 200);
+
+
+          this.exercisesList = exercises;
+          this.exercisesListFiltered = exercises;
+          this.exercisesListSliced =  this.exercisesList.slice(this.start, this.start+this.nbDisplayItems);
+
+          let totalPages = Math.ceil(exercises.length /this.nbDisplayItems);
+
+          this.pagerService.setPager(totalPages, 1 , this.nbDisplayItems);
+          this.pagesInfo.totalPages = totalPages;
+          this.pagesInfo.currentPage = 1;
+          this.pagesInfo.pageSize = this.nbDisplayItems;
+        },
+        error=>{
+
+          setTimeout(() => {
+
+                this.spinner.hide();
+                }, 200);
 
 
 
-
-      })
+        }
+       )
   }
 
    create() {

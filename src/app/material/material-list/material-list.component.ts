@@ -99,7 +99,7 @@ export class MaterialListComponent {
 
 
   ngOnInit(): void {
-    // this.nbItemsAftFiltered=0
+    // this.nbItemsAftFiltered=0  
     this.path = this.route.snapshot.routeConfig.path
 
     this.materialSize=['XXS','XS','S', 'M', 'L', 'XL', 'XXL'];
@@ -121,21 +121,26 @@ export class MaterialListComponent {
 
 
     this.materialService.getMaterials(1)
-      .subscribe(materials => {
-        this.materialsList = materials;
-        this.materialsListFiltered = materials;
+      .subscribe(
+        materials => {
+          this.materialsList = materials;
+          this.materialsListFiltered = materials;
 
-        this.materialsListSliced =  this.materialsList.slice(this.start, this.start+this.nbDisplayItems);
-        let totalPages = Math.ceil(materials.length /this.nbDisplayItems);
-        this.pagerService.setPager(totalPages, 1 , this.nbDisplayItems);
-        this.pagesInfo.totalPages = totalPages;
-        this.pagesInfo.currentPage = 1;
-        this.pagesInfo.pageSize = this.nbDisplayItems;
+          this.materialsListSliced =  this.materialsList.slice(this.start, this.start+this.nbDisplayItems);
+          let totalPages = Math.ceil(materials.length /this.nbDisplayItems);
+          this.pagerService.setPager(totalPages, 1 , this.nbDisplayItems);
+          this.pagesInfo.totalPages = totalPages;
+          this.pagesInfo.currentPage = 1;
+          this.pagesInfo.pageSize = this.nbDisplayItems;
 
 
 
 
-      })
+        },
+        error => {
+          console.log('on est dans erreur du material list', error);
+        }
+      )
   }
 
   updateFilter(sliderEvent, sliderId){

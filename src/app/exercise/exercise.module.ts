@@ -5,6 +5,7 @@ import { UiSwitchModule } from 'ngx-ui-switch';
 
 
 
+
 import { FormsModule } from '@angular/forms';
 
 
@@ -44,7 +45,8 @@ import {SharedModule} from '../common/sharedComponent.module'
     EditorModule,
     ExerciseRoutingModule,
     MatSliderModule,
-    SharedModule
+    SharedModule,
+    
     
   ],
   declarations: [

@@ -112,14 +112,19 @@ export class MaterialCreateComponent {
 		  	else {
 
 		  		this.materialService.getMaterial(this.id)
-		  		.subscribe(material => {
+		  		.subscribe(
+		  			material => {
 
-        			this.material = material;
-        			this.createFormControls();
-        			this.formInit();       
-        			this.getImage(this.material._id);
-        			this.ready=true;
+	        			this.material = material;
+	        			this.createFormControls();
+	        			this.formInit();       
+	        			this.getImage(this.material._id);
+	        			this.ready=true;
       				})
+		  			error => {
+		  				console.log(error);
+
+		  			}
 		  	}
 	}
 

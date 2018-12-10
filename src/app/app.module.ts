@@ -15,6 +15,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { UiSwitchModule } from 'ngx-ui-switch';
 import {ToastrModule} from 'ngx-toastr';
+import { NgxSpinnerModule } from 'ngx-spinner';
+
 
 
 
@@ -31,6 +33,7 @@ import { MaterialTypeService } from './services/materialType.service';
 import { BodyPartService } from './services/bodyPart.service';
 import { MenuService } from './services/menu.service';
 import { MaterialService } from './services/material.service';
+import { errorHandler } from './services/errorHandler.service';
 
 
 
@@ -109,6 +112,7 @@ import {SharedModule} from './common/sharedComponent.module'
     MatListModule,
     MatCardModule,
     SharedModule,
+    NgxSpinnerModule,
     NgbModule.forRoot(),
     ToastrModule.forRoot(),
   ],
@@ -118,7 +122,7 @@ import {SharedModule} from './common/sharedComponent.module'
 
     ],
 
-  providers: [MenuService, MaterialService, ExerciseService,  PagerService, FileService, authService, UserService, userSessionService, SessionService, CanActivateExercisesGuard, MaterialTypeService, BodyPartService],
+  providers: [errorHandler, MenuService, MaterialService, ExerciseService,  PagerService, FileService, authService, UserService, userSessionService, SessionService, CanActivateExercisesGuard, MaterialTypeService, BodyPartService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

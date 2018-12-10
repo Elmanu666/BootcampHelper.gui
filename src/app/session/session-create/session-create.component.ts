@@ -86,7 +86,7 @@ export class SessionCreateComponent implements OnInit {
       })
 
    this.activAccordion = 0;
-   this.id = this.route.snapshot.paramMap.get('id') ? this.route.snapshot.paramMap.get('id') : "create";
+   this.route.snapshot.paramMap.get('id') ? this.id = this.route.snapshot.paramMap.get('id') : "create";
 
     if (this.id === "create") {
 

@@ -7,6 +7,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { FileService } from '../../services/file.service'
 import { PagerComponent } from '../../common/pager/pager.component'
+import { NgxSpinnerService } from 'ngx-spinner';
+
 
 
 
@@ -19,11 +21,12 @@ export class ExerciseDisplayComponent {
 
 
 	constructor(
-  	  	private exerciseService: ExerciseService,
+  	  private exerciseService: ExerciseService,
   		private route: ActivatedRoute,
     	private router: Router,
     	private toastr: ToastrService,
     	private fileService : FileService,
+      private spinner: NgxSpinnerService
 
   	) { }
   id: string;
@@ -37,7 +40,7 @@ export class ExerciseDisplayComponent {
 
   //	let id = this.route.snapshot.paramMap.get('id');
 
-    this.id == this.route.snapshot.paramMap.get('id') ? this.route.snapshot.paramMap.get('id') : this.id = "select";
+    this.route.snapshot.paramMap.get('id') ? this.id = this.route.snapshot.paramMap.get('id') : this.id = "select";
 
     if (this.id == 'select'){
 
@@ -45,25 +48,31 @@ export class ExerciseDisplayComponent {
     }
 
     else {
-
+     this.spinner.show();
      this.exerciseService.getExercise(this.id)
-      .subscribe(exercise => {
-        //assign the todolist property to the proper http response
-        this.exercise = exercise;
-        this.loaded = true;
-        console.log("on reçoit l'exercise");
-        console.log(exercise);
-        this.getImage(this.exercise._id);
+      .subscribe(
+        exercise => {
+          //assign the todolist property to the proper http response
+          setTimeout(() => {
+
+              this.spinner.hide();
+              }, 200);
+          this.exercise = exercise;
+          this.loaded = true;
+          this.getImage(this.exercise._id);
+        },
+        error=> {
+              setTimeout(() => {
+              this.spinner.hide();
+              this.toastr.error('operation unsuccesful. try later', 'error!', {timeOut:2000})
+            }, 200);
+
+
+        })
+      }
 
 
 
-
-      })
-
-    }
-
-
-  	console.log(this.loaded);
 
 
 

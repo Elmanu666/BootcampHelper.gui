@@ -6,6 +6,8 @@ import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { FileService } from '../../services/file.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+
 
 
 
@@ -19,11 +21,12 @@ export class ExerciseCreateComponent {
 
 
 	constructor(
-  	  	private exerciseService: ExerciseService,
+  	  private exerciseService: ExerciseService,
   		private route: ActivatedRoute,
     	private router: Router,
       private toastr : ToastrService,
       private fileService : FileService,
+      private spinner: NgxSpinnerService
 
   	) { }
   images : File;
@@ -34,7 +37,7 @@ export class ExerciseCreateComponent {
 
   ngOnInit() {
 
-  	 this.route.snapshot.paramMap.get('id') ? this.id == this.route.snapshot.paramMap.get('id') : this.id = "create";
+  	 this.route.snapshot.paramMap.get('id') ? this.id = this.route.snapshot.paramMap.get('id') : this.id = "create";
 
   	console.log(this.id);
 
@@ -47,19 +50,35 @@ export class ExerciseCreateComponent {
     }
 
     else {
-
+      this.spinner.show();
       this.exerciseService.getExercise(this.id)
-      .subscribe(exercise => {
+      .subscribe(
+        exercise => {
         //assign the todolist property to the proper http response
         this.exercise = exercise;
         console.log("on reçoit l'exercise");
         console.log(exercise);
         this.getImage(this.exercise._id);
+        setTimeout(() => {
+
+            this.spinner.hide();
+            }, 200);
+        },
+        error => {
+          console.log(error);
+          setTimeout(() => {
+              this.spinner.hide();
+              this.toastr.error('operation unsuccesful. try later', 'error!', {timeOut:2000})
+            }, 200);
+    
 
 
 
+        }
 
-      })
+
+        )
+
 
  
 
@@ -69,10 +88,15 @@ export class ExerciseCreateComponent {
   }
 
   create() {
+    this.spinner.show();
     this.exerciseService.createExercise(this.exercise)
       .subscribe((res) => {
+        setTimeout(()=>{
+          this.spinner.hide();
+          this.toastr.success('Creation succesful', 'Success!' , {timeOut: 2000});
+        }, 200);
         this.exercise = res.data;
-        this.toastr.success('Creation succesful', 'Success!' , {timeOut: 2000});
+        
         this.id = this.exercise._id;
       })
   }
@@ -80,16 +104,25 @@ export class ExerciseCreateComponent {
 
   update(event) {
 
-
+     this.spinner.show();
     if (event !='create') {
 
+
+
        this.exerciseService.editExercise(this.exercise).subscribe(res => {
-          console.log('Update Succesful')
-          this.toastr.success('Update succesful', 'Success!' , {timeOut: 2000});
+          setTimeout(()=>{
+            this.spinner.hide();
+            this.toastr.success('Creation succesful', 'Success!' , {timeOut: 2000});
+          }, 200);
+
 
         }, err => {
+          setTimeout(()=>{
+            this.spinner.hide();
+            this.toastr.error('Update Unsuccesful', 'Error!' , {timeOut: 2000});
+          }, 200);          
 
-          this.toastr.error('Update Unsuccesful', 'Error!' , {timeOut: 2000});
+          
         })
 
     }

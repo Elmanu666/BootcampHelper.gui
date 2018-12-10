@@ -7,6 +7,10 @@ import {Response} from '@angular/http';
 import { Injectable } from '@angular/core';
 import { PagerService } from '../services/pages.service';
 import { environment } from '../../environments/environment';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { ToastrService } from 'ngx-toastr';
+
+
 
 
 
@@ -18,7 +22,9 @@ export class MaterialService {
 
   constructor(
     private http: HttpClient,
-    public pagerService : PagerService
+    public pagerService : PagerService,
+    private spiner:NgxSpinnerService,
+    private toastr: ToastrService,
   ) { }
 
 
@@ -37,27 +43,27 @@ export class MaterialService {
   //   })
   // }
 
-    getMaterials(page: number): Observable<Material[]>{
+    getMaterials(page: number): Observable<any>{
       let url = this.materialUrl+'?page='+page
-   // 	let url = this.materialUrl
-  //  	let url = this.materialUrl
-    	let config = {'params' : {'page' : page }};
-      
-    	return this.http.get(url)
-    		.pipe(
 
-    			map(res  => {
-      			//Maps the response object sent from the server
-      			console.log('donnée envoyer pour le pager');
-      			console.log(res['data']);
+    	let config = {'params' : {'page' : page }};  	
 
-     //     		this.pagerService.setPager(res["data"].pages, res["data"].page, res["data"].limit)
+      return this.http
+        .get(url)
+    		.map(res  => {
 
+
+      	    return res["data"] as Material[];
+
+
+            }
+          )
+        .catch(error=> {
+
+          return this.handleError(error)}
+          ) 
         
-   //     return res["data"].docs as Exercise[];
-      	return res["data"] as Material[];
-    }) )
-  }
+    }
 
 
   getMaterial(id:Material['_id']): Observable<Material>{
@@ -101,7 +107,6 @@ export class MaterialService {
 
   //Default Error handling method.
   private handleError(error: any): Promise<any> {
-    console.error('An error occurred', error); // for demo purposes only
     return Promise.reject(error.message || error);
   }
 
