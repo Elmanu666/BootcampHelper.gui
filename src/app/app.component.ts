@@ -10,6 +10,10 @@ import Page from './models/pages.model';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { GeneralAnimations } from './animation/general.animations';
 import { MenuService } from './services/menu.service';
+import {MediaChange, MediaObserver} from '@angular/flex-layout';
+import {Subscription} from 'rxjs';
+
+
 
 
 
@@ -25,19 +29,22 @@ import { MenuService } from './services/menu.service';
 })
 export class AppComponent {
   
+  watcher: Subscription;
+  activeMediaQuery = '';
   breadcrumb : string;
   breadcrumbs : [{'url':string, 'title':string}]
   menus : Array<MenuItem>;
   menuSelected : Array<MenuItem>;
   section: string;
-  lateralMenuStatus
+  lateralMenuStatus;
+  mainDisplay: string;
 
 	  constructor(
 
-	  	    public toastr: ToastrService,
-	  	    
+	  	  public toastr: ToastrService,  
     		private router: Router,
         private menuservice : MenuService,
+        public mediaObserver: MediaObserver,
 
 
     //Private todoservice will be injected into the component by Angular Dependency Injector
@@ -58,7 +65,19 @@ export class AppComponent {
                this.setLateralMenu();
            }
     		
-		}) 
+		});
+     this.watcher = mediaObserver.media$.subscribe((change: MediaChange) => {
+      debugger;
+      this.activeMediaQuery = change ? `'${change.mqAlias}' = (${change.mediaQuery})` : '';
+      if ( change.mqAlias == 'xs' || change.mqAlias == 'xm' || change.mqAlias == 'md') {
+         this.mainDisplay = "col-md-12";
+      }
+
+      else {
+        this.mainDisplay = "col-md-11"
+
+      }
+    });
 
       }
 

@@ -14,7 +14,8 @@ import {
   animate,
   transition
 } from '@angular/animations';
-import { CalendarComponent } from '../../calendar/calendar.component'
+import { CalendarComponent } from '../../calendar/calendar.component';
+
 
 const colors: any = {
   red: {
@@ -95,10 +96,12 @@ export class SessionRunComponent implements OnInit {
 	loaded : boolean = false;
 	idSession : SessionModel['_id'];
 	currentExercise : {'round':number, 'exercise':number, 'drills':boolean, 'repeat':number};
+  NextExercise : {'round':number, 'exercise':number, 'drills':boolean, 'repeat':number};
 	started:boolean;
 	roundsStarted :boolean=false;
   sessionFinished : boolean =false;
 	progressBar:boolean=true;
+  mainDisplay: string;
 
    
 
@@ -108,20 +111,21 @@ export class SessionRunComponent implements OnInit {
 
 
 
-  constructor(
+  constructor
+    (
   		private route: ActivatedRoute,
   		private sessionService: SessionService,
   		public toastr: ToastrService,
-
-
-
-  	) { }
+  	) 
+    {}
 
   ngOnInit() {
 
+
     this.route.snapshot.paramMap.get('id') != null ? (this.calendar = false , this.idSession = this.route.snapshot.paramMap.get('id'), this.loaded=false):  (this.calendar =true);
   	this.progressBar = true;
-  	this.currentExercise = {'round':0, 'exercise':0, 'drills':false, 'repeat':1};
+    this.currentExercise = {'round':0, 'exercise':0, 'drills':false, 'repeat':1};
+  	this.NextExercise = {'round':0, 'exercise':1, 'drills':false, 'repeat':1};
   	this.started=false;
 
     if(!this.calendar){      
@@ -389,7 +393,7 @@ export class SessionRunComponent implements OnInit {
 
   nextExercise(event:string){
 
-    
+    debugger;
 
 //end of the session 
   	if ( this.currentExercise.round == this.session.round.length -1 && this.currentExercise.exercise == this.session.round[this.currentExercise.round].exercises.length-1 && this.currentExercise.repeat == this.session.round[this.currentExercise.round].repeat){
@@ -443,6 +447,8 @@ export class SessionRunComponent implements OnInit {
 	this.currentExercise.drills ? (this.currentExercise.drills = false, this.currentExercise.repeat +=1, this.currentExercise.exercise = 0,this.countdowncomponent.setDuration(this.session.round[this.currentExercise.round].drillsDuration), this.toastr.success('End of a repeat :'+ this.session.round[this.currentExercise.round].title, 'Continue !' , {timeOut: 2000})
 ) : (this.currentExercise.drills = true, this.countdowncomponent.setDuration(this.session.round[this.currentExercise.round].drillsDuration)) ;
 
+  this.NextExercise = Object.assign({}, this.currentExercise);
+  this.NextExercise.exercise = this.currentExercise.exercise + 1;
 	
 	if(event== 'manual'){
 
@@ -461,18 +467,23 @@ export class SessionRunComponent implements OnInit {
   }
 
   else {
-  	  		this.currentExercise.drills ? (this.currentExercise.drills = false, this.currentExercise.exercise += 1, this.countdowncomponent.setDuration(this.session.round[this.currentExercise.round].restDuration)) : (this.currentExercise.drills = true, this.countdowncomponent.setDuration(this.session.round[this.currentExercise.round].drillsDuration)) ;
+  	this.currentExercise.drills ? (this.currentExercise.drills = false, this.currentExercise.exercise += 1, this.countdowncomponent.setDuration(this.session.round[this.currentExercise.round].restDuration)) : (this.currentExercise.drills = true, this.countdowncomponent.setDuration(this.session.round[this.currentExercise.round].drillsDuration)) ;
 
-	if(event== 'manual'){
+    this.NextExercise = Object.assign({}, this.currentExercise);
 
-		this.stopCountDown();
+    this.NextExercise.exercise == this.session.round[this.currentExercise.round].exercises.length -1 ? this.NextExercise.exercise = 0 : this.NextExercise.exercise  += 1;
 
-	}
-	else {
 
-		this.startCountDown();
-	}
-	
+  	if(event== 'manual'){
+
+  		this.stopCountDown();
+
+  	}
+  	else {
+
+  		this.startCountDown();
+  	}
+  	
 
 
   }

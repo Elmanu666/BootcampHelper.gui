@@ -1,5 +1,5 @@
 
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
 
 .body {
     
@@ -75,10 +75,14 @@ a:not([href]) {
     padding: 10px;
 }
 
-.image-container {
+.image-container div {
     position: relative;
     text-align: center;
     color: black;
+}
+
+.image-container {
+    display: flex;
 }
 
 .image-container i {
@@ -130,6 +134,21 @@ a:not([href]) {
     z-index: 100;
     padding: 0;
     box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+}
+
+@media only screen and (max-width: 1024px) {
+    .sidebar{
+    display: none;
+
+    }
+
+    .breadcrumbTop{
+    display:none;
+    }
+
+    .main{
+        margin-top: 50px;
+    }
 }
 
 

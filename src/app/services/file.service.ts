@@ -1,4 +1,6 @@
 import File from '../models/file.model';
+import { environment } from '../../environments/environment';
+
 
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
@@ -8,7 +10,8 @@ import { Observable } from 'rxjs/Rx';
 
 @Injectable()
 export class FileService {
-    _baseURL: string = 'http://localhost:3000/api/files'
+      api_url = environment.apiUrl || 'http://localhost:3000/api/';
+    _baseURL: string = this.api_url +'files';
     constructor(private http: HttpClient) { }
 
  //   upload(files, parameters){
@@ -27,7 +30,7 @@ export class FileService {
         // let httpOptions = new HttpHeaders();
         // httpOptions.append('params', 'test')
         // httpOptions.append('params' , parameters);
-
+        debugger;
         return  this.http.post(this._baseURL , files)
                  
                  .catch(error => Observable.throw(error));
@@ -46,4 +49,12 @@ export class FileService {
 
 
     }
+
+    getHttpImages(url):Observable<any>{
+  
+
+        return this.http.get(url, {responseType: 'blob'});
+            
+    }
+    
 }

@@ -6,19 +6,19 @@
 	<table class="table table-hover">
 		<thead class="thead-dark bg-primary">
 			<tr>
-		      <th>Title</th>
-              <th>Description</th>
-              <th>Muscu</th>
-              <th>Cardio</th>        
-              <th>Balance</th>        
-              <th>warmup</th>        
+		      <th (click)="sortBy('title')">Title</th>
+              <th (click)="sortBy('description')">Description</th>
+              <th (click)="sortBy('details.muscu')">Muscu</th>
+              <th (click)="sortBy('details.cardio')">Cardio</th>        
+              <th (click)="sortBy('details.balance')">Balance</th>        
+              <th (click)="sortBy('details.warmup')">warmup</th>        
 
 		     </tr>        
 		</thead>
 		<tbody [@tableLine]="exercisesListSliced.length">
 			<tr (click)="displayExercise(exercise._id)" *ngFor="let exercise of exercisesListSliced ; let i =index" id={{i}}>
 				<td>{{exercise.title}}</td>
-	            <td>{{exercise.description}}</td>
+	            <td [innerHTML]="exercise.description"></td>
 	            <td>{{exercise.details.muscu}}</td>
 	            <td>{{exercise.details.cardio}}</td>
 	            <td>{{exercise.details.balance}}</td>

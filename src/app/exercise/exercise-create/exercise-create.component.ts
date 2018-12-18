@@ -7,6 +7,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { FileService } from '../../services/file.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { environment } from '../../../environments/environment';
+
 
 
 
@@ -20,6 +22,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class ExerciseCreateComponent {
 
 
+
+
 	constructor(
   	  private exerciseService: ExerciseService,
   		private route: ActivatedRoute,
@@ -29,16 +33,20 @@ export class ExerciseCreateComponent {
       private spinner: NgxSpinnerService
 
   	) { }
-  images : File;
+  images : File[];
   exercise: Exercise;
   bodyPart: string[] = ["Abs", "Biceps", "Triceps", "Glutes", "Legs", "Shoulders", "Oblics", "Chest (middle)", "Chest (high)", "Chest (low)" ];
   materialType: string[] = ["elastic band","dumbbell", "Yoga ball","medcine ball", "TRX", "bench", "ball"];
   id: string;
 
+   img_url = environment.imgUrl || 'http://localhost:3000/';
+
+
+
   ngOnInit() {
 
   	 this.route.snapshot.paramMap.get('id') ? this.id = this.route.snapshot.paramMap.get('id') : this.id = "create";
-
+    console.log('img_url', this.img_url);
   	console.log(this.id);
 
     if (this.id === "create") {
@@ -104,47 +112,68 @@ export class ExerciseCreateComponent {
 
   update(event) {
 
-     this.spinner.show();
+   
     if (event !='create') {
-
-
-
+       this.spinner.show();
        this.exerciseService.editExercise(this.exercise).subscribe(res => {
           setTimeout(()=>{
             this.spinner.hide();
             this.toastr.success('Creation succesful', 'Success!' , {timeOut: 2000});
           }, 200);
 
-
         }, err => {
           setTimeout(()=>{
             this.spinner.hide();
             this.toastr.error('Update Unsuccesful', 'Error!' , {timeOut: 2000});
           }, 200);          
-
           
         })
-
     }
-
-
-        
 
   }
 
-    getImage(id){
+
+  newExercise(){
+    this.exercise = new Exercise();
+    this.id = "create";
+
+
+  }
+
+  getImage(id){
+    debugger;
     this.fileService.getImages(id)
     .subscribe(retApi => {
             //assign the todolist property to the proper http response
             this.images = retApi.data.docs;
-            console.log('retour api image');
-            console.log(this.images)
+
             
 
 
 
           })
      }
+
+  removeImage(img){
+
+    this.spinner.show();
+
+
+    this.fileService.deleteImage(img._id)
+    .subscribe(retApi => {
+            //assign the todolist property to the proper http response
+
+            debugger;
+
+           this.images =  this.images.filter( imgs => {
+
+              return imgs._id !== img._id;
+            })
+               this.spinner.hide();
+
+          })
+
+  }
 
 
 

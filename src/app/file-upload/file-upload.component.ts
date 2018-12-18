@@ -58,8 +58,41 @@ export class FileUploadComponent implements OnInit {
 	    this.dragAreaClass = "dragarea";           
 	    event.preventDefault();
 	    event.stopPropagation();
-	    var files = event.dataTransfer.files;
-	    this.saveFiles(files);
+	    var data = event.dataTransfer.items;
+	 
+	    debugger;
+	    for (var v = 0 ; v < data.length; v++){
+
+	    	if (data[v].kind == 'string' && data[v].type.match('^text/uri-list')) 
+	    		{
+     			data[v].getAsString(s =>{
+
+     				var f = s;
+     				this.fileService.getHttpImages(f)
+     					.subscribe(files =>{
+							debugger;
+							var fl = new Array();
+							files.name = f;
+							files.lastModifiedDate = new Date();
+
+							fl.push(files);
+     						console.log(fl);
+     						this.saveFiles(fl)
+
+     					})
+     				
+     			});
+     			console.log("... Drop: URI");
+   				}
+   			else if (data[v].kind == 'file'){
+
+   				var f = data[v].getAsFile();
+   				var files = event.dataTransfer.files;
+   				this.saveFiles(files);
+   			}
+
+	    }
+	    
 	}
 
 	saveFiles(files){

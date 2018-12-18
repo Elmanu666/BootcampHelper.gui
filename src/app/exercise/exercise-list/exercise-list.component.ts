@@ -96,6 +96,7 @@ export class ExerciseListComponent {
   nbDisplayItems :number;
   pagesInfo : Page = new Page();
   path : string;
+  sortingInfo : any[];
 
 
 
@@ -104,7 +105,8 @@ export class ExerciseListComponent {
     // this.nbItemsAftFiltered=0
 
     this.spinner.show();
-    this.path = this.route.snapshot.routeConfig.path
+    this.path = this.route.snapshot.routeConfig.path;
+    this.sortingInfo = new Array();
 
 
 
@@ -413,6 +415,30 @@ export class ExerciseListComponent {
   doneEditing(exercise: Exercise) {
 
   	this.editExercises.splice(this.editExercises.indexOf(exercise), 1);
+
+  }
+
+  sortBy(criteria){
+    var sortingInfoExist = false;
+    var index = 0 ;
+    for (var v = 0; v < this.sortingInfo.length; v++)
+      {
+      if (this.sortingInfo[v].criteria == criteria ){
+        this.sortingInfo[v].sort == 'asc' ? this.sortingInfo[v].sort = 'dsc' :this.sortingInfo[v].sort = 'asc';
+        sortingInfoExist = true;
+        index = v;
+
+        }
+      }
+
+    sortingInfoExist == false ? this.sortingInfo.push({'criteria': criteria, 'sort': 'asc'}) : '';
+
+    this.sortingInfo[index].sort == 'asc' ? this.exercisesList.sort((a,b) => a[criteria].localeCompare(b[criteria])) : this.exercisesList.sort((a,b) => b[criteria].localeCompare(a[criteria]));
+
+    this.exerciseFilterByText('forced');
+
+
+
 
   }
 

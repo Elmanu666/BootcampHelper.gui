@@ -1,6 +1,12 @@
 .round-card-container {
 	display : flex;
+	flex-wrap: wrap;
+    justify-content: space-between;
 
+}
+
+.mat-card{
+	margin: 1rem;
 }
 
 .session-title{
@@ -11,12 +17,11 @@
 
 .exercise-list-container{
 	display:flex;
-	justify-content:flex-start;
-	flex-wrap:wrap;
+	justify-content:space-between;
+	flex-wrap: nowrap;
 
 }
 .exercise-list{
-
 
 }
 
@@ -36,4 +41,11 @@
 	padding-left:16px;
 	padding-right:10px;
 
+}
+
+@media only screen and (max-width: 650px) {
+	.exercise-list-container{
+	flex-wrap: wrap;
+
+	}
 }

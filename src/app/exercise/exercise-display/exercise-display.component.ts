@@ -4,10 +4,13 @@ import Exercise from '../../models/exercise.model';
 import File from '../../models/file.model';
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { TitleCasePipe } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { FileService } from '../../services/file.service'
 import { PagerComponent } from '../../common/pager/pager.component'
 import { NgxSpinnerService } from 'ngx-spinner';
+import { environment } from '../../../environments/environment';
+
 
 
 
@@ -30,13 +33,15 @@ export class ExerciseDisplayComponent {
 
   	) { }
   id: string;
-	images : File;
+	images : File[];
   exercise: Exercise;
   bodyPart: string[] = ["Abs", "Biceps", "Triceps", "Glutes", "Legs", "Shoulders", "Oblics", "Chest (middle)", "Chest (high)", "Chest (low)" ];
   materialType: string[] = ["elastic band","dumbbell", "Yoga ball","medcine ball", "TRX", "bench", "ball"];
-  loaded:boolean = false
+  loaded:boolean = false;
+  img_url = environment.imgUrl || 'http://localhost:3000/';
 
   ngOnInit() {
+
 
   //	let id = this.route.snapshot.paramMap.get('id');
 
@@ -108,8 +113,23 @@ export class ExerciseDisplayComponent {
 
 
           })
-}
+  }
 
+  removeImage(id){
+
+    this.fileService.deleteImage(id)
+    .subscribe(retApi => {
+            //assign the todolist property to the proper http response
+            this.images = retApi.data.docs;
+            console.log('retour api image');
+            console.log(this.images)
+            for (var v=0; v < this.images.length; v++) {
+
+              id == this.images[v]._id ? this.images.slice(v, 1) : '';
+            }          
+          })
+
+  }
 
 
 

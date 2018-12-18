@@ -149,21 +149,38 @@
 				    		<div class="container"   >
 				      			<span class="user" *ngFor="let usr of round.exercisesMainUser">{{usr}}</span>
 					      		<h1 class="display-4">{{exercise.title}}</h1>
-					      		<p class="lead"> {{exercise.description }} </p>
+					      		<p class="lead" [innerHTML]="exercise.description "> {{exercise.description }} </p>
 				    		</div >
 				    		<ng-container *ngFor="let exAl of round.exercisesAlternatives">
-
 				    				<div class="container">
 				    					<span class="user" *ngFor="let usrAlt of exAl.users">{{usrAlt}}</span>
 				    					<h1 class="display-4">{{exAl.exercises[j].title}}</h1>
-				    					<p class="lead"> {{exAl.exercises[j].description }} </p>
+				    					<p class="lead" [innerHTML]="exAl.exercises[j].description"></p>
+				    				</div>
+
+				    		</ng-container>
+	
+				    	</div>
+			    	</ng-container>
+
+			    	<ng-container *ngFor="let exercise of round.exercises; let j =index">
+
+				    	<div class="on-going-exercises" [@flyInOut] *ngIf="j === this.NextExercise.exercise">
+				    		<div class="container">Next drills</div>
+				    		<div class="container"   >
+				      			<span class="user" *ngFor="let usr of round.exercisesMainUser">{{usr}}</span>
+					      		<h3 class="display-4">{{exercise.title}}</h3>
+
+				    		</div >
+				    		<ng-container *ngFor="let exAl of round.exercisesAlternatives">
+				    				<div class="container">
+				    					<span class="user" *ngFor="let usrAlt of exAl.users">{{usrAlt}}</span>
+				    					<h3 class="display-4">{{exAl.exercises[j].title}}</h3>
 
 				    				</div>
 
-
 				    		</ng-container>
-				    			
-				    		
+	
 				    	</div>
 			    	</ng-container>
 

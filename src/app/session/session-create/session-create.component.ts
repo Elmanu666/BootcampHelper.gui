@@ -5,6 +5,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { ToastrService } from 'ngx-toastr';
 import { SessionDisplayComponent } from '../session-display/session-display.component';
+import {DatePipe} from '@angular/common';
+
 
 
 
@@ -77,7 +79,7 @@ export class SessionCreateComponent implements OnInit {
   id : string;
 
   ngOnInit() {
-
+    debugger;
     this.userService.getUsers()
       .subscribe(users =>{
         this.users = users;
@@ -86,7 +88,7 @@ export class SessionCreateComponent implements OnInit {
       })
 
    this.activAccordion = 0;
-   this.route.snapshot.paramMap.get('id') ? this.id = this.route.snapshot.paramMap.get('id') : "create";
+   this.route.snapshot.paramMap.get('id') ? this.id = this.route.snapshot.paramMap.get('id') : this.id= "create";
 
     if (this.id === "create") {
 
@@ -105,6 +107,7 @@ export class SessionCreateComponent implements OnInit {
      this.exerciseService.getExercises(1)
       .subscribe(exercises => {
         //assign the todolist property to the proper http response
+        exercises.sort((a,b) => a.title.localeCompare(b.title));
         this.exercisesList = exercises;
       //  this.pagesInfo = this.pagerService.getPager();
       })
@@ -146,6 +149,7 @@ export class SessionCreateComponent implements OnInit {
       })
 
       this.newSession.round[idRound].exercises = tmp;
+      this.newSession.round[idRound].exercises.length < this.newSession.round[idRound].exercisesNumber ? this.newSession.round[idRound].exercises.push(new Exercise()): '';
 
     }
 
@@ -157,6 +161,7 @@ export class SessionCreateComponent implements OnInit {
       })
 
       this.newSession.round[idRound].exercisesAlternatives[exAltId].exercises = tmp;
+      this.newSession.round[idRound].exercisesAlternatives[exAltId].exercises.length < this.newSession.round[idRound].exercisesNumber ? this.newSession.round[idRound].exercisesAlternatives[exAltId].exercises.push(new Exercise()):'';
 
     }
   }
