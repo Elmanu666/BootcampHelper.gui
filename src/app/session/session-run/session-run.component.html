@@ -9,7 +9,7 @@
 <ng-container *ngIf="!calendar && loaded && !started && !sessionFinished">
 	<div class="row spacer-top" >
 			<div class="col-md-4"></div>
-			<div class="col-md-4">
+			<div class="col-md-4 bouton-center">
 				<button  [@flyDown] class="btn btn-lg btn-success" (click)="startSession()">
 			       		Run bootcamp session
 			    </button>
@@ -39,7 +39,7 @@
 	<div *ngIf="!roundsStarted">
 		<div class="row">
 			<div class="col-md-5"></div>
-			<div class="col-md-2">
+			<div class="col-md-2 bouton-center">
 				<button  [@flyDown] class="btn btn-lg btn-success" (click)="startRounds()">
 			       		Start round
 			    </button>
@@ -68,7 +68,7 @@
 				            <p mat-line> {{session.round[currentExercise.round].drillsDuration }}s </p>
 				          </mat-list-item>
 				        </div>
-				        <div class="exercise-list-alt">
+				        <div class="exercise-list-alt" *ngIf="session.round[currentExercise.round].exercisesAlternatives.length >0">
 				        	<ng-container *ngFor="let exrcAlts of session.round[currentExercise.round].exercisesAlternatives">
 				        	  <div class="exercise-list-user"><span *ngFor="let usr of exrcAlts.users">{{usr}}</span></div>
 					          <mat-list-item *ngFor="let exAlt of exrcAlts.exercises">
@@ -162,26 +162,32 @@
 	
 				    	</div>
 			    	</ng-container>
-
+			    	<div class="container" ><h5>Next drills :</h5></div>
+			    	<div class="on-going-exercises" [@flyInOut] *ngIf="this.NextExercise.exercise == 999">
+				    	<div class="container">
+				    		<h5>Round finished</h5>
+				    	</div>
+				    </div>
 			    	<ng-container *ngFor="let exercise of round.exercises; let j =index">
+			    		
 
-				    	<div class="on-going-exercises" [@flyInOut] *ngIf="j === this.NextExercise.exercise">
-				    		<div class="container">Next drills</div>
+				    	<div class="on-going-exercises" [@flyInOut] *ngIf="j === this.NextExercise.exercise && this.NextExercise.exercise != 999">
 				    		<div class="container"   >
 				      			<span class="user" *ngFor="let usr of round.exercisesMainUser">{{usr}}</span>
-					      		<h3 class="display-4">{{exercise.title}}</h3>
+					      		<h5 class="display-4">{{exercise.title}}</h5>
 
 				    		</div >
 				    		<ng-container *ngFor="let exAl of round.exercisesAlternatives">
 				    				<div class="container">
 				    					<span class="user" *ngFor="let usrAlt of exAl.users">{{usrAlt}}</span>
-				    					<h3 class="display-4">{{exAl.exercises[j].title}}</h3>
+				    					<h5 class="display-4">{{exAl.exercises[j].title}}</h5>
 
 				    				</div>
 
 				    		</ng-container>
 	
 				    	</div>
+
 			    	</ng-container>
 
 			

@@ -36,8 +36,9 @@ export class AppComponent {
   menus : Array<MenuItem>;
   menuSelected : Array<MenuItem>;
   section: string;
-  lateralMenuStatus;
+  lateralMenuStatus :boolean;
   mainDisplay: string;
+  blockMainDisplay: boolean;
 
 	  constructor(
 
@@ -63,17 +64,17 @@ export class AppComponent {
 
  	            this.breadcrumbUrl(res.url);
                this.setLateralMenu();
+               params[1] == 'session' && params[2] == 'run' && params.length > 3 ? (this.mainDisplay = "col-md-12", this.blockMainDisplay= true, this.lateralMenuStatus =false) : (this.mainDisplay = "col-md-11" , this.blockMainDisplay= false);
            }
     		
 		});
      this.watcher = mediaObserver.media$.subscribe((change: MediaChange) => {
-      debugger;
       this.activeMediaQuery = change ? `'${change.mqAlias}' = (${change.mediaQuery})` : '';
-      if ( change.mqAlias == 'xs' || change.mqAlias == 'xm' || change.mqAlias == 'md') {
+      if ( change.mqAlias == 'xs' || change.mqAlias == 'xm' || change.mqAlias == 'md' && this.blockMainDisplay == false) {
          this.mainDisplay = "col-md-12";
       }
 
-      else {
+      else if (this.blockMainDisplay == false) {
         this.mainDisplay = "col-md-11"
 
       }

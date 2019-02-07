@@ -2,8 +2,6 @@ import { Component, OnInit, ViewContainerRef, ViewChild } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { trigger, state, style, animate, transition, query, stagger } from '@angular/animations';
 import { Router, ActivatedRoute } from '@angular/router';
-import {CdkDragDrop, moveItemInArray, transferArrayItem, copyArrayItem} from '@angular/cdk/drag-drop';
-
 
 import { ToastrService } from 'ngx-toastr';
 import { SessionDisplayComponent } from '../session-display/session-display.component';
@@ -15,7 +13,6 @@ import {DatePipe} from '@angular/common';
 import { UserService } from '../../services/user.service';
 import { ExerciseService } from '../../services/exercise.service';
 import { SessionService } from '../../services/session.service';
-
 
 import Session from '../../models/session.model';
 import Round from '../../models/round.model';
@@ -30,8 +27,8 @@ function remove(item: string, list: string[]) {
 
 @Component({
   selector: 'app-root',
-  templateUrl: './session-create.component.html',
-  styleUrls: ['./session-create.component.scss'],
+  templateUrl: './session-create-old.component.html',
+  styleUrls: ['./session-create-old.component.scss'],
   animations: [
         trigger('cardBody', [
           transition('void => *',[ 
@@ -47,7 +44,7 @@ function remove(item: string, list: string[]) {
 })
 
 
-export class SessionCreateComponent implements OnInit {
+export class SessionCreateOldComponent implements OnInit {
 
 
 
@@ -97,8 +94,6 @@ export class SessionCreateComponent implements OnInit {
 
           this.newSession = new Session();
           this.loaded=true;
-
-
     }
     else {
        this.sessionService.getSession(this.id)
@@ -107,7 +102,6 @@ export class SessionCreateComponent implements OnInit {
         this.newSession = session;
         //this.loaded = true
         this.loaded = true;
-
       })
     }
      this.exerciseService.getExercises(1)
@@ -303,39 +297,6 @@ export class SessionCreateComponent implements OnInit {
     this.dropAreaClass = 'dropOut';
   }
 
-  drop2(event: CdkDragDrop<string[]>, round : number, idAtl : number) {
-    debugger;
-    if (event.previousContainer === event.container && event.container.id.slice(0, 16) != "exercise-dropped") {
-
-
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-
-
-
-
-    } 
-
-    else if (event.previousContainer.id.slice(0, 13) === "exercise-list" && event.container != event.previousContainer ) {
-      var type = "";
- 
-
-      event.container.id.slice(0, 3) === 'alt' ? type = "alt" : type ="main";
-      this.addExercise(event.previousContainer.data[event.previousIndex], round, type, idAtl)
-
-      // copyArrayItem(event.previousContainer.data,
-      //                   event.container.data,
-      //                   event.previousIndex,
-      //                   event.currentIndex);
-    
-
-    }
-
-
-    
-  }
-
-
-
   addExercise(exercise:Exercise, id : number, type: string, idAtl : number){
 
     //try to find the first empty exercise in the list
@@ -402,7 +363,7 @@ export class SessionCreateComponent implements OnInit {
 
   roundChange(id){
 
-    debugger;
+
     this.activAccordion == id ? this.activAccordion = null : this.activAccordion = id;
   }
 
@@ -512,7 +473,6 @@ export class SessionCreateComponent implements OnInit {
 
 
   }
-
 
 }
 

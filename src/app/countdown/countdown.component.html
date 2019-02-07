@@ -3,7 +3,7 @@
 	
 	<div class="count-down-wrapper">
 		<div class="count-down">
-			<h1>{{durationSelected2Digit.minute}}:{{durationSelected2Digit.second}}</h1>
+			<h1 class="clock">{{durationSelected2Digit.minute}}:{{durationSelected2Digit.second}}</h1>
 
 			<div class="lecteur" *ngIf="playerEnable">
 				<button  *ngIf="!start" class="btn btn-lg btn-success" (click)="startCountDown(durationSelected)">

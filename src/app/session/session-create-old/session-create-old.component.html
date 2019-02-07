@@ -90,70 +90,59 @@
                       <mat-error *ngIf="round.exercisesNumber < 1 || round.exercisesNumber > 10 ">Min nb: 1</mat-error>
                     </mat-form-field>
                   </div>
-                  <div cdkDropListGroup>
-                    <div class="round-configurator">
-
-                      <div class="exercise-selector-container">
-                        <div class="exercise-selector-header">
-                          <h6>Exercises selector :</h6>
-                          <span>Drag and drop to the rigth panel</span>
-                        </div>
-                        <div class="exercise-selector list-group" cdkDropList #exerciseList="cdkDropList"
-                              [cdkDropListData]="exercisesList"
-                               id="exercise-list-{{i}}">
-                          <div class="exercise-items list-group-item" *ngFor="let exercise of exercisesList" cdkDrag [cdkDragData]="exercise" (cdkDropListDropped)="drop2($event)">
-                              <div class="placeholder" *cdkDragPlaceholder></div> 
-                              {{exercise.title}}
-
-                          </div>
-                        </div>
+                  <div class="round-configurator">
+                    <div class="exercise-selector-container">
+                      <div class="exercise-selector-header">
+                        <h6>Exercises selector :</h6>
+                        <span>Drag and drop to the rigth panel</span>
                       </div>
-                      <div class="rounds-exercises-container">
-                        <div class="header exercise-selector-header">
-                          <button type="button" (click)="addAlternative(i)" class="btn btn-success btn-sm"><i class="fas fa-plus"></i></button>
-                          <span *ngFor="let user of round.exercisesMainUser" class="main-user">{{user}}</span>
-                        </div>
-                        <div class="exercise-selected dropzone" [ngClass]="dropAreaClass"  cdkDropList #doneList="cdkDropList"
-                            [cdkDropListData]="round.exercises"
-                            (cdkDropListDropped)="drop2($event, i, '')" id="exercise-droped-{{i}}">
-                            <ul>
+                      <div class="exercise-selector list-group" >
+                        <ul>
+                          <li class="exercise-items list-group-item" *ngFor="let exercise of exercisesList" draggable="true"  (dragstart)="dragExercise($event, exercise._id)"  (dragend)="dropExercise($event, exercise._id)">
+                                                  {{exercise.title}}
+                          </li>
+                        </ul>
+                      </div>
+                      </div>
+                    <div class="rounds-exercises-container">
+                      <div class="header exercise-selector-header">
+                        <button type="button" (click)="addAlternative(i)" class="btn btn-success btn-sm"><i class="fas fa-plus"></i></button>
+                        <span *ngFor="let user of round.exercisesMainUser">{{user}}</span>
+                      </div>
+                      <div class="exercise-selected dropzone" [ngClass]="dropAreaClass" (dragover)="dragOver($event)"  (dragleave)="dragLeave($event)" (drop)="drop($event, i, 'main', 0)">
+                          <ul appSortableList (sort)="sort($event, i, 'main', 0) ">
+                            <li class="exerciseItemsSelected box" *ngFor="let exec of round.exercises; let v=index" appSortable>
+                              <i class="fas fa-bars"  appDraggableHandler></i>
+                              {{exec.title}} 
+                              <i class="fas fa-times delete" (click)="deleteExerciseSelected(i, v, 'main', 0)"></i>
+                              <div class="box" *appDraggableHelper>{{exec.title}}</div>
+                          </li>
+                          </ul>
+                      </div>
 
-                              <li class="exerciseItemsSelected box" *ngFor="let exec of round.exercises; let v=index" cdkDragBoundary=".exercise-selected" cdkDrag>
-                                 <i class="fas fa-bars"  cdkDragHandle></i>
-                                {{exec.title}}
-                                <i class="fas fa-times delete" (click)="deleteExerciseSelected(i, v, 'main', 0)"></i>
-                                <div class="placeholder" *cdkDragPlaceholder></div>
+                    </div>
+                    <div class="rounds-exercises-container" *ngFor="let exAlt of round.exercisesAlternatives; let j = index" >
+                        <div class="header exercise-selector-header" >
+                          <mat-form-field>
+                            <mat-select placeholder="Participants" [(ngModel)]="newSession.round[i].exercisesAlternatives[j].users" multiple name="newSession.attendees" (selectionChange)="altUserSelection($event, {'round': i, 'exrAlt': j})">
+                            <mat-option *ngFor="let user of newSession.attendees" [value]="user">{{user}}</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                          <button type="button" (click)="deleteExercisesAlternatives(i,j)" class="btn btn-success btn-sm"><i class="far fa-trash-alt"></i></button>
+                        </div>
+                        <div class="exercise-selected dropzone" [ngClass]="dropAreaClass" (dragover)="dragOver($event)"  (dragleave)="dragLeave($event)" (drop)="drop($event, i, 'alt', j)">
+                            <ul appSortableList (sort)="sort($event, i, 'alt', j) ">
+                              <li class="exerciseItemsSelected box" *ngFor="let execAlt of exAlt.exercises; let v =index" appSortable>
+                                <i class="fas fa-bars"  appDraggableHandler></i>
+                                {{execAlt.title}} 
+                                <i class="fas fa-times delete" (click)="deleteExerciseSelected(i, v, 'alt', j)"></i>
+                                <div class="box" *appDraggableHelper>{{execAlt.title}}</div>
                             </li>
                             </ul>
-                        </div>
-
-                      </div>
+                        </div>             
                       
-
-                      <div class="rounds-exercises-container" *ngFor="let exAlt of round.exercisesAlternatives; let j = index" >
-                          <div class="header exercise-selector-header" >
-                            <mat-form-field>
-                              <mat-select placeholder="Participants" [(ngModel)]="newSession.round[i].exercisesAlternatives[j].users" multiple name="newSession.attendees" (selectionChange)="altUserSelection($event, {'round': i, 'exrAlt': j})">
-                              <mat-option *ngFor="let user of newSession.attendees" [value]="user">{{user}}</mat-option>
-                              </mat-select>
-                            </mat-form-field>
-                            <button type="button" (click)="deleteExercisesAlternatives(i,j)" class="btn btn-success btn-sm"><i class="far fa-trash-alt"></i></button>
-                          </div>
-                          <div class="exercise-selected dropzone" [ngClass]="dropAreaClass" cdkDropList #doneListAlt="cdkDropList"
-                            [cdkDropListData]="newSession.round[i].exercisesAlternatives[j].exercises"
-                            (cdkDropListDropped)="drop2($event, i, j)"  id="alt-exercise-droped-{{i}}-{{j}}">
-                              <ul >
-                                <li class="exerciseItemsSelected box" *ngFor="let execAlt of exAlt.exercises; let v =index" cdkDrag>
-                                  <i class="fas fa-bars"  cdkDragHandle></i>
-                                  {{execAlt.title}} 
-                                  <i class="fas fa-times delete" (click)="deleteExerciseSelected(i, v, 'alt', j)"></i>
-                                  <div class="placeholder" *cdkDragPlaceholder></div>
-                              </li>
-                              </ul>
-                          </div>             
-                        
-                      </div>
                     </div>
+
                   </div>
                 </div>
               </div >

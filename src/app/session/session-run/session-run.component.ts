@@ -17,6 +17,7 @@ import {
 import { CalendarComponent } from '../../calendar/calendar.component';
 
 
+
 const colors: any = {
   red: {
     primary: '#ad2121',
@@ -102,6 +103,7 @@ export class SessionRunComponent implements OnInit {
   sessionFinished : boolean =false;
 	progressBar:boolean=true;
   mainDisplay: string;
+  audio= new Audio();
 
    
 
@@ -120,7 +122,7 @@ export class SessionRunComponent implements OnInit {
     {}
 
   ngOnInit() {
-
+    this.initAudio();
 
     this.route.snapshot.paramMap.get('id') != null ? (this.calendar = false , this.idSession = this.route.snapshot.paramMap.get('id'), this.loaded=false):  (this.calendar =true);
   	this.progressBar = true;
@@ -181,6 +183,7 @@ export class SessionRunComponent implements OnInit {
 
   startRounds(){
     this.roundsStarted = true;
+    this.playAudio();
     setTimeout(()=>{
           this.countdowncomponent.setDuration(this.session.round[this.currentExercise.round].restDuration);
 
@@ -189,8 +192,8 @@ export class SessionRunComponent implements OnInit {
                       this.startCountDown();
 
 
-          }, 900);
-    }, 100);
+          }, 100);
+    }, 20);
 
 
   //  this.countdowncomponent.startCountDown();
@@ -222,6 +225,8 @@ export class SessionRunComponent implements OnInit {
   }
 
   startCountDown(){
+        this.playAudio();
+
 
     this.countdowncomponent.startCountDown();
 
@@ -392,23 +397,25 @@ export class SessionRunComponent implements OnInit {
   }
 
   nextExercise(event:string){
-
-    debugger;
-
 //end of the session 
   	if ( this.currentExercise.round == this.session.round.length -1 && this.currentExercise.exercise == this.session.round[this.currentExercise.round].exercises.length-1 && this.currentExercise.repeat == this.session.round[this.currentExercise.round].repeat){
-
-  		this.toastr.success('End of your Workout :'+ this.session.round[this.currentExercise.round].title, 'Finished !' , {timeOut: 2000});
-  			if(event== 'manual'){
-
-		        this.finishSession();
-
-	        }
+      if(this.currentExercise.drills == true){
+        this.toastr.success('End of your Workout :'+ this.session.round[this.currentExercise.round].title, 'Finished !' , {timeOut: 2000});
+        if(event== 'manual'){
+            this.finishSession();
+          }
 
           else {
-
             this.finishSession()
           }
+
+      }
+      else {
+
+        this.currentExercise.drills = true;
+        this.countdowncomponent.setDuration(this.session.round[this.currentExercise.round].drillsDuration);
+        this.startCountDown();
+      }
 
 
   	}
@@ -418,7 +425,7 @@ export class SessionRunComponent implements OnInit {
   	else if (this.currentExercise.exercise == this.session.round[this.currentExercise.round].exercises.length -1 && this.currentExercise.repeat == this.session.round[this.currentExercise.round].repeat){
 
   		this.currentExercise.drills ? (this.currentExercise.drills = false, this.currentExercise.repeat=1, this.currentExercise.exercise = 0,this.currentExercise.round +=  1, this.countdowncomponent.setDuration(this.session.round[this.currentExercise.round].restDuration),   		this.toastr.success('End of round :'+ this.session.round[this.currentExercise.round].title, 'Next Round !' , {timeOut: 2000})
-) : (this.currentExercise.drills = true, this.countdowncomponent.setDuration(this.session.round[this.currentExercise.round].drillsDuration)) ;
+) : (this.currentExercise.drills = true, this.countdowncomponent.setDuration(this.session.round[this.currentExercise.round].drillsDuration), this.NextExercise.exercise = 999) ;
 
   			if(event== 'manual'){
 
@@ -436,7 +443,7 @@ export class SessionRunComponent implements OnInit {
 
 
         }
-  	  	
+  	  	return ;
 
   }
 
@@ -444,53 +451,65 @@ export class SessionRunComponent implements OnInit {
 
   else if (this.currentExercise.exercise == this.session.round[this.currentExercise.round].exercises.length -1){
 
-	this.currentExercise.drills ? (this.currentExercise.drills = false, this.currentExercise.repeat +=1, this.currentExercise.exercise = 0,this.countdowncomponent.setDuration(this.session.round[this.currentExercise.round].drillsDuration), this.toastr.success('End of a repeat :'+ this.session.round[this.currentExercise.round].title, 'Continue !' , {timeOut: 2000})
-) : (this.currentExercise.drills = true, this.countdowncomponent.setDuration(this.session.round[this.currentExercise.round].drillsDuration)) ;
+    	this.currentExercise.drills ? (this.currentExercise.drills = false, this.currentExercise.repeat +=1, this.currentExercise.exercise = 0,this.countdowncomponent.setDuration(this.session.round[this.currentExercise.round].restDuration), this.toastr.success('End of a repeat :'+ this.session.round[this.currentExercise.round].title, 'Continue !' , {timeOut: 2000}), this.NextExercise.exercise = 1
+    ) : (this.currentExercise.drills = true, this.countdowncomponent.setDuration(this.session.round[this.currentExercise.round].drillsDuration), this.NextExercise.exercise=0) ;
 
-  this.NextExercise = Object.assign({}, this.currentExercise);
-  this.NextExercise.exercise = this.currentExercise.exercise + 1;
-	
-	if(event== 'manual'){
+      // this.NextExercise = Object.assign({}, this.currentExercise);
+      // this.NextExercise.exercise = this.currentExercise.exercise + 1;
+    	
+    	if(event== 'manual'){
 
-		this.stopCountDown();
+    		this.stopCountDown();
 
-	}
-	else {
+    	}
+    	else {
+    //    this.playAudio();
+    		this.startCountDown();
+    	}
+    	
 
-		this.startCountDown();
-	}
-	
-
-
+     return;
 
 
   }
 
   else {
-  	this.currentExercise.drills ? (this.currentExercise.drills = false, this.currentExercise.exercise += 1, this.countdowncomponent.setDuration(this.session.round[this.currentExercise.round].restDuration)) : (this.currentExercise.drills = true, this.countdowncomponent.setDuration(this.session.round[this.currentExercise.round].drillsDuration)) ;
+    	this.currentExercise.drills ? (this.currentExercise.drills = false, this.currentExercise.exercise += 1, this.countdowncomponent.setDuration(this.session.round[this.currentExercise.round].restDuration)) : (this.currentExercise.drills = true, this.countdowncomponent.setDuration(this.session.round[this.currentExercise.round].drillsDuration)) ;
 
-    this.NextExercise = Object.assign({}, this.currentExercise);
+      this.NextExercise = Object.assign({}, this.currentExercise);
 
-    this.NextExercise.exercise == this.session.round[this.currentExercise.round].exercises.length -1 ? this.NextExercise.exercise = 0 : this.NextExercise.exercise  += 1;
+      this.NextExercise.exercise == this.session.round[this.currentExercise.round].exercises.length -1 ? this.session.round[this.currentExercise.round].repeat == this.currentExercise.repeat ?this.NextExercise.exercise = 999 : this.NextExercise.exercise = 0 : this.NextExercise.exercise  += 1;
 
 
-  	if(event== 'manual'){
+    	if(event== 'manual'){
 
-  		this.stopCountDown();
+    		this.stopCountDown();
 
-  	}
-  	else {
+    	}
+    	else {
+  //      this.playAudio();
+    		this.startCountDown();
+    	}
+    	
 
-  		this.startCountDown();
-  	}
-  	
+
+    }
+
 
 
   }
 
+  initAudio(){
 
+    this.audio.src = "../../../../assets/audio/pagerbeeps.mov";
+    this.audio.load();
 
-}
+  }
+
+  playAudio(){
+
+    this.audio.play();
+  }
 }
 
 

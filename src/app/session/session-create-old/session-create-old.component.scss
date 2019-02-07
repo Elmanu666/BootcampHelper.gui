@@ -156,19 +156,6 @@ ul {
   user-select: none;
 }
 
-.placeholder{
-  background: #ccc;
-  border: dotted 3px #999;
-  min-height: 60px;
-  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
-
-}
-
 .movable:not(.dragging) {
   transition: transform 300ms ease-in-out;
-}
-
-.main-user {
-  margin-top:1.5rem;
-
 }

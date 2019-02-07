@@ -59,11 +59,16 @@
 
 }
 
+.bouton-center{
+	display: flex;
+	justify-content: center;
+}
+
 .on-going-exercises{
 			display: flex;
 }
 
- @media only screen and (max-width: 1024px) {
+ @media only screen and (max-width: 1120px) {
  	.jumbotron{
  		padding :0rem !important;
 

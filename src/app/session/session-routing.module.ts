@@ -6,6 +6,7 @@ import { SessionComponent } from './session.component';
 import { SessionListComponent } from './session-list/session-list.component';
 import { SessionDisplayComponent } from './session-display/session-display.component';
 import { SessionCreateComponent } from './session-create/session-create.component';
+import { SessionCreateOldComponent } from './session-create-old/session-create-old.component';
 import { SessionRunComponent } from './session-run/session-run.component';
 import { SessionMainComponent } from './session-main/session-main.component';
 
@@ -20,12 +21,14 @@ const sessionRoutes: Routes = [
           { path: '', component:SessionMainComponent},
           { path: 'list', component: SessionListComponent },
           { path: 'create', component: SessionCreateComponent },
+          { path: 'create-old', component: SessionCreateOldComponent },
           { path: 'detail/:id', component: SessionDisplayComponent },
           { path: 'detail', component: SessionListComponent },
           { path: 'edit/:id', component: SessionCreateComponent },
           { path: 'edit', component: SessionListComponent },
           { path: 'run/:id', component: SessionRunComponent },
           { path: 'run', component: SessionRunComponent },
+        
 //          { path: 'count-down', component: SessionRunComponent },
 
         

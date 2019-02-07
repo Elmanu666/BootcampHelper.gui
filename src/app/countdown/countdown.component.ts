@@ -20,6 +20,7 @@ export class CountdownComponent implements OnInit {
 	durationSelected2Digit:{"hour":string, "minute":string, "second":string, "msecond" :string} ;
 	initialDuration: number = 30;
 	remainingDuration:number = 0;
+	audio = new Audio();
 
   	 private interval;
   	 private stop:boolean = false;
@@ -43,7 +44,6 @@ export class CountdownComponent implements OnInit {
   }
 
   startCountDown(){
-
   	if (this.start){
 
 
@@ -98,6 +98,17 @@ export class CountdownComponent implements OnInit {
 
   }
 
+  initAudio(){
+
+    this.audio.src = "../../../assets/audio/pagerbeeps.mov";
+    this.audio.load();
+
+  }
+
+  playAudio(){
+    this.audio.play();
+  }
+
   finishCountDown(){
 
 
@@ -110,19 +121,30 @@ export class CountdownComponent implements OnInit {
 
 
 	tickTick(duration:{"hour":number, "minute":number, "second":number, "msecond" : number}) {
-
 		this.duration = this.jsonToNumber(duration);
 		this.initialDuration = this.duration;
+		// var buzzer = 1000;
+		// buzzer = buzzer - this.clockPrecision;
 		if (this.duration > 0) {
 			this.interval = setInterval(() => {
 				this.duration = this.duration - this.clockPrecision
 			
+				// if (this.duration == buzzer){
+				// 	var _this = this ;
+				// 	setTimeout(function() {
+				// 	       _this.playAudio();
+				// 	    }, 20)
+				// }
 
 				if (this.duration <=-1){
 
 
 					this.finishCountDown();
 				}
+
+
+
+
 
 
 
@@ -236,6 +258,7 @@ export class CountdownComponent implements OnInit {
 
 
 		}
+
 
 		
 

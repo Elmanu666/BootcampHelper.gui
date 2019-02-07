@@ -3,7 +3,7 @@ import { CommonModule }   from '@angular/common';
 import { EditorModule } from '@tinymce/tinymce-angular';
 import { UiSwitchModule } from 'ngx-ui-switch';
 import {MatStepperModule, MatNativeDateModule, MatListModule, MatCardModule, MatInputModule, MatButtonModule, MatDatepickerModule, MatSelectModule, MatGridListModule, MatExpansionModule, MatIconModule} from '@angular/material';
-
+import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 
 
 
@@ -13,6 +13,7 @@ import { FormsModule } from '@angular/forms';
 import {SessionDisplayComponent} from './session-display/session-display.component';
 import {SessionListComponent} from './session-list/session-list.component';
 import {SessionCreateComponent} from './session-create/session-create.component';
+import {SessionCreateOldComponent} from './session-create-old/session-create-old.component';
 import {SessionRunComponent} from './session-run/session-run.component';
 import {SessionSheetComponent} from './session-sheet/session-sheet.component';
 import {SessionMainComponent} from './session-main/session-main.component';
@@ -31,6 +32,8 @@ import {SharedModule} from '../common/sharedComponent.module'
 import { CalendarComponent } from '../calendar/calendar.component';
 
 import { DraggableModule } from '../common/draggable/draggable.module';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+
 
 
 
@@ -67,6 +70,8 @@ import { DraggableModule } from '../common/draggable/draggable.module';
     SessionRoutingModule,
     SharedModule,
     DraggableModule,
+     DragDropModule,
+
     
     // CalendarModule.forRoot({
     //   provide: DateAdapter,
@@ -82,6 +87,7 @@ import { DraggableModule } from '../common/draggable/draggable.module';
   	SessionDisplayComponent,
   	SessionListComponent,
   	SessionCreateComponent,
+    SessionCreateOldComponent,
     SessionRunComponent,
   	SessionMainComponent,
   	CountdownComponent,
