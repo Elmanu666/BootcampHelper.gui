@@ -40,16 +40,15 @@ export class UsersCreateComponent implements OnInit {
   ngOnInit() {
 
   	this.ready=false;
-
-	this.route.snapshot.routeConfig.path.slice(0,6) == 'detail' ? this.viewMode = true: this.viewMode = false;
-	this.path = this.route.snapshot.routeConfig.path.split("/")[0];
-	this.route.snapshot.paramMap.get('id') ? this.id =  this.route.snapshot.paramMap.get('id') : this.id = null;
+  	this.route.snapshot.routeConfig.path.slice(0,6) == 'detail' ? this.viewMode = true: this.viewMode = false;
+  	this.path = this.route.snapshot.routeConfig.path.split("/")[0];
+  	this.route.snapshot.paramMap.get('id') ? this.id =  this.route.snapshot.paramMap.get('id') : this.id = null;
 
 
   	this.formGroup = new Array();
 
 
-  	if (this.id == null){
+  if (this.id == null){
 		this.user = new User();
 		this.createFormControls();
 		this.formInit();

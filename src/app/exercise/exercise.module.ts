@@ -27,6 +27,12 @@ import {MatSliderModule} from '@angular/material/slider';
 
 import {SharedModule} from '../common/sharedComponent.module'
 
+import { ReactiveFormsModule } from '@angular/forms';
+
+import {DynamicFormModule} from '../dynamic-form/dynamic-form.module';
+
+
+
 
 
 // import { AdminComponent }           from './admin.component';
@@ -46,8 +52,8 @@ import {SharedModule} from '../common/sharedComponent.module'
     ExerciseRoutingModule,
     MatSliderModule,
     SharedModule,
-    
-    
+    ReactiveFormsModule,
+    DynamicFormModule
   ],
   declarations: [
     ExerciseListComponent,

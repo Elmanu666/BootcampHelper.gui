@@ -8,8 +8,8 @@ class session {
     plannedDate: Date;
     executionDate :Date;
     Status: string;
-    attendees : [string];
-    round :[Round];
+    attendees : string[];
+    round :Round[];
     deleted:boolean;
     executed:boolean;
 

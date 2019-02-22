@@ -3,6 +3,8 @@ import SessionModel from '../../models/session.model';
 import { SessionService } from '../../services/session.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from 'ngx-spinner';
+
 
 
 
@@ -25,7 +27,9 @@ export class SessionDisplayComponent implements OnInit {
           private sessionService: SessionService,
           private route: ActivatedRoute,
           private router: Router,
-          private toastr : ToastrService) { }
+          private toastr : ToastrService,
+          private spinner: NgxSpinnerService
+          ) { }
 
   ngOnInit() {
 
@@ -33,15 +37,15 @@ export class SessionDisplayComponent implements OnInit {
 
       this.idSession = this.route.snapshot.paramMap.get('id');
 
-  
+      this.spinner.show();
 
       this.sessionService.getSession(this.idSession)
       .subscribe(session => {
         //assign the todolist property to the proper http response
         this.session = session;
         this.loaded = true
-        console.log("on reçoit la session");
-        console.log(session);
+
+        this.spinner.hide();
 
 
 

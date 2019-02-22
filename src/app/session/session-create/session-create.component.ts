@@ -21,6 +21,8 @@ import Session from '../../models/session.model';
 import Round from '../../models/round.model';
 //import User from '../../models/user.model';
 import Exercise from '../../models/exercise.model';
+import { NgxSpinnerService } from 'ngx-spinner';
+
 
 function remove(item: string, list: string[]) {
   if (list.indexOf(item) !== -1) {
@@ -74,8 +76,7 @@ export class SessionCreateComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private userService :UserService,
-
-
+    private spinner: NgxSpinnerService
 
    ) { }
 
@@ -101,14 +102,19 @@ export class SessionCreateComponent implements OnInit {
 
     }
     else {
-       this.sessionService.getSession(this.id)
-      .subscribe(session => {
-        //assign the todolist property to the proper http response
-        this.newSession = session;
-        //this.loaded = true
-        this.loaded = true;
+      this.spinner.show();
+      this.sessionService.getSession(this.id)
+     
 
-      })
+        .subscribe(session => {
+          //assign the todolist property to the proper http response
+          this.newSession = session;
+          //this.loaded = true
+          this.loaded = true;
+          this.roundNb = this.newSession.round.length;
+          this.spinner.hide();
+
+        })
     }
      this.exerciseService.getExercises(1)
       .subscribe(exercises => {
@@ -237,6 +243,14 @@ export class SessionCreateComponent implements OnInit {
       this.newSession.round.push(newRound);    
   }
 
+  deleteRound(id:number){
+    debugger;
+    this.newSession.round.splice(id, 1) ;
+    this.roundNb = this.newSession.round.length;
+
+
+  }
+
   sessionSave(){
     if (this.id == 'create'){
       this.sessionService.createSession(this.newSession).subscribe(res =>
@@ -336,7 +350,7 @@ export class SessionCreateComponent implements OnInit {
 
 
 
-  addExercise(exercise:Exercise, id : number, type: string, idAtl : number){
+  addExercise(exercise, id : number, type: string, idAtl : number){
 
     //try to find the first empty exercise in the list
 

@@ -23,7 +23,8 @@ const exerciseRoutes: Routes = [
           { path: 'list3', component: ExerciseComponent },
           { path: 'create', component: ExerciseCreateComponent },
           { path: 'detail', component: ExerciseListComponent },
-          { path: 'detail/:id', component: ExerciseDisplayComponent },
+//          { path: 'detail/:id', component: ExerciseDisplayComponent },
+          { path: 'detail/:id', component: ExerciseCreateComponent },
           { path: 'edit', component: ExerciseListComponent },
           { path: 'edit/:id', component: ExerciseCreateComponent },
 

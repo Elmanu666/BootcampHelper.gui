@@ -19,6 +19,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 
 import Page from '../../models/pages.model';
+import { NgxSpinnerService } from 'ngx-spinner';
+
 
 
 
@@ -63,6 +65,8 @@ export class SessionListComponent implements OnInit {
   		private pagerService: PagerService,
   		private route: ActivatedRoute,
     	private router: Router,
+      private spinner: NgxSpinnerService
+
 
 
 		) { 
@@ -91,18 +95,13 @@ export class SessionListComponent implements OnInit {
 
   ngOnInit(): void {
 
-        this.path = this.route.snapshot.routeConfig.path
-
-
+    this.path = this.route.snapshot.routeConfig.path
     this.getSessions();
-
-
-
-      }
+    }
 
 
   getSessions(){
-
+    this.spinner.show();
     this.loaded=false;
 
     this.sessionService.getSessions(this.page)
@@ -110,7 +109,11 @@ export class SessionListComponent implements OnInit {
         //assign the todolist property to the proper http response
         this.sessionsList = sessions;
         this.pagesInfo = this.pagerService.getPager();
-        this.loaded=true;
+
+          setTimeout(() => {
+            this.loaded = true;
+            this.spinner.hide();
+            }, 200);
 
 
 

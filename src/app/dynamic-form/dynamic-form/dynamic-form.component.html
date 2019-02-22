@@ -6,7 +6,7 @@
     </div>
  
     <div class="form-row" *ngIf="!disable">
-      <button type="submit" [disabled]="!form.valid" ngClass="{'btn-success':form.valid , 'disabled':!form.valid}">Save</button>
+      <button type="submit" [disabled]="!form.valid" class="btn" [ngClass]="{'btn-success': form.valid , 'btn-danger' : !form.valid}">Save</button>
     </div>
   </form>
  

@@ -17,6 +17,7 @@ export class DynamicFormQuestionComponent  {
   @Input() form: FormGroup;
   @Input() disable: boolean;
   get isValid() { return this.form.controls[this.question.key].valid; }
+  get isTouched() { return this.form.controls[this.question.key].touched; }
 
 
   rangeValueUpdate(sliderEvent){

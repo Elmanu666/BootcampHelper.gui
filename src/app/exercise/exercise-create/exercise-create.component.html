@@ -1,104 +1,158 @@
-<div class="container" *ngIf="exercise">
- 
-
+<div class="container" *ngIf="dynForm && ready">
+  <h1>Exercise</h1>
   <div class="row">
-        <div class="col-md-8 form-group">
-          <label for="title">Title</label>
-          <input type="text" name="title" id="title" (blur)="update(id)" [(ngModel)]="exercise.title" placeholder="Title" class="form-control">
-        </div>
-        <div class="col-md-4 ActionButtons">
+    <div class="col-md-6">
+      <div class="row">
+        <button class="btn btn-danger" (click)="deleteExercise()" *ngIf="edit || view">
+          <i  class="fa fa-trash"></i>
+        </button>
 
-            <button *ngIf="id == 'create'" class="btn btn-success" (click)="create(exercise)">
-              <i  class="fa fa-check"></i>
-            </button>
-            <button *ngIf="id != 'create'" class="btn btn-danger" (click)="deleteExercise(exercise)">
+        <button class="btn btn-warning" (click)="editExercise()" *ngIf="view">
+          <i  class="fa fa-pencil"></i>
+        </button> 
+       <button class="btn btn-success" (click)="viewExercise()" *ngIf="edit">
+          <i  class="fa fa-eye"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  <app-dynamic-form [questions]="questionsExercises" (saveForm)="onSubmit($event)" [disable]="view"></app-dynamic-form>
+  <br>
+  <div class="row media" *ngIf="edit">
+    <div class="form-group col-md-12">
+            <app-file-upload 
+              ExerciseId="{{exercise._id}}" 
+              type="exercise" 
+              maxFiles="4"
+              maxSize="5"
+              fileExt="JPG, GIF, PNG"
+              (uploadStatus) = "getImage(exercise._id)"        
+              >
+            </app-file-upload>
+    </div>
+  </div>
+
+  <div class="row media" *ngIf="!creation">
+   
+    <div class="image-container form-group col-md-3" *ngFor="let img of images">
+      <img  [src]="img_url + img.ImagePath" class="img-thumbnail"  alt="">
+      <a (click)="removeImage(img)">
+        <i class="far fa-trash-alt"  style="font-size: 48px;"></i>
+      </a>
+    </div>
+  </div>
+
+</div>
+
+
+
+
+<div class="container" *ngIf="!dynForm && ready">
+  
+    <h1>Exercise</h1>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="row">
+            <button class="btn btn-danger" (click)="deleteExercise()" *ngIf="edit || view">
               <i  class="fa fa-trash"></i>
             </button>
-            <button class="btn btn-warning" (click)="newExercise()">
-              <i class="fa fa-plus-square"></i>
+
+            <button class="btn btn-warning" (click)="editExercise()" *ngIf="view">
+              <i  class="fa fa-pencil"></i>
+            </button> 
+           <button class="btn btn-success" (click)="viewExercise()" *ngIf="edit">
+              <i  class="fa fa-eye"></i>
             </button>
+          </div>
+          <form (ngSubmit)="onSubmit()" [formGroup]="exerciseForm">
+
+
+              <div class="form-group" [ngClass]="{'has-danger': title.invalid && title.dirty,'has-success': title.valid && title.dirty, 'view': view}">   
+                <label for="title">Title</label>
+                <input type="text" class="form-control" id="title" formControlName="title"  >
+                <div class="alert alert-danger" *ngIf="title.errors && (title.dirty || title.touched)"> 
+                  <p *ngIf="title.errors.required">Title is required </p>
+                  <p *ngIf="title.errors.minlength">Must be more than {{title.errors.minlength.requiredLength}} ({{title.errors.minlength.actualLength}}) </p>
+                </div>
+              </div>
+            
+              <div class="form-group" [ngClass]="{'has-danger': description.invalid && description.dirty,'has-success': description.valid && description.dirty, 'view': view}">   
+                <label for="description">Description</label>
+                <textarea rows="3" type="text" class="form-control" id="description" formControlName="description"  ></textarea>
+                <div class="alert alert-danger" *ngIf="description.errors && (description.dirty || description.touched)"> 
+                  <p *ngIf="description.errors.required">Description is required </p>
+                  <p *ngIf="description.errors.minlength">Must be more than {{description.errors.minlength.requiredLength}} ({{description.errors.minlength.actualLength}}) </p>
+                </div>
+              </div>
+
+
+              <div class="form-group form-check" [ngClass]="{ 'view' : view}">
+                <input type="checkbox" class="form-check-input" id="muscu" formControlName="muscu">
+                <label for="muscu" class="form-check-label">Muscu</label>
+              </div>
+
+              <div class="form-group form-check" [ngClass]="{'view' : view}">
+                <input type="checkbox" class="form-check-input" id="cardio" formControlName="cardio">
+                <label for="cardio" class="form-check-label">Cardio</label>
+              </div>
+
+              <div class="form-group form-check" [ngClass]="{'view' : view}">
+                <input type="checkbox" class="form-check-input" id="balance" formControlName="balance">
+                <label for="balance" class="form-check-label">Balance</label>
+              </div>
+
+              <div class="form-group form-check" [ngClass]="{'view' : view}">
+                <input type="checkbox" class="form-check-input" id="warmup" formControlName="warmup">
+                <label for="warmup" class="form-check-label">warmup</label>
+              </div>
+
+              <div class="form-group" [ngClass]="{'view' : view}">
+                <label for="bodyPart">Body part</label>
+                <select class="form-control" id="bodyPart" name="bodyPart" formControlName="bodyPart" multiple>
+                    <option *ngFor="let ty of bodyPartList" [value]="ty">{{ty}}</option>
+                </select>
+                <div class="alert alert-danger" *ngIf="bodyPart.errors && (bodyPart.dirty || bodyPart.touched)"> 
+                  <p *ngIf="bodyPart.errors.required">Bodypart is required </p>
+                </div>
+              </div>
+
+              <div class="form-group" [ngClass]="{'view' : view}">
+                <label for="material">Material type</label>
+                <select class="form-control" id="material" name="material" formControlName="material" multiple>
+                    <option *ngFor="let mat of materialType" [value]="mat">{{mat}}</option>
+                </select>
+              </div>
+              <div class="row media" *ngIf="edit">
+                  <div class="form-group col-md-12">
+                          <app-file-upload 
+                            ExerciseId="{{exercise._id}}" 
+                            type="exercise" 
+                            maxFiles="4"
+                            maxSize="5"
+                            fileExt="JPG, GIF, PNG"
+                            (uploadStatus) = "getImage(exercise._id)"
+                      
+                            >
+                          </app-file-upload>
+                  </div>
+              </div>
+
+
+              <div class="row media" *ngIf="!creation">
+                 
+                  <div class="image-container form-group col-md-3" *ngFor="let img of images">
+                    <img  [src]="img_url + img.ImagePath" class="img-thumbnail"  alt="">
+                    <a (click)="removeImage(img)">
+                      <i class="far fa-trash-alt"  style="font-size: 48px;"></i>
+                    </a>
+                  </div>
+              </div>
+
+              <button *ngIf="!view" type="submit" class="btn" [disabled]="!exerciseForm.valid" [ngClass]="{'btn-danger' : !exerciseForm.valid, 'btn-success': exerciseForm.valid}">Submit</button>
+
+          </form>
         </div>
-  </div>
-
-
-  <div class="row">
-        <div class="form-group col-md-12">
-          <label for="description">Description</label>
-          <editor [(ngModel)]="exercise.description" (onBlur)="update(id)" name="description" id="description{{i}}" class="form-control"></editor>
-        </div>
-  </div>
-
-                        
-  <div class="checklist row">
-      <div class="form-check col-md-3">
-        <ui-switch type="checkbox" size="small" name="muscu" id="muscu" (change)="update(id)" [(ngModel)]="exercise.details.muscu"  class="form-control-input">
-        </ui-switch>
-
-        <label class="switch-label form-check-label" for="muscu">Muscu</label>
       </div>
-                        
-      <div class="form-group col-md-3">
-          <ui-switch type="checkbox" size="small" name="cardio" id="cardio" (change)="update(id)" [(ngModel)]="exercise.details.cardio" class="form-control-input"></ui-switch>
-          <label class="form-check-label" for="cardio">Cardio</label>
-      </div>
-      <div class="form-group col-md-3">
-        <ui-switch type="checkbox" size="small" name="balance" id="balance" (change)="update(id)" [(ngModel)]="exercise.details.balance" ></ui-switch>
-          <label class="form-check-label" for="balance">Balance</label>
-      </div>
-      <div class="form-group col-md-3">
-        <ui-switch type="checkbox" size="small" name="warmup" id="warmup" (change)="update(id)" [(ngModel)]="exercise.details.warmup" ></ui-switch>
-          <label class="form-check-label" for="warmup">Warmup ideal</label>
-      </div>
-  </div>
-
-  <div class="row media">
-      <div class="form-group col-md-12">
-              <app-file-upload 
-                ExerciseId="{{exercise._id}}" 
-                type="exercise" 
-                maxFiles="4"
-                maxSize="5"
-                fileExt="JPG, GIF, PNG"
-                (uploadStatus) = "getImage(exercise._id)"
-          
-                >
-              </app-file-upload>
-      </div>
-  </div>
-
-
-  <div class="row media">
-     
-      <div class="image-container form-group col-md-3" *ngFor="let img of images">
-        <img  [src]="img_url + img.ImagePath" class="img-fluid img-thumbnail"  alt="">
-        <a (click)="removeImage(img)"><i class="far fa-trash-alt"  style="font-size: 48px;"></i></a>
-        
-
-      </div>
-  </div>
-        
-  <div class="row">
-    <div class="form-group col-md-6">
-        <label class="form-check-label" for="balance">Body part</label>
-        <select multiple class="form-control" id="bodyPart" [(ngModel)]="exercise.details.bodyPart" (click)="update(id)">
-          <option *ngFor="let bp of bodyPart" [value]="bp" [selected]="exercise.details.bodyPart.includes(bp)">{{bp}}</option>  
-        </select>
-        
-  </div>
-  <div class="form-group col-md-6">
-      <label class="form-check-label" for="balance">Material</label>
-        <select multiple class="form-control" id="materialType" [(ngModel)]="exercise.material" (click)="update(id)" >
-            <option *ngFor="let mt of materialType" [value]="mt" [selected]="exercise.material.includes(mt)">{{mt}}</option>
-
-        </select>
-        
-  </div>
-     
-          
-
-      
-    
-                          
-
-  
 </div>
+
+

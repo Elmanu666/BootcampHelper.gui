@@ -15,6 +15,8 @@ import {
   transition
 } from '@angular/animations';
 import { CalendarComponent } from '../../calendar/calendar.component';
+import { NgxSpinnerService } from 'ngx-spinner';
+
 
 
 
@@ -118,6 +120,8 @@ export class SessionRunComponent implements OnInit {
   		private route: ActivatedRoute,
   		private sessionService: SessionService,
   		public toastr: ToastrService,
+      private spinner: NgxSpinnerService
+
   	) 
     {}
 
@@ -131,20 +135,20 @@ export class SessionRunComponent implements OnInit {
   	this.started=false;
 
     if(!this.calendar){      
-
+        this.spinner.show();
         this.sessionService.getSession(this.idSession)
             .subscribe(sessionApi => {
               this.session = sessionApi;
-              console.log('on a recuperer la sessions');
-              console.log(this.session);
-              this.loaded = true;
-
+                  setTimeout(() => {
+                    this.loaded = true;
+                    this.spinner.hide();
+                    }, 200);
       })
 
      }
 
      else {
-
+       this.spinner.show();
        var dd = new Date();
 
        var y = dd.getFullYear();
@@ -155,7 +159,11 @@ export class SessionRunComponent implements OnInit {
               
               this.sessions = sessionApi;
               this.sessionToEvent();
-              this.loaded = true;
+              setTimeout(() => {
+                this.loaded = true;
+                this.spinner.hide();
+                }, 200);
+
 
       })
 
@@ -192,8 +200,8 @@ export class SessionRunComponent implements OnInit {
                       this.startCountDown();
 
 
-          }, 100);
-    }, 20);
+          }, 5);
+    }, 5);
 
 
   //  this.countdowncomponent.startCountDown();

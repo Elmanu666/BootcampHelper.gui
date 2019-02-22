@@ -9,20 +9,24 @@
 		
 	display : flex;
 	justify-content : flex-start;
-
-	
-
+  max-height: 450px;
 }
 
 .header .btn{
 
     margin-bottom: 1.5rem;
+}
+
+.delete-round{
+
+  margin-top: 0px !important;
 
 }
+
 .rounds-exercises-container{
 
-	    padding-right: 20px;
-	    min-width: 250px
+  padding-right: 20px;
+  min-width: 250px
 }
 
 .rounds-exercises-container .header{
@@ -43,6 +47,14 @@
 
 }
 
+.exercise-selector{
+  padding: 20px;
+  max-height: 300px;
+  overflow-x:scroll;
+  overflow-y:scroll;
+
+}
+
 .dropOver{
 		background-color : pink !important ;
   		border: 5px dashed grey !important;	
@@ -59,13 +71,7 @@ i.draggableHandler{
 	cursor:move;
 }
 
-.exercise-selector{
-	padding: 20px;
-   	max-height: 150px;
-   	overflow-x:scroll;
-   	overflow-y:scroll;
 
-}
 
 .card-header{
 	display : flex;

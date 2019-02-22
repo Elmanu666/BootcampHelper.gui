@@ -58,13 +58,16 @@
                       </mat-form-field>
                   </h5>
                   <mat-form-field>
-                    <mat-select placeholder="PreConfigurer" name="PreConfigurer" (selectionChange)="setRoundPreconfiguration($event, i)">
+                    <mat-select placeholder="(optional) select a configuration" name="PreConfigurer" (selectionChange)="setRoundPreconfiguration($event, i)">
                       <mat-option [value]="0">- None -</mat-option>
                       <mat-option [value]="1">Warm up</mat-option>
                       <mat-option [value]="2">Round</mat-option>
                       <mat-option [value]="3">Warm down</mat-option>
                     </mat-select>
                   </mat-form-field>
+                  <button type="button" (click)="deleteRound(i)" class="btn btn-error btn-sm delete-round">
+                    <i class="far fa-trash-alt"></i>
+                  </button>
 
 
 
@@ -102,8 +105,10 @@
                               [cdkDropListData]="exercisesList"
                                id="exercise-list-{{i}}">
                           <div class="exercise-items list-group-item" *ngFor="let exercise of exercisesList" cdkDrag [cdkDragData]="exercise" (cdkDropListDropped)="drop2($event)">
-                              <div class="placeholder" *cdkDragPlaceholder></div> 
+                              <i class="fas fa-bars"  cdkDragHandle></i>
                               {{exercise.title}}
+                              <div class="placeholder" *cdkDragPlaceholder></div> 
+                              
 
                           </div>
                         </div>

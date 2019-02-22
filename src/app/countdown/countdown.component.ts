@@ -59,7 +59,7 @@ export class CountdownComponent implements OnInit {
 	  		this.pause=false;
 
 
-  			}, 500)
+  			}, 5)
 
   	}
 
@@ -127,6 +127,7 @@ export class CountdownComponent implements OnInit {
 		// buzzer = buzzer - this.clockPrecision;
 		if (this.duration > 0) {
 			this.interval = setInterval(() => {
+				debugger;
 				this.duration = this.duration - this.clockPrecision
 			
 				// if (this.duration == buzzer){
@@ -196,7 +197,8 @@ export class CountdownComponent implements OnInit {
 	}
 
 	numberToJson(timeNumber:number):any{
-
+		// debugger;
+		//timeNumber 	= timeNumber + 999;
 		let timeJson = {"hour":0, "minute":0, "second":0, "msecond":0};
 		let timeStringJson = {"hour":"00", "minute":"00", "second":"00", "msecond":"000"};
 		let msecond = timeNumber%1000;
