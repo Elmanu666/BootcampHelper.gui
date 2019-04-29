@@ -1,0 +1,17 @@
+<div class="row media" *ngIf="upload">
+    <div class="form-group col-md-12">
+            <app-file-upload 
+              ExerciseId="{{objectId}}" 
+              type="exercise" 
+              maxFiles="4"
+              maxSize="5"
+              fileExt="JPG, GIF, PNG"
+              (uploadStatus) = "updateImage()"        
+              >
+            </app-file-upload>
+    </div>
+ </div>
+
+<div class="row" *ngIf="display">
+	<app-image-display  objectId="{{objectId}}" style="{{style}}"></app-image-display>   
+</div>

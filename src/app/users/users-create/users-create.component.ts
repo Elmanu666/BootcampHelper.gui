@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FileService } from '../../services/file.service';
+
 import {ReactiveFormsModule, FormsModule, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import User from '../../models/user.model';
-import File from '../../models/file.model';
+
 import {QuestionBase} from '../../dynamic-form/models/question-base.model';
 import {DropdownQuestion} from '../../dynamic-form/models/question-dropdown.model';
 import {TextboxQuestion} from '../../dynamic-form/models/question-textbox.model';
@@ -31,7 +31,7 @@ export class UsersCreateComponent implements OnInit {
   constructor(
 	private toastr : ToastrService,
 	private route: ActivatedRoute,
-	private fileService : FileService,
+
 	private router : Router,
 	private userService : UserService,
 

@@ -205,7 +205,7 @@ export class ExerciseListComponent {
   }
 
   exerciseFilterByText(event : any){
-
+    debugger;
     console.log('exerciseFilterByText declenché');
 
     this.exercisesListFiltered=this.exercisesList;
@@ -246,7 +246,7 @@ export class ExerciseListComponent {
 
 
      }
-     if (this.materialTypeSelected[0] = 'indif'){
+     if (this.materialTypeSelected[0] == 'indif'){
 
          this.materialTypeSelected.length > 0 ? this.materialTypeSelected = this.materialTypeSelected.slice(0,1) : '';
 

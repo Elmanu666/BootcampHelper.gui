@@ -10,9 +10,8 @@ import { FormsModule } from '@angular/forms';
 
 
 import { ExerciseListComponent} from './exercise-list/exercise-list.component';
-import { ExercisesComponent} from './exercises/exercises.component';
+
 import { ExerciseComponent} from './exercise.component';
-import { ExerciseDisplayComponent} from './exercise-display/exercise-display.component';
 import { ExerciseCreateComponent} from './exercise-create/exercise-create.component';
 import { ExerciseMainComponent} from './exercise-main/exercise-main.component';
 
@@ -26,10 +25,13 @@ import { ExerciseTitleFilter } from '../pipes/exerciseTitleFilter.pipe';
 import {MatSliderModule} from '@angular/material/slider';
 
 import {SharedModule} from '../common/sharedComponent.module'
+import {FilesManagementModule} from '../files-management/files-management.module'
 
 import { ReactiveFormsModule } from '@angular/forms';
 
 import {DynamicFormModule} from '../dynamic-form/dynamic-form.module';
+import { bchTooltipModule } from '../tooltip/bch-tooltip.module'
+
 
 
 
@@ -52,14 +54,14 @@ import {DynamicFormModule} from '../dynamic-form/dynamic-form.module';
     ExerciseRoutingModule,
     MatSliderModule,
     SharedModule,
+    FilesManagementModule,
     ReactiveFormsModule,
-    DynamicFormModule
+    DynamicFormModule,
+    bchTooltipModule
   ],
   declarations: [
     ExerciseListComponent,
-    ExercisesComponent,
     ExerciseComponent,
-    ExerciseDisplayComponent,
     ExerciseCreateComponent,
     ExerciseMainComponent,
     ExerciseTitleFilter,

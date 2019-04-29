@@ -82,29 +82,9 @@
 		</div>
 	    <div class="col-md-6">
 			
-		    <div class="row media">
-		       
-		        <div class="image-container form-group" *ngFor="let img of images">
-		          <img  [src]="'http://localhost:3000/' + img.ImagePath" class="img-fluid img-thumbnail"  alt="">
-		          <a (click)="removeImage(img)"><i class="far fa-trash-alt"  style="font-size: 48px;"></i></a>
-			    	</div>
-			</div>
-			<div class="row media" *ngIf="path == 'edit'">
-		        <div class="form-group col-md-12">
-		                <app-file-upload 
-		                  ExerciseId="{{material._id}}" 
-		                  type="material" 
-		                  maxFiles="4"
-		                  maxSize="2"
-		                  fileExt="JPG, GIF, PNG"
-		                  (uploadStatus) = "getImage(material._id)"
-		            
-		                  >
-		                </app-file-upload>
-		        </div>
-		    </div>
+	    	  <app-files-management objectId="{{material._id}}" display="true" upload="true"></app-files-management>
 
 
-	</div>
+		</div>
 
 </div>

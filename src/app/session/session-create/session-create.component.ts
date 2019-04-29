@@ -4,10 +4,13 @@ import { trigger, state, style, animate, transition, query, stagger } from '@ang
 import { Router, ActivatedRoute } from '@angular/router';
 import {CdkDragDrop, moveItemInArray, transferArrayItem, copyArrayItem} from '@angular/cdk/drag-drop';
 
+import { MatTooltipModule } from '@angular/material';
+
+
 
 import { ToastrService } from 'ngx-toastr';
 import { SessionDisplayComponent } from '../session-display/session-display.component';
-import {DatePipe} from '@angular/common';
+import { DatePipe } from '@angular/common';
 
 
 
@@ -19,9 +22,12 @@ import { SessionService } from '../../services/session.service';
 
 import Session from '../../models/session.model';
 import Round from '../../models/round.model';
-//import User from '../../models/user.model';
+import User from '../../models/user.model';
 import Exercise from '../../models/exercise.model';
 import { NgxSpinnerService } from 'ngx-spinner';
+
+import { bchTooltipComponent } from '../../tooltip/bch-tooltip.component';
+import { bchTooltipDirective } from '../../tooltip/bch-tooltip.directive';
 
 
 function remove(item: string, list: string[]) {
@@ -62,9 +68,11 @@ export class SessionCreateComponent implements OnInit {
   secondFormGroup: FormGroup;
   newSession: Session;
   exercisesList: Exercise[];
+  exercisesListFiltered: Exercise[];
   loaded: boolean = false;
   dropAreaClass : string;
   activAccordion:number;
+  filter:{'any':boolean, 'cardio': boolean, 'muscu': boolean, 'balance': boolean, 'warmup':boolean} ;
 
   @ViewChild('stepper') stepper;
 
@@ -84,6 +92,7 @@ export class SessionCreateComponent implements OnInit {
 
   ngOnInit() {
     debugger;
+    this.filter = {'any':true, 'cardio': false, 'muscu': false, 'balance': false, 'warmup':false}
     this.userService.getUsers()
       .subscribe(users =>{
         this.users = users;
@@ -114,13 +123,19 @@ export class SessionCreateComponent implements OnInit {
           this.roundNb = this.newSession.round.length;
           this.spinner.hide();
 
+          debugger;
+
         })
     }
      this.exerciseService.getExercises(1)
       .subscribe(exercises => {
         //assign the todolist property to the proper http response
-        exercises.sort((a,b) => a.title.localeCompare(b.title));
+        exercises.sort((a,b) => {
+          a.title.localeCompare(b.title)
+        });
+        exercises.sort((a,b) => a['title'].localeCompare(b['title']))
         this.exercisesList = exercises;
+        this.exercisesListFiltered = exercises;
       //  this.pagesInfo = this.pagerService.getPager();
       })
     
@@ -154,26 +169,26 @@ export class SessionCreateComponent implements OnInit {
   deleteExerciseSelected(idRound:number, idExercise:number, type:string, exAltId :number){
     
     if (type=='main'){
-     var tmp = this.newSession.round[idRound].exercises.filter(exr=>{
-        return !(exr ==this.newSession.round[idRound].exercises[idExercise]); 
+     var tmp = this.newSession.round[idRound].exercisesId.filter(exr=>{
+        return !(exr ==this.newSession.round[idRound].exercisesId[idExercise]); 
 
 
       })
 
-      this.newSession.round[idRound].exercises = tmp;
-      this.newSession.round[idRound].exercises.length < this.newSession.round[idRound].exercisesNumber ? this.newSession.round[idRound].exercises.push(new Exercise()): '';
+      this.newSession.round[idRound].exercisesId = tmp;
+      this.newSession.round[idRound].exercisesId.length < this.newSession.round[idRound].exercisesNumber ? this.newSession.round[idRound].exercisesId.push(new Exercise()): '';
 
     }
 
     else if (type=='alt'){
-     var tmp = this.newSession.round[idRound].exercisesAlternatives[exAltId].exercises.filter(exr=>{
-        return !(exr ==this.newSession.round[idRound].exercisesAlternatives[exAltId].exercises[idExercise]); 
+     var tmp = this.newSession.round[idRound].exercisesAlternatives[exAltId].exercisesAltId.filter(exr=>{
+        return !(exr ==this.newSession.round[idRound].exercisesAlternatives[exAltId].exercisesAltId[idExercise]); 
 
 
       })
 
-      this.newSession.round[idRound].exercisesAlternatives[exAltId].exercises = tmp;
-      this.newSession.round[idRound].exercisesAlternatives[exAltId].exercises.length < this.newSession.round[idRound].exercisesNumber ? this.newSession.round[idRound].exercisesAlternatives[exAltId].exercises.push(new Exercise()):'';
+      this.newSession.round[idRound].exercisesAlternatives[exAltId].exercisesAltId = tmp;
+      this.newSession.round[idRound].exercisesAlternatives[exAltId].exercisesAltId.length < this.newSession.round[idRound].exercisesNumber ? this.newSession.round[idRound].exercisesAlternatives[exAltId].exercisesAltId.push(new Exercise()):'';
 
     }
   }
@@ -181,35 +196,35 @@ export class SessionCreateComponent implements OnInit {
   sort(event: any, roundId:number, type:string, excAltId:number) {
    
    if(type ==='main'){
-    const current = this.newSession.round[roundId].exercises[event.currentIndex];
-    const swapWith = this.newSession.round[roundId].exercises[event.newIndex];
+    const current = this.newSession.round[roundId].exercisesId[event.currentIndex];
+    const swapWith = this.newSession.round[roundId].exercisesId[event.newIndex];
 
-    this.newSession.round[roundId].exercises[event.newIndex] = current;
-    this.newSession.round[roundId].exercises[event.currentIndex] = swapWith;
+    this.newSession.round[roundId].exercisesId[event.newIndex] = current;
+    this.newSession.round[roundId].exercisesId[event.currentIndex] = swapWith;
    } 
 
    else if(type==='alt'){
-    const current = this.newSession.round[roundId].exercisesAlternatives[excAltId].exercises[event.currentIndex];
-    const swapWith = this.newSession.round[roundId].exercisesAlternatives[excAltId].exercises[event.newIndex];
+    const current = this.newSession.round[roundId].exercisesAlternatives[excAltId].exercisesAltId[event.currentIndex];
+    const swapWith = this.newSession.round[roundId].exercisesAlternatives[excAltId].exercisesAltId[event.newIndex];
 
-    this.newSession.round[roundId].exercisesAlternatives[excAltId].exercises[event.newIndex] = current;
-    this.newSession.round[roundId].exercisesAlternatives[excAltId].exercises[event.currentIndex] = swapWith;
+    this.newSession.round[roundId].exercisesAlternatives[excAltId].exercisesAltId[event.newIndex] = current;
+    this.newSession.round[roundId].exercisesAlternatives[excAltId].exercisesAltId[event.currentIndex] = swapWith;
 
    }
   }
 
   updateExercisesNumber(id){
 
-    	var i = this.newSession.round[id]['exercises'].length;
-    	if(this.newSession.round[id]['exercises'].length < this.newSession.round[id].exercisesNumber){
+    	var i = this.newSession.round[id]['exercisesId'].length;
+    	if(this.newSession.round[id]['exercisesId'].length < this.newSession.round[id].exercisesNumber){
     		for (var v=0; v < this.newSession.round[id].exercisesNumber- i; v++){
-  				this.newSession.round[id]['exercises'].push(new Exercise());         
+  				this.newSession.round[id]['exercisesId'].push(new Exercise());         
     		}
     	}
 
-    	if (this.newSession.round[id]['exercises'].length > this.newSession.round[id].exercisesNumber){
+    	if (this.newSession.round[id]['exercisesId'].length > this.newSession.round[id].exercisesNumber){
     		for (var v=0; v < this.newSession.round[id].exercisesNumber- i; v++){
-				this.newSession.round[id]['exercises'].pop();
+				this.newSession.round[id]['exercisesId'].pop();
     		}
     	}
 
@@ -219,11 +234,11 @@ export class SessionCreateComponent implements OnInit {
   updateExercisesAlternativesNumber(id:number){
     if (typeof this.newSession.round[id].exercisesAlternatives != undefined && this.newSession.round[id].exercisesAlternatives.length > 0){
         for (var i = 0; i < this.newSession.round[id].exercisesAlternatives.length ; i++){
-          if (this.newSession.round[id].exercisesAlternatives[i].exercises.length < this.newSession.round[id].exercisesNumber){
-           this.newSession.round[id].exercisesAlternatives[i].exercises.push(new Exercise());           
+          if (this.newSession.round[id].exercisesAlternatives[i].exercisesAltId.length < this.newSession.round[id].exercisesNumber){
+           this.newSession.round[id].exercisesAlternatives[i].exercisesAltId.push(new Exercise());           
           }
-          else if (this.newSession.round[id].exercisesAlternatives[i].exercises.length < this.newSession.round[id].exercisesNumber){
-            this.newSession.round[id].exercisesAlternatives[i].exercises.pop();
+          else if (this.newSession.round[id].exercisesAlternatives[i].exercisesAltId.length < this.newSession.round[id].exercisesNumber){
+            this.newSession.round[id].exercisesAlternatives[i].exercisesAltId.pop();
           }
         }
     }
@@ -334,7 +349,7 @@ export class SessionCreateComponent implements OnInit {
  
 
       event.container.id.slice(0, 3) === 'alt' ? type = "alt" : type ="main";
-      this.addExercise(event.previousContainer.data[event.previousIndex], round, type, idAtl)
+      this.addExercise(event.item.data, round, type, idAtl);
 
       // copyArrayItem(event.previousContainer.data,
       //                   event.container.data,
@@ -353,14 +368,14 @@ export class SessionCreateComponent implements OnInit {
   addExercise(exercise, id : number, type: string, idAtl : number){
 
     //try to find the first empty exercise in the list
-
+    debugger;
     var successed = false
 
     if (type=='main'){
-      for (var i=0; i< this.newSession.round[id].exercises.length; i++){
-        if (this.newSession.round[id].exercises[i].title== '' && successed == false){
+      for (var i=0; i< this.newSession.round[id].exercisesId.length; i++){
+        if (this.newSession.round[id].exercisesId[i].title== '' && successed == false){
 
-            this.newSession.round[id].exercises[i]=exercise;
+            this.newSession.round[id].exercisesId[i]=exercise;
             successed = true;
             break;
 
@@ -370,10 +385,10 @@ export class SessionCreateComponent implements OnInit {
     }
     // in case all exercise has been already selected we swap with the last one in the list
     if (type=='alt'){
-      for (var i=0; i< this.newSession.round[id].exercisesAlternatives[idAtl].exercises.length; i++){
-        if (this.newSession.round[id].exercisesAlternatives[idAtl].exercises[i].title== '' && successed == false){
+      for (var i=0; i< this.newSession.round[id].exercisesAlternatives[idAtl].exercisesAltId.length; i++){
+        if (this.newSession.round[id].exercisesAlternatives[idAtl].exercisesAltId[i].title== '' && successed == false){
 
-            this.newSession.round[id].exercisesAlternatives[idAtl].exercises[i]=exercise;
+            this.newSession.round[id].exercisesAlternatives[idAtl].exercisesAltId[i]=exercise;
             successed = true;
             break;
 
@@ -384,7 +399,7 @@ export class SessionCreateComponent implements OnInit {
 
 
     if (successed == false){
-      type == 'main' ? this.newSession.round[id].exercises[this.newSession.round[id].exercises.length - 1]=exercise : this.newSession.round[id].exercisesAlternatives[idAtl].exercises[this.newSession.round[id].exercisesAlternatives[idAtl].exercises.length -1]=exercise;
+      type == 'main' ? this.newSession.round[id].exercisesId[this.newSession.round[id].exercisesId.length - 1]=exercise : this.newSession.round[id].exercisesAlternatives[idAtl].exercisesAltId[this.newSession.round[id].exercisesAlternatives[idAtl].exercisesAltId.length -1]=exercise;
 
     }
 
@@ -431,18 +446,18 @@ export class SessionCreateComponent implements OnInit {
   addAlternativeToRound(id){
     if (this.newSession.round[id].exercisesAlternatives.length==0){
     //    this.newSession.round[id].exercisesAlternatives[0] = new Array();
-        this.newSession.round[id].exercisesAlternatives[0] = { 'users' : new Array(), 'exercises' : new Array()};
-        this.newSession.round[id].exercises.map(exc =>
+        this.newSession.round[id].exercisesAlternatives[0] = { 'usersId' : new Array(), 'exercisesAltId' : new Array()};
+        this.newSession.round[id].exercisesId.map(exc =>
             {
-              this.newSession.round[id].exercisesAlternatives[0].exercises.push(exc);
+              this.newSession.round[id].exercisesAlternatives[0].exercisesAltId.push(exc);
             })
     }
     else {
       var lt = this.newSession.round[id].exercisesAlternatives.length;
     //  this.newSession.round[id].exercisesAlternatives[lt] = new Array();
-      this.newSession.round[id].exercisesAlternatives[lt] = { 'users' : new Array(), 'exercises' : new Array()};
-      this.newSession.round[id].exercises.map(exc =>  {
-            this.newSession.round[id].exercisesAlternatives[lt].exercises.push(exc);
+      this.newSession.round[id].exercisesAlternatives[lt] = { 'usersId' : new Array(), 'exercisesAltId' : new Array()};
+      this.newSession.round[id].exercisesId.map(exc =>  {
+            this.newSession.round[id].exercisesAlternatives[lt].exercisesAltId.push(exc);
           })
     }
   }
@@ -456,7 +471,7 @@ export class SessionCreateComponent implements OnInit {
     else {
       var t = new Array();
       t = this.newSession.round[roundId].exercisesAlternatives.filter(exc=>{
-       !(exc.exercises == this.newSession.round[roundId].exercisesAlternatives[excAAltId].exercises);
+       !(exc.exercisesAltId == this.newSession.round[roundId].exercisesAlternatives[excAAltId].exercisesAltId);
       });
       this.newSession.round[roundId].exercisesAlternatives = t ;
       this.defineMainExerciseUser(roundId)
@@ -475,7 +490,7 @@ export class SessionCreateComponent implements OnInit {
     if(this.newSession.round[roundId].exercisesAlternatives.length > 0){
       var att = this.newSession.attendees.filter(attendee=>{
         return !(this.newSession.round[roundId].exercisesAlternatives.map(exrcAlt=>{
-          exrcAlt.users.includes(attendee)
+          exrcAlt.usersId.includes(attendee)
         }))
 
       })
@@ -524,6 +539,52 @@ export class SessionCreateComponent implements OnInit {
 
     }
 
+
+  }
+
+  exerciseFilter(event){
+    debugger;
+    let turnIn : boolean = false;
+    turnIn = !this.filter[event.currentTarget.id];
+
+
+
+    for (var k in this.filter){
+
+      if (k == event.currentTarget.id){
+        this.filter[event.currentTarget.id] = !this.filter[event.currentTarget.id]
+      } 
+      else {
+        this.filter[k] = false;
+      }
+    }
+
+    if (!turnIn &&event.currentTarget.id != 'any'){
+      this.filter[event.currentTarget.id] = false;
+      this.filter['any'] = true;
+      
+    }
+
+    if (!turnIn &&event.currentTarget.id == 'any'){
+      this.filter[event.currentTarget.id] = true;
+      
+    }
+
+
+    this.exercisesListFiltered = this.exercisesList;
+    if (this.filter[event.currentTarget.id] && event.currentTarget.id != 'any'){
+            this.exercisesListFiltered = this.exercisesList.filter((a)=>
+        {
+        return a.details[event.currentTarget.id] == this.filter[event.currentTarget.id] 
+      })
+    }
+
+
+
+  }
+  compareAttendees(c1: User, c2: User){
+
+        return c1 && c2 ? c1._id === c2._id : c1 === c2;
 
   }
 

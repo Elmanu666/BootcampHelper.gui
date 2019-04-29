@@ -35,10 +35,23 @@ h1{
   text-rendering: optimizeLegibility;
 }
 
-.clock{
-    font-size: 175px;
-  font-weight: 200;
+.clockDigit h1{
+  font-size: 175px;
+  font-weight: 700;
+  font-style:bold;
+}
 
+.clockDigit h2{
+  font-size: 50px;
+  font-weight: 200;
+  min-width: 110px;
+  padding-bottom: 1.5rem;
+}
+
+.clockDigit{
+
+  display:flex;
+  align-items:flex-end;
 
 
 }

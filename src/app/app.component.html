@@ -6,7 +6,7 @@
  <p style="font-size: 20px; color: white">Loading...</p>
 </ngx-spinner>
 <app-bootcamp-helper-header></app-bootcamp-helper-header>
-<div class="breadcrumbTop">
+<div class="breadcrumbTop" *ngIf="breadcrumbDisplay">
 	<div class="col-md-12">  
 		<ol class="breadcrumb">
 	    	<li class="breadcrumb-item" *ngFor="let breadcrumb of  breadcrumbs ; let i =index" [ngClass]=" {'active' : i === breadcrumbs.length -1 }">
@@ -17,7 +17,7 @@
 	  	</ol>
   	</div>
 </div>
-<div class="container-fluid main">
+<div class="container-fluid main" [ngClass]="{'main':breadcrumbDisplay , 'main-v-breadcrumb' : !breadcrumbDisplay}" >
 	<div class="row">
 	  	<nav class="col-md-1  bg-light sidebar" [@flyInOut] *ngIf="lateralMenuStatus">
 	  		<div class="sidebar-sticky">
@@ -32,19 +32,12 @@
 	  	</nav>
 
 
-	<main class="{{mainDisplay}}" >
+		<main class="{{mainDisplay}}" >
 
-	
-<!-- 		<div class="row">
+			<router-outlet></router-outlet>
 
-		  	<div class="col-md-2"></div>
-
-	  		<main class="col-md-10">
-		 -->
-
-		<router-outlet></router-outlet>
-<!-- 			</main>
-		</div> -->
-	</main>
+		</main>
+	</div>
 	
 </div>
+		

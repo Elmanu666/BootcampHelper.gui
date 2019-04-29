@@ -99,10 +99,8 @@ export class CountdownComponent implements OnInit {
   }
 
   initAudio(){
-
     this.audio.src = "../../../assets/audio/pagerbeeps.mov";
     this.audio.load();
-
   }
 
   playAudio(){
@@ -110,8 +108,6 @@ export class CountdownComponent implements OnInit {
   }
 
   finishCountDown(){
-
-
   	clearInterval(this.interval);
   	this.countDownFinished.emit(true);
 
@@ -127,7 +123,7 @@ export class CountdownComponent implements OnInit {
 		// buzzer = buzzer - this.clockPrecision;
 		if (this.duration > 0) {
 			this.interval = setInterval(() => {
-				debugger;
+			
 				this.duration = this.duration - this.clockPrecision
 			
 				// if (this.duration == buzzer){

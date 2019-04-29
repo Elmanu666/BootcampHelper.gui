@@ -1,61 +1,38 @@
-
-
-	
-	<div class="count-down-wrapper">
-		<div class="count-down">
-			<h1 class="clock">{{durationSelected2Digit.minute}}:{{durationSelected2Digit.second}}</h1>
-
-			<div class="lecteur" *ngIf="playerEnable">
-				<button  *ngIf="!start" class="btn btn-lg btn-success" (click)="startCountDown(durationSelected)">
-       				<i  class="fas fa-play-circle fa-3x"></i>
-    			</button>
-    			<button *ngIf="start" class="btn btn-lg btn-warning" (click)="pauseCountDown()">
-       				<i class="fas fa-pause fa-3x"></i>
-    			</button>
-    			<button class="btn btn-lg btn-danger" (click)="stopCountDown()">
-       				<i  class="fas fa-stop-circle fa-3x"></i>
-    			</button>
-			</div>
- 			<div class="value-input form-groupe row" *ngIf="formEnable">
-				<div class="col-md-4">
-					<label for="hour">Hours</label>
-					<input class="form-control" type="number" name="hour" id="hour" [(ngModel)]="durationSelected.hour">
-				</div>
-				<div class="col-md-4">
-					<label for="hour">Minutes</label>
-					<input class="form-control" type="number" name="minute" id="minute" [(ngModel)]="durationSelected.minute">
-				</div>
-				<div class="col-md-4">
-					<label for="hour">Seconds</label>
-					<input class="form-control" type="number" name="second" id="second" [(ngModel)]="durationSelected.second">
-				</div>
-<!-- 				<div class="col-md-8"><ngb-timepicker [(ngModel)]="durationSelected" [seconds]=true></ngb-timepicker></div> -->
-
-				
-			</div>
- 
-
-<!--			<div class="row" *ngIf="progressBarEnable"> -->
-			<div class="row" >
-  					<ngb-progressbar type="warning" [value]="clockPurcentage" [striped]="true" [animated]="true"></ngb-progressbar>
-			</div>
-
-<!--			<div class="row">
-				{{durationSelected | json}}
-			</div>
-
-			<div class="row">
-				<input type="number" name="clockPrecision" id="clockPrecision" [(ngModel)]="clockPrecision">{{clockPrecision}}
-			</div> 
-
+<div class="count-down-wrapper">
+	<div class="count-down">
+		<div class="clockDigit">
+			<h1 class="clock">{{durationSelected2Digit.minute}}:{{durationSelected2Digit.second}}</h1><h2 class="clock">:{{durationSelected2Digit.msecond}}</h2>
 		</div>
-		-->
 
-
-
-
-
-	</div>
+		<div class="lecteur" *ngIf="playerEnable">
+			<button  *ngIf="!start" class="btn btn-lg btn-success" (click)="startCountDown(durationSelected)">
+   				<i  class="fas fa-play-circle fa-3x"></i>
+			</button>
+			<button *ngIf="start" class="btn btn-lg btn-warning" (click)="pauseCountDown()">
+   				<i class="fas fa-pause fa-3x"></i>
+			</button>
+			<button class="btn btn-lg btn-danger" (click)="stopCountDown()">
+   				<i  class="fas fa-stop-circle fa-3x"></i>
+			</button>
+		</div>
+			<div class="value-input form-groupe row" *ngIf="formEnable">
+			<div class="col-md-4">
+				<label for="hour">Hours</label>
+				<input class="form-control" type="number" name="hour" id="hour" [(ngModel)]="durationSelected.hour">
+			</div>
+			<div class="col-md-4">
+				<label for="hour">Minutes</label>
+				<input class="form-control" type="number" name="minute" id="minute" [(ngModel)]="durationSelected.minute">
+			</div>
+			<div class="col-md-4">
+				<label for="hour">Seconds</label>
+				<input class="form-control" type="number" name="second" id="second" [(ngModel)]="durationSelected.second">
+			</div>
+		</div>
+		<div class="row" >
+			<ngb-progressbar type="warning" [value]="clockPurcentage" [striped]="true" [animated]="true"></ngb-progressbar>
+		</div>
+</div>
 
 
 

@@ -27,8 +27,8 @@
     		</mat-grid-tile>
       	<mat-grid-tile>
       			<mat-form-field>
-      				<mat-select placeholder="Participants" [(ngModel)]="newSession.attendees" multiple name="newSession.attendees">
-        			<mat-option *ngFor="let user of users" [value]="user.username">{{user.username}}</mat-option>
+      				<mat-select placeholder="Participants" [compareWith]="compareAttendees" [(ngModel)]="newSession.attendees" multiple name="newSession.attendees">
+        			<mat-option *ngFor="let user of users" [value]="user">{{user.name}}</mat-option>
       				</mat-select>
     			</mat-form-field>
     		</mat-grid-tile>
@@ -101,14 +101,57 @@
                           <h6>Exercises selector :</h6>
                           <span>Drag and drop to the rigth panel</span>
                         </div>
+                        <div class="selector-filter" >
+                          <span style="ico-filter-selector" [ngClass]="{'active' : filter.any, 'inactive' : !filter.any}" placement="top" ngbTooltip="No filter">
+                            <i id="any" class="fab fa-creative-commons-zero" (click)="exerciseFilter($event)" ></i>
+                          </span>
+                           <span style="ico-filter-selector" [ngClass]="{'active' : filter.cardio, 'inactive' : !filter.cardio}" placement="top" ngbTooltip="Cardio">
+                            <i id="cardio" class="fas fa-heartbeat" (click)="exerciseFilter($event)"></i>
+                          </span>
+                           <span style="ico-filter-selector" [ngClass]="{'active' : filter.balance, 'inactive' : !filter.balance}" placement="top" ngbTooltip="Balance">
+                            <i id="balance" class="fas fa-balance-scale" (click)="exerciseFilter($event)"></i>
+                          </span>
+                           <span style="ico-filter-selector" [ngClass]="{'active' : filter.muscu, 'inactive' : !filter.muscu}" placement="top" ngbTooltip="Muscu">
+                            <i id="muscu" class="fas fa-dumbbell" (click)="exerciseFilter($event)"></i>
+                          </span>
+                           <span style="ico-filter-selector" [ngClass]="{'active' : filter.warmup, 'inactive' : !filter.warmup}" placement="top" ngbTooltip="Warmup oriented">
+                            <i id="warmup" class="fas fa-running" (click)="exerciseFilter($event)"></i>
+                          </span>
+
+                        </div>
                         <div class="exercise-selector list-group" cdkDropList #exerciseList="cdkDropList"
                               [cdkDropListData]="exercisesList"
                                id="exercise-list-{{i}}">
-                          <div class="exercise-items list-group-item" *ngFor="let exercise of exercisesList" cdkDrag [cdkDragData]="exercise" (cdkDropListDropped)="drop2($event)">
+                          <div class="exercise-items list-group-item" *ngFor="let exercise of this.exercisesListFiltered" cdkDrag [cdkDragData]="exercise" (cdkDropListDropped)="drop2($event)">
                               <i class="fas fa-bars"  cdkDragHandle></i>
                               {{exercise.title}}
-                              <div class="placeholder" *cdkDragPlaceholder></div> 
-                              
+                              <div class="exercise-details">
+                                <div>                                
+                                  <i id="cardio" class="fas fa-heartbeat" *ngIf="exercise.details.cardio" placement="top" ngbTooltip="Cardio"></i>
+                                  <i id="balance" class="fas fa-balance-scale" *ngIf="exercise.details.balance" placement="top" ngbTooltip="Balance"></i>
+                                  <i id="muscu" class="fas fa-dumbbell" *ngIf="exercise.details.muscu" placement="top" ngbTooltip="Muscu"></i>
+                                  <i id="warmup" class="fas fa-running" *ngIf="exercise.details.warmup" placement="top" ngbTooltip="Warmup oriented"></i>
+                                </div>
+                                <div>
+                                  <i id="images" class="fas fa-camera" bchTooltip [bchTooltipImg]="true"  [bchTooltipObjectId]="exercise._id" [bchTooltipTheme]="tooltip"></i>
+                                </div>
+
+                              </div>
+                              <div class="placeholder" *cdkDragPlaceholder>
+                                <i class="fas fa-bars"  cdkDragHandle></i>
+                                {{exercise.title}}
+                                <div class="exercise-details">
+                                  <div>                                
+                                    <i id="cardio" class="fas fa-heartbeat" *ngIf="exercise.details.cardio"></i>
+                                    <i id="balance" class="fas fa-balance-scale" *ngIf="exercise.details.balance"></i>
+                                    <i id="muscu" class="fas fa-dumbbell" *ngIf="exercise.details.muscu"></i>
+                                    <i id="warmup" class="fas fa-running" *ngIf="exercise.details.warmup"></i>
+                                  </div>
+                                  <div>
+                                    <i id="images" class="fas fa-camera"></i>
+                                  </div>                               
+                                </div> 
+                              </div>
 
                           </div>
                         </div>
@@ -116,14 +159,14 @@
                       <div class="rounds-exercises-container">
                         <div class="header exercise-selector-header">
                           <button type="button" (click)="addAlternative(i)" class="btn btn-success btn-sm"><i class="fas fa-plus"></i></button>
-                          <span *ngFor="let user of round.exercisesMainUser" class="main-user">{{user}}</span>
+                          <span *ngFor="let user of round.exercisesMainUser" class="main-user">{{user.username}}</span>
                         </div>
                         <div class="exercise-selected dropzone" [ngClass]="dropAreaClass"  cdkDropList #doneList="cdkDropList"
-                            [cdkDropListData]="round.exercises"
+                            [cdkDropListData]="round.exercisesId"
                             (cdkDropListDropped)="drop2($event, i, '')" id="exercise-droped-{{i}}">
                             <ul>
 
-                              <li class="exerciseItemsSelected box" *ngFor="let exec of round.exercises; let v=index" cdkDragBoundary=".exercise-selected" cdkDrag>
+                              <li class="exerciseItemsSelected box" *ngFor="let exec of round.exercisesId; let v=index" cdkDragBoundary=".exercise-selected" cdkDrag>
                                  <i class="fas fa-bars"  cdkDragHandle></i>
                                 {{exec.title}}
                                 <i class="fas fa-times delete" (click)="deleteExerciseSelected(i, v, 'main', 0)"></i>
@@ -138,17 +181,17 @@
                       <div class="rounds-exercises-container" *ngFor="let exAlt of round.exercisesAlternatives; let j = index" >
                           <div class="header exercise-selector-header" >
                             <mat-form-field>
-                              <mat-select placeholder="Participants" [(ngModel)]="newSession.round[i].exercisesAlternatives[j].users" multiple name="newSession.attendees" (selectionChange)="altUserSelection($event, {'round': i, 'exrAlt': j})">
-                              <mat-option *ngFor="let user of newSession.attendees" [value]="user">{{user}}</mat-option>
+                              <mat-select placeholder="Participants" [compareWith]="compareAttendees" [(ngModel)]="newSession.round[i].exercisesAlternatives[j].usersId" multiple name="newSession.attendees" (selectionChange)="altUserSelection($event, {'round': i, 'exrAlt': j})">
+                              <mat-option *ngFor="let user of newSession.attendees" [value]="user">{{user.name}}</mat-option>
                               </mat-select>
                             </mat-form-field>
                             <button type="button" (click)="deleteExercisesAlternatives(i,j)" class="btn btn-success btn-sm"><i class="far fa-trash-alt"></i></button>
                           </div>
                           <div class="exercise-selected dropzone" [ngClass]="dropAreaClass" cdkDropList #doneListAlt="cdkDropList"
-                            [cdkDropListData]="newSession.round[i].exercisesAlternatives[j].exercises"
+                            [cdkDropListData]="newSession.round[i].exercisesAlternatives[j].exercisesAltId"
                             (cdkDropListDropped)="drop2($event, i, j)"  id="alt-exercise-droped-{{i}}-{{j}}">
                               <ul >
-                                <li class="exerciseItemsSelected box" *ngFor="let execAlt of exAlt.exercises; let v =index" cdkDrag>
+                                <li class="exerciseItemsSelected box" *ngFor="let execAlt of exAlt.exercisesAltId; let v =index" cdkDrag>
                                   <i class="fas fa-bars"  cdkDragHandle></i>
                                   {{execAlt.title}} 
                                   <i class="fas fa-times delete" (click)="deleteExerciseSelected(i, v, 'alt', j)"></i>

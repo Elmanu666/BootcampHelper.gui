@@ -19,14 +19,20 @@
 }
 
 .countdown {
-	
-	margin : 3px;
+	padding : 3px;
+/*	margin : 3px;*/
 	border-radius:10px;
 	-moz-border-radius:10px;
 -webkit-border-radius:10px;
 }
 
 :host ::ng-deep .countdown h1 {
+	
+	color : #ffffff9e
+
+}
+
+:host ::ng-deep .countdown h2 {
 	
 	color : #ffffff9e
 
@@ -42,7 +48,7 @@
 .space-around-timer{
 	
 
-	padding-top : 2rem;
+	padding-top : 1rem;
 	padding-bottom : 1rem;
 }
 
@@ -54,6 +60,14 @@
 	flex-wrap:wrap;
 
 }
+.ex-title{
+    font-size: 5rem;
+    font-weight: 800;
+    line-height: 1.2;
+
+}
+
+
 .exercise-list{
 
 
@@ -64,8 +78,15 @@
 	justify-content: center;
 }
 
+.exercises-container{
+	flex-grow : 1;
+
+
+}
+
 .on-going-exercises{
 			display: flex;
+			justify-content: space-between;
 }
 
  @media only screen and (max-width: 1120px) {
@@ -100,6 +121,16 @@
 
 }
 
+.session-run-drills{
+ 	min-height: 420px;
+ 	padding: 1rem;
+
+}
+
+.jumbotron {
+	min-height:450px !important;
+}
+
 
 .card-round{
 	display:flex;
@@ -107,5 +138,21 @@
 	flex-wrap:wrap;
 
 
+}
+
+.lecteur {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    align-self: center;
+    height:100%;
+}
+
+.session-run{
+
+	display: flex;
+  flex-flow: column;
+  height: 100%;
 }
 

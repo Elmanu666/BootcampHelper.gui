@@ -5,7 +5,6 @@ import { MaterialComponent } from './material.component';
 import { MaterialMainComponent } from './material-main/material-main.component';
 import { MaterialListComponent } from './material-list/material-list.component';
 import { MaterialCreateComponent } from './material-create/material-create.component';
-import { MaterialViewComponent } from './material-view/material-view.component';
 
 
 import { CanActivateExercisesGuard }     from '../guards/can-activate-exercises.guards';

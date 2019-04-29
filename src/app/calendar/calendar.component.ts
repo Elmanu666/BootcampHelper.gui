@@ -121,7 +121,6 @@ export class CalendarComponent {
 	setDateVariables(){
 
 		this.today = new Date();
-		debugger;
 
 		var j = this.refDate.getDay();
 

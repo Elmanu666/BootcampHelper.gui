@@ -1,11 +1,10 @@
 import { Response } from '@angular/http';
 import { ExerciseService } from '../../services/exercise.service';
 import Exercise from '../../models/exercise.model';
-import File from '../../models/file.model';
+
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { FileService } from '../../services/file.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { environment } from '../../../environments/environment';
 import { BodyPartService } from '../../services/bodyPart.service';
@@ -19,6 +18,9 @@ import {RangeSimpleQuestion} from '../../dynamic-form/models/question-range-simp
 import {TextAreaQuestion} from '../../dynamic-form/models/question-text-area.model';
 import {CheckBoxQuestion} from '../../dynamic-form/models/question-checkBox.model';
 import {SelectMultipleQuestion} from '../../dynamic-form/models/question-select-multiple.model';
+
+import {FilesManagementComponent} from '../../files-management/files-management/files-management.component';
+
 
 
 
@@ -40,7 +42,7 @@ export class ExerciseCreateComponent {
   		private route: ActivatedRoute,
     	private router: Router,
       private toastr : ToastrService,
-      private fileService : FileService,
+
       private spinner: NgxSpinnerService,
       private bodyPartService: BodyPartService,
 
@@ -83,7 +85,6 @@ export class ExerciseCreateComponent {
       .subscribe(
         exercise => {
           this.exercise = exercise;
-          this.getImage(this.exercise._id);
           this.questionsExercises = this.ExercisesToQuestions();
           // this.createFormControls();
           // this.formInit();
@@ -214,29 +215,7 @@ export class ExerciseCreateComponent {
 
   }
 
-  getImage(id){
-    debugger;
-    this.fileService.getImages(id)
-    .subscribe(retApi => {
-            //assign the todolist property to the proper http response
-            this.images = retApi.data.docs;
-          })
-     }
 
-  removeImage(img){
-    this.spinner.show();
-    this.fileService.deleteImage(img._id)
-    .subscribe(retApi => {
-            //assign the todolist property to the proper http response
-           this.images =  this.images.filter( imgs => {
-
-              return imgs._id !== img._id;
-            })
-               this.spinner.hide();
-
-          })
-
-  }
 
 
 /* change by redirecting to trigger new API call */

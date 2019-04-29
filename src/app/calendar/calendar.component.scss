@@ -198,3 +198,23 @@
 	padding-rigth:3px;
 
 }
+
+div.event.green{
+    background-color:green;
+}
+div.event.blue{
+    background-color:#047BFF;
+}
+div.event.red{
+    background-color:#f30505;
+}
+
+div.cal-month-event-item-badge.green span{
+    background-color:green;
+}
+div.cal-month-event-item-badge.blue span{
+    background-color:#047BFF;
+}
+div.cal-month-event-item-badge.red span{
+    background-color:#f30505;
+}

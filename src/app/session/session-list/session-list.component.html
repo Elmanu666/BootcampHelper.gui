@@ -21,7 +21,9 @@
 
             <tr  (click)="sessionJump(session._id)"  *ngFor="let session of sessionsList; let i =index" id={{i}}>
               <td>{{session?.description || 'default'}}</td>
-              <td>{{session.attendees}}</td>
+              <td>
+                <i class="attendees" *ngFor="let att of session.attendees">{{att.name}}</i>
+              </td>
               <td>{{session.round.length}}</td>
               <td>{{session.plannedDate | date }}</td>
             </tr>

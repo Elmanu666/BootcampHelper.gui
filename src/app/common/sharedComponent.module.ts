@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { MenuBlocksComponent } from './menu-blocks/menuBlocks.component';
 import { MenuComponent } from './menu/menu.component';
 import { PagerComponent } from './pager/pager.component';
-import { FileUploadComponent } from '../file-upload/file-upload.component';
+
 
 
 
@@ -19,14 +19,14 @@ import { FileUploadComponent } from '../file-upload/file-upload.component';
          MenuBlocksComponent,
          MenuComponent,
          PagerComponent,
-         FileUploadComponent
+
 
     ],
     exports: [
         MenuBlocksComponent,
         MenuComponent,
         PagerComponent,
-        FileUploadComponent
+
 
     ]
 })

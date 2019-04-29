@@ -15,11 +15,6 @@ import {Subscription} from 'rxjs';
 
 
 
-
-
-
-
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -36,7 +31,7 @@ export class AppComponent {
   menus : Array<MenuItem>;
   menuSelected : Array<MenuItem>;
   section: string;
-  lateralMenuStatus :boolean;
+  lateralMenuStatus; breadcrumbDisplay :boolean;
   mainDisplay: string;
   blockMainDisplay: boolean;
 
@@ -51,34 +46,41 @@ export class AppComponent {
     //Private todoservice will be injected into the component by Angular Dependency Injector
 
 
-  ) {
+    ) {
       
-	  	 this.router.events.subscribe((res) => { 
+  	  	this.router.events.subscribe((res) => { 
+       		if (res instanceof NavigationEnd) {
+            this.breadcrumbDisplay = true;
+            let params = new Array() ;
+            res.url.length == 1? params[0]= 'Home' : (params = res.url.split("/"), params[0]= 'Home');
+            // if we reach a submenu (list, create .. of un object) the lateral menu is displayed and the main block is displayed on 11 columns
+            params.length > 2 ? (this.mainDisplay = "col-md-11" , this.blockMainDisplay= false, this.lateralMenuStatus = true) : (this.mainDisplay = "col-md-12" , this.blockMainDisplay= true, this.lateralMenuStatus =false);
 
-     		if (res instanceof NavigationEnd) {
-              let params = res.url.split("/");
-              console.log('res : ');
-              console.log(res);
-
-              params.length > 2 ? this.lateralMenuStatus = true : this.lateralMenuStatus =false;
-
- 	            this.breadcrumbUrl(res.url);
-               this.setLateralMenu();
-               params[1] == 'session' && params[2] == 'run' && params.length > 3 ? (this.mainDisplay = "col-md-12", this.blockMainDisplay= true, this.lateralMenuStatus =false) : (this.mainDisplay = "col-md-11" , this.blockMainDisplay= false);
-           }
+            // exception for session run
+            params[1] == 'session' && params[2] == 'run' && params.length > 3 ? (this.mainDisplay = "col-md-12", this.blockMainDisplay= true, this.lateralMenuStatus =false, this.breadcrumbDisplay = false) :'';
+            
+            this.breadcrumbUrl(res.url);
+            this.setLateralMenu();
+            console.log('breadcrumDisplay value :', this.breadcrumbDisplay);
+           
+          }
     		
-		});
-     this.watcher = mediaObserver.media$.subscribe((change: MediaChange) => {
-      this.activeMediaQuery = change ? `'${change.mqAlias}' = (${change.mediaQuery})` : '';
-      if ( change.mqAlias == 'xs' || change.mqAlias == 'xm' || change.mqAlias == 'md' && this.blockMainDisplay == false) {
-         this.mainDisplay = "col-md-12";
-      }
+		    });
 
-      else if (this.blockMainDisplay == false) {
-        this.mainDisplay = "col-md-11"
+        this.watcher = mediaObserver.media$.subscribe((change: MediaChange) => {
+          this.activeMediaQuery = change ? `'${change.mqAlias}' = (${change.mediaQuery})` : '';
+          if ( change.mqAlias == 'xs' || change.mqAlias == 'xm' || change.mqAlias == 'md' && this.blockMainDisplay == false) 
+          {
+            this.mainDisplay = "col-md-12";
+          }
 
-      }
-    });
+          else if (this.blockMainDisplay == false) 
+          {
+            this.mainDisplay = "col-md-11"
+
+          }
+
+        });
 
       }
 
@@ -88,6 +90,7 @@ export class AppComponent {
     	var urlSplited = url.split('/');
     	
     	this.breadcrumbs = [{'url':'/', 'title':'Home'}];
+
 
     	var urlAssembled = '';
 

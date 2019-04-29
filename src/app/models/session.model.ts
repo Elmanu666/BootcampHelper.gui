@@ -1,4 +1,5 @@
 import Round from './round.model';
+import User from './user.model';
 
 
 
@@ -7,9 +8,12 @@ class session {
     description:string;
     plannedDate: Date;
     executionDate :Date;
+    executionStart :Date;
+    executionEnd :Date;
     Status: string;
-    attendees : string[];
+    attendees : User[];
     round :Round[];
+    caloriesBurntId: [{'users' : string, 'calories' : number}]
     deleted:boolean;
     executed:boolean;
 
@@ -22,7 +26,7 @@ class session {
     this.plannedDate= new Date();
     this.executionDate = new Date();
     this.Status= "new";
-    this.attendees = [""];
+    this.attendees = [new User()];
     this.round = [new Round()];
     this.deleted=false;
     this.executed=false;

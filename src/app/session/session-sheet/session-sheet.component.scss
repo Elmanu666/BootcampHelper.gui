@@ -1,7 +1,7 @@
 .round-card-container {
 	display : flex;
 	flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-around;
 
 }
 
@@ -22,7 +22,7 @@
 
 }
 .exercise-list{
-
+	min-width:300px;
 }
 
 .exercise-list-alt{
@@ -48,4 +48,10 @@
 	flex-wrap: wrap;
 
 	}
+}
+
+.attendees{
+	padding-left:1rem;
+
+
 }

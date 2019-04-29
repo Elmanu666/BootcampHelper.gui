@@ -1,5 +1,5 @@
 import File from '../models/file.model';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 
 
 import { Injectable } from '@angular/core';
@@ -30,7 +30,6 @@ export class FileService {
         // let httpOptions = new HttpHeaders();
         // httpOptions.append('params', 'test')
         // httpOptions.append('params' , parameters);
-        debugger;
         return  this.http.post(this._baseURL , files)
                  
                  .catch(error => Observable.throw(error));

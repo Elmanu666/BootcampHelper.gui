@@ -18,7 +18,7 @@
   </div>
   <app-dynamic-form [questions]="questionsExercises" (saveForm)="onSubmit($event)" [disable]="view"></app-dynamic-form>
   <br>
-  <div class="row media" *ngIf="edit">
+  <!-- <div class="row media" *ngIf="edit">
     <div class="form-group col-md-12">
             <app-file-upload 
               ExerciseId="{{exercise._id}}" 
@@ -33,15 +33,16 @@
   </div>
 
   <div class="row media" *ngIf="!creation">
+    <app-image-display  objectId="{{exercise._id}}"></app-image-display>
    
     <div class="image-container form-group col-md-3" *ngFor="let img of images">
       <img  [src]="img_url + img.ImagePath" class="img-thumbnail"  alt="">
       <a (click)="removeImage(img)">
         <i class="far fa-trash-alt"  style="font-size: 48px;"></i>
       </a>
-    </div>
-  </div>
-
+    </div> 
+  </div> -->
+  <app-files-management *ngIf="!creation" class="row" objectId="{{exercise._id}}" [display]="true" [upload]="edit"></app-files-management>
 </div>
 
 

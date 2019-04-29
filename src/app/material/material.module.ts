@@ -12,9 +12,9 @@ import { MaterialComponent } from './material.component';
 import { MaterialMainComponent } from './material-main/material-main.component';
 import { MaterialListComponent } from './material-list/material-list.component';
 import { MaterialCreateComponent } from './material-create/material-create.component';
-import { MaterialViewComponent } from './material-view/material-view.component';
 
 import {SharedModule} from '../common/sharedComponent.module'
+import {FilesManagementModule} from '../files-management/files-management.module'
 import { ReactiveFormsModule } from '@angular/forms';
 import { IonRangeSliderModule } from "ng2-ion-range-slider";
 
@@ -39,7 +39,8 @@ import { IonRangeSliderModule } from "ng2-ion-range-slider";
     UiSwitchModule,
     MatSliderModule,
     IonRangeSliderModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FilesManagementModule,
 
  
     
@@ -50,7 +51,6 @@ import { IonRangeSliderModule } from "ng2-ion-range-slider";
    MaterialMainComponent,
    MaterialListComponent,
    MaterialCreateComponent,
-   MaterialViewComponent
 
 
   ],

@@ -2,7 +2,7 @@
 
 
 import { Component, OnInit, Input, Output, EventEmitter, HostListener } from '@angular/core';
-import {FileService} from '../services/file.service';
+import { FileService } from '../services/file.service';
 
 
 @Component({
@@ -60,7 +60,7 @@ export class FileUploadComponent implements OnInit {
 	    event.stopPropagation();
 	    var data = event.dataTransfer.items;
 	 
-	    debugger;
+
 	    for (var v = 0 ; v < data.length; v++){
 
 	    	if (data[v].kind == 'string' && data[v].type.match('^text/uri-list')) 
@@ -70,7 +70,6 @@ export class FileUploadComponent implements OnInit {
      				var f = s;
      				this.fileService.getHttpImages(f)
      					.subscribe(files =>{
-							debugger;
 							var fl = new Array();
 							files.name = f;
 							files.lastModifiedDate = new Date();
@@ -96,7 +95,6 @@ export class FileUploadComponent implements OnInit {
 	}
 
 	saveFiles(files){
-		debugger;
 	  this.errors = []; // Clear error
 	  // Validate file size and allowed extensions
 	  if (files.length > 0 && (!this.isValidFiles(files))) {

@@ -1,7 +1,7 @@
-<div *ngIf="loaded && vertical">
+<div *ngIf="loaded && vertical && !resume">
   <h3 mat-subheader>{{session.description}}</h3>
   <h5 mat-subheader>Planned date : {{session.plannedDate | date}}</h5>
-  <h5 mat-subheader>Atendees : {{session.attendees}}</h5>
+  <h5 mat-subheader>Atendees : <i class="attendees" *ngFor="let att of session.attendees">{{att.name}}</i></h5>
 
   <mat-card *ngFor="let round of session.round">
 
@@ -15,35 +15,37 @@
       <div class="exercise-list-container">
         <div class="exercise-list">
           <h5 cmat-subheader *ngFor="let user of round.exercisesMainUser">
-                <i *ngFor="let user of round.exercisesMainUser">{{user}}</i>
+                <i class="attendees" *ngFor="let user of round.exercisesMainUser">{{user.name}}</i>
           </h5>
-        	<mat-list-item *ngFor="let exercise of round.exercises">
+        	<mat-list-item *ngFor="let exercise of round.exercisesId">
           	
           	<h3 mat-line>{{exercise.title}}</h3>
           	<mat-icon mat-list-icon>accessibility_new</mat-icon>
           	<p mat-line> {{round.drillsDuration }}s </p>
+            <i id="images" class="fas fa-camera" bchTooltip [bchTooltipImg]="true"  [bchTooltipObjectId]="exercise._id"></i>
         	</mat-list-item>
         </div>
+        <ng-container *ngFor="let excAlt of round.exercisesAlternatives">
+          <div class="exercise-list-alt"></div>
+          <div class="exercise-list">
+            <h5 cmat-subheader>
+                  <i class="attendees" *ngFor="let user of excAlt.usersId">{{user.name}}</i>
+            </h5>
+              <mat-list-item *ngFor="let exercise of excAlt.exercisesAltId">
+                <h4 mat-line>{{exercise.title}}</h4>
+                <mat-icon mat-list-icon>accessibility_new</mat-icon>
+                <p mat-line> {{round.drillsDuration }}s </p>
+                <i id="images" class="fas fa-camera" bchTooltip [bchTooltipImg]="true"  [bchTooltipObjectId]="exercise._id"></i>
 
-        <div class="exercise-list-alt" *ngFor="let excAlt of round.exercisesAlternatives">
-          <h5 cmat-subheader>
-                <i *ngFor="let user of excAlt.users">{{user}}</i>
-          </h5>
-            <mat-list-item *ngFor="let exercise of excAlt.exercises">
-              <h4 mat-line>{{exercise.title}}</h4>
-              <mat-icon mat-list-icon>accessibility_new</mat-icon>
-              <p mat-line> {{round.drillsDuration }}s </p>
-            </mat-list-item>
-        </div>
+              </mat-list-item>
+          </div>
+        </ng-container>
       </div>      
  	  </mat-list>
   </mat-card>
-
-
-
 </div>
 
-<div  *ngIf="loaded && !vertical">
+<div  *ngIf="loaded && !vertical && !resume">
   <div class="row">
     <div class="col-md-4 session-title">
       <h4 mat-subheader>Planned date : {{session.plannedDate | date}}</h4>
@@ -52,7 +54,7 @@
         <h3 mat-subheader>{{session.description}}</h3>
     </div>
     <div class="col-md-4 session-title">
-      <h4 mat-subheader>Atendees : {{session.attendees}}</h4>
+      <h4 mat-subheader>Atendees : <i class="attendees" *ngFor="let att of session.attendees">{{att.name}}</i></h4>
     </div>
   </div>
 
@@ -72,32 +74,41 @@
             <div class="exercise-list">
               <div class="exercise-list-user">
                 <h3 cmat-subheader *ngFor="let usr of round.exercisesMainUser">
-                    {{usr}}
+                    {{usr.name}}
                 </h3>
               </div>  
-              <mat-list-item *ngFor="let exercise of round.exercises">                
+              <mat-list-item *ngFor="let exercise of round.exercisesId">                
                 <h4 mat-line>{{exercise.title}}</h4>
                 <mat-icon mat-list-icon>accessibility_new</mat-icon>
                 <p mat-line> {{round.drillsDuration }}s </p>
+                <i id="images" class="fas fa-camera" bchTooltip [bchTooltipImg]="true"  [bchTooltipObjectId]="exercise._id"></i>
+
               </mat-list-item>
             </div>
-            <div class="exercise-list-alt" *ngFor="let excAlt of round.exercisesAlternatives">
-                <h3 cmat-subheader *ngFor="let user of excAlt.users">
-                  {{user}}
-                </h3>
-                <mat-list-item *ngFor="let exercise of excAlt.exercises">
-                  <h4 mat-line>{{exercise.title}}</h4>
-                  <mat-icon mat-list-icon>accessibility_new</mat-icon>
-                  <p mat-line> {{round.drillsDuration }}s </p>
-                </mat-list-item>
-            </div>
+            <ng-container *ngFor="let excAlt of round.exercisesAlternatives">
+              <div class="exercise-list-alt"></div>
+              <div class="exercise-list" >
+                  <h3 cmat-subheader *ngFor="let user of excAlt.usersId">
+                    {{user.name}}
+                  </h3>
+                  <mat-list-item *ngFor="let exercise of excAlt.exercisesAltId">
+                    <h4 mat-line>{{exercise.title}}</h4>
+                    <mat-icon mat-list-icon>accessibility_new</mat-icon>
+                    <p mat-line> {{round.drillsDuration }}s </p>
+                    <i id="images" class="fas fa-camera" bchTooltip [bchTooltipImg]="true"  [bchTooltipObjectId]="exercise._id"></i>
+
+                  </mat-list-item>
+              </div>
+            </ng-container>
           </div>
         </mat-list>
       </mat-card>
     </div>
   </div>
-
-
-
-
 </div>   
+
+<div *ngIf="loaded && resume">
+  <p class="lead">Session resume</p>
+  <p>Number of exercises : {{nbExercise}}</p>
+  <p>Session duration :  {{duration2display}}</p>
+</div>

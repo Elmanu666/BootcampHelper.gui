@@ -9,7 +9,7 @@ export class SelectMultipleQuestion extends QuestionBase<string> {
     super(options);
     this.type = options['type'] || 'text';
     this.options = options['options'];
-    debugger;
+
 
   }
 }

@@ -2,11 +2,11 @@ import { Response } from '@angular/http';
 import { MaterialService } from '../../services/material.service';
 import { MaterialTypeService } from '../../services/materialType.service';
 import Material from '../../models/material.model';
-import File from '../../models/file.model';
+
 import { Component, OnInit} from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FileService } from '../../services/file.service';
+
 import {ReactiveFormsModule, FormsModule, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
 
@@ -41,7 +41,6 @@ export class MaterialCreateComponent {
 		private toastr : ToastrService,
 		private route: ActivatedRoute,
 		private materialService : MaterialService,
-		private fileService : FileService,
 		private materialTypeService : MaterialTypeService,
 		private router : Router,
 	){
@@ -118,7 +117,7 @@ export class MaterialCreateComponent {
 	        			this.material = material;
 	        			this.createFormControls();
 	        			this.formInit();       
-	        			this.getImage(this.material._id);
+
 	        			this.ready=true;
       				})
 		  			error => {
@@ -158,19 +157,7 @@ export class MaterialCreateComponent {
 
 	}
 
-	getImage(id){
-    	this.fileService.getImages(id)
-    	.subscribe(retApi => {
-            //assign the todolist property to the proper http response
-            this.images = retApi.data.docs;
-            console.log('retour api image' +id);
-            console.log(this.images)
-            
 
-
-
-          })
-     }
 
 
 }

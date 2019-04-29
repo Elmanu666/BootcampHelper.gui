@@ -1,10 +1,9 @@
 import { NgModule }             from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { ExercisesComponent } from './exercises/exercises.component';
+
 import { ExerciseComponent } from './exercise.component';
 import { ExerciseListComponent } from './exercise-list/exercise-list.component';
-import { ExerciseDisplayComponent } from './exercise-display/exercise-display.component';
 import { ExerciseCreateComponent } from './exercise-create/exercise-create.component';
 import { ExerciseMainComponent } from './exercise-main/exercise-main.component';
 
@@ -23,7 +22,6 @@ const exerciseRoutes: Routes = [
           { path: 'list3', component: ExerciseComponent },
           { path: 'create', component: ExerciseCreateComponent },
           { path: 'detail', component: ExerciseListComponent },
-//          { path: 'detail/:id', component: ExerciseDisplayComponent },
           { path: 'detail/:id', component: ExerciseCreateComponent },
           { path: 'edit', component: ExerciseListComponent },
           { path: 'edit/:id', component: ExerciseCreateComponent },

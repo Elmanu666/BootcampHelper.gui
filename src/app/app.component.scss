@@ -1,11 +1,4 @@
 
-@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
-
-.body {
-    
-    font-weight: 500 !important;
-}
-
 
 
 .breadcrumbTop{
@@ -31,7 +24,21 @@
 .main {
     
     margin-top : 84px;
+    height: 100%;
 }
+
+.main-v-breadcrumb{
+    margin-top : 50px;
+    height: 100%;
+
+}
+
+.mainWBreadcrumb {
+
+    margin-top: 50px;
+}
+
+
 
 .HeaderTable{
     border-top: 1px solid #DEE2E6;
@@ -183,6 +190,11 @@ a:not([href]) {
 
 .spacer-top {
     padding-top : 0.5rem;
+}
+
+.tooltip-img{
+
+    background-color : none;
 }
 
 

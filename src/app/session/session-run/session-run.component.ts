@@ -103,6 +103,7 @@ export class SessionRunComponent implements OnInit {
 	started:boolean;
 	roundsStarted :boolean=false;
   sessionFinished : boolean =false;
+  SessionResume : boolean=false;
 	progressBar:boolean=true;
   mainDisplay: string;
   audio= new Audio();
@@ -174,11 +175,14 @@ export class SessionRunComponent implements OnInit {
 
 
     startSession(){
+    this.session.round[0].exercisesId.length > 1 ? this.NextExercise.exercise =1 : this.NextExercise.exercise =999;
     this.started=true;
-  //  setTimeout(()=>{this.initRound()}, 500 ) ;
+    this.session.executionStart = new Date();
 
 
     }
+
+
 
   initRound(){
     this.roundsStarted = false;
@@ -233,9 +237,8 @@ export class SessionRunComponent implements OnInit {
   }
 
   startCountDown(){
-        this.playAudio();
-
-
+    this.playAudio();
+    debugger;
     this.countdowncomponent.startCountDown();
 
 
@@ -249,15 +252,29 @@ export class SessionRunComponent implements OnInit {
   }
 
   finishSession(){
-
-    console.log('on est dans le finishSession');
-
+    this.session.executionEnd = new Date();
     this.countdowncomponent.stopCountDown();
     this.started=false;
     this.roundsStarted = false;
     this.sessionFinished=true;
 
 
+
+
+  }
+
+  endSession(){
+    this.SessionResume=true;
+    this.session.executed = true;
+    this.session.Status = 'done';
+    this.sessionService.editSession(this.session).subscribe(res => {
+          console.log('Update Succesful')
+
+
+        }, err => {
+
+          this.toastr.error('Update Unsuccesful', 'Error!' , {timeOut: 2000});
+        })
 
   }
 
@@ -272,6 +289,7 @@ export class SessionRunComponent implements OnInit {
         this.eventsSession[i].startDate = this.sessions[i].plannedDate ;
         this.eventsSession[i].endDate =   this.sessions[i].plannedDate; 
         this.eventsSession[i].link = this.sessions[i]._id;
+        this.sessions[i].Status == 'new' ? this.eventsSession[i].primaryColor = 'green' : (this.sessions[i].Status == 'done' ? this.eventsSession[i].primaryColor = 'blue' : this.eventsSession[i].primaryColor = 'red' );
  
 
 
@@ -300,14 +318,14 @@ export class SessionRunComponent implements OnInit {
   			for (var z = 0; z < this.sessionExpended.round[i].repeat; z++){
 
 
-  				for (var j = 0; j < sessionApi.round[i].exercises.length; j++){
+  				for (var j = 0; j < sessionApi.round[i].exercisesId.length; j++){
 
   					if (xtest.length >0){
-  						xtest.push(sessionApi.round[i].exercises[j]);
+  						xtest.push(sessionApi.round[i].exercisesId[j]);
   					}
   					else {
 
-  						xtest[0]=sessionApi.round[i].exercises[j];
+  						xtest[0]=sessionApi.round[i].exercisesId[j];
   					}
   					//	this.sessionExpended.round[i].exercises.push(session.round[i].exercises[j]);
 
@@ -316,7 +334,7 @@ export class SessionRunComponent implements OnInit {
 
   			}
 
-  			this.sessionExpended.round[i].exercises = xtest as [ExerciseModel];
+  			this.sessionExpended.round[i].exercisesId = xtest as [ExerciseModel];
 
   		}
 
@@ -352,7 +370,7 @@ export class SessionRunComponent implements OnInit {
   		  		this.stopCountDown();
 
 
-  		this.currentExercise.drills == false ? (this.currentExercise.drills = true, this.currentExercise.exercise = this.session.round[this.currentExercise.round].exercises.length -1,this.currentExercise.round -=  1, this.currentExercise.repeat = this.session.round[this.currentExercise.round].repeat, this.countdowncomponent.setDuration(this.session.round[this.currentExercise.round].drillsDuration)) : (this.currentExercise.drills = false, this.countdowncomponent.setDuration(this.session.round[this.currentExercise.round].restDuration)) ;
+  		this.currentExercise.drills == false ? (this.currentExercise.drills = true, this.currentExercise.exercise = this.session.round[this.currentExercise.round].exercisesId.length -1,this.currentExercise.round -=  1, this.currentExercise.repeat = this.session.round[this.currentExercise.round].repeat, this.countdowncomponent.setDuration(this.session.round[this.currentExercise.round].drillsDuration)) : (this.currentExercise.drills = false, this.countdowncomponent.setDuration(this.session.round[this.currentExercise.round].restDuration)) ;
 
 
 
@@ -364,7 +382,7 @@ export class SessionRunComponent implements OnInit {
 
   		this.stopCountDown();
 
-  		this.currentExercise.drills == false ? (this.currentExercise.drills = true, this.currentExercise.exercise = this.session.round[this.currentExercise.round].exercises.length -1,this.currentExercise.repeat -=  1, this.countdowncomponent.setDuration(this.session.round[this.currentExercise.round].drillsDuration) ): (this.currentExercise.drills = false, this.countdowncomponent.setDuration(this.session.round[this.currentExercise.round].restDuration));
+  		this.currentExercise.drills == false ? (this.currentExercise.drills = true, this.currentExercise.exercise = this.session.round[this.currentExercise.round].exercisesId.length -1,this.currentExercise.repeat -=  1, this.countdowncomponent.setDuration(this.session.round[this.currentExercise.round].drillsDuration) ): (this.currentExercise.drills = false, this.countdowncomponent.setDuration(this.session.round[this.currentExercise.round].restDuration));
 		
 
 		
@@ -406,7 +424,7 @@ export class SessionRunComponent implements OnInit {
 
   nextExercise(event:string){
 //end of the session 
-  	if ( this.currentExercise.round == this.session.round.length -1 && this.currentExercise.exercise == this.session.round[this.currentExercise.round].exercises.length-1 && this.currentExercise.repeat == this.session.round[this.currentExercise.round].repeat){
+  	if ( this.currentExercise.round == this.session.round.length -1 && this.currentExercise.exercise == this.session.round[this.currentExercise.round].exercisesId.length-1 && this.currentExercise.repeat == this.session.round[this.currentExercise.round].repeat){
       if(this.currentExercise.drills == true){
         this.toastr.success('End of your Workout :'+ this.session.round[this.currentExercise.round].title, 'Finished !' , {timeOut: 2000});
         if(event== 'manual'){
@@ -414,7 +432,8 @@ export class SessionRunComponent implements OnInit {
           }
 
           else {
-            this.finishSession()
+            this.playAudio();
+            this.finishSession();
           }
 
       }
@@ -430,7 +449,7 @@ export class SessionRunComponent implements OnInit {
 
  // fin d'un round
 
-  	else if (this.currentExercise.exercise == this.session.round[this.currentExercise.round].exercises.length -1 && this.currentExercise.repeat == this.session.round[this.currentExercise.round].repeat){
+  	else if (this.currentExercise.exercise == this.session.round[this.currentExercise.round].exercisesId.length -1 && this.currentExercise.repeat == this.session.round[this.currentExercise.round].repeat){
 
   		this.currentExercise.drills ? (this.currentExercise.drills = false, this.currentExercise.repeat=1, this.currentExercise.exercise = 0,this.currentExercise.round +=  1, this.countdowncomponent.setDuration(this.session.round[this.currentExercise.round].restDuration),   		this.toastr.success('End of round :'+ this.session.round[this.currentExercise.round].title, 'Next Round !' , {timeOut: 2000})
 ) : (this.currentExercise.drills = true, this.countdowncomponent.setDuration(this.session.round[this.currentExercise.round].drillsDuration), this.NextExercise.exercise = 999) ;
@@ -447,6 +466,7 @@ export class SessionRunComponent implements OnInit {
         else {
 
         this.stopRounds();
+        this.playAudio();
 
 
 
@@ -457,7 +477,7 @@ export class SessionRunComponent implements OnInit {
 
   // fin d'un repeat
 
-  else if (this.currentExercise.exercise == this.session.round[this.currentExercise.round].exercises.length -1){
+  else if (this.currentExercise.exercise == this.session.round[this.currentExercise.round].exercisesId.length -1){
 
     	this.currentExercise.drills ? (this.currentExercise.drills = false, this.currentExercise.repeat +=1, this.currentExercise.exercise = 0,this.countdowncomponent.setDuration(this.session.round[this.currentExercise.round].restDuration), this.toastr.success('End of a repeat :'+ this.session.round[this.currentExercise.round].title, 'Continue !' , {timeOut: 2000}), this.NextExercise.exercise = 1
     ) : (this.currentExercise.drills = true, this.countdowncomponent.setDuration(this.session.round[this.currentExercise.round].drillsDuration), this.NextExercise.exercise=0) ;
@@ -486,7 +506,7 @@ export class SessionRunComponent implements OnInit {
 
       this.NextExercise = Object.assign({}, this.currentExercise);
 
-      this.NextExercise.exercise == this.session.round[this.currentExercise.round].exercises.length -1 ? this.session.round[this.currentExercise.round].repeat == this.currentExercise.repeat ?this.NextExercise.exercise = 999 : this.NextExercise.exercise = 0 : this.NextExercise.exercise  += 1;
+      this.NextExercise.exercise == this.session.round[this.currentExercise.round].exercisesId.length -1 ? this.session.round[this.currentExercise.round].repeat == this.currentExercise.repeat ?this.NextExercise.exercise = 999 : this.NextExercise.exercise = 0 : this.NextExercise.exercise  += 1;
 
 
     	if(event== 'manual'){
@@ -517,6 +537,18 @@ export class SessionRunComponent implements OnInit {
   playAudio(){
 
     this.audio.play();
+  }
+
+  setCalories(value:any){
+    debugger;
+    var data = value.data.map(x => {
+      return x._id
+    })
+    this.session.caloriesBurntId = data;
+
+    this.endSession();
+
+
   }
 }
 

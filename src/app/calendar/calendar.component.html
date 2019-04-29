@@ -51,7 +51,7 @@
 				 		<span class="day_number" >{{d.day}}</span>
 				 	</div>
 				 	<div class="event_cal" *ngIf="d.events">
-				 		<div class="event" *ngFor="let e of d.events">
+				 		<div class="event" *ngFor="let e of d.events" [ngClass]="e.primaryColor">
 				 		</div>
 				 		
 				 	</div>
@@ -60,7 +60,7 @@
 
 			<div class="cal-event-list" *ngIf="m.display">
 				<div class="cal-month-event-item" *ngFor="let ev of m.events">
-					<div class="cal-month-event-item-badge"><span></span></div>
+					<div class="cal-month-event-item-badge" [ngClass]="ev.primaryColor"><span></span></div>
 					<div class="cal-month-event-item-title"><span><a class="event-link" routerLink="{{ev.link}}">{{ev.title}}</a></span></div>
 					<div class="cal-month-event-item-action">
 						<span>

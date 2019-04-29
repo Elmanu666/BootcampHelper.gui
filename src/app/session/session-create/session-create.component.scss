@@ -166,6 +166,10 @@ ul {
   background: #ccc;
   border: dotted 3px #999;
   min-height: 60px;
+  padding-top: 0.75rem;
+  padding-right: 1.25rem;
+  padding-bottom: 0.75rem;
+  padding-left: 1.25rem;
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 
 }
@@ -176,5 +180,30 @@ ul {
 
 .main-user {
   margin-top:1.5rem;
+
+}
+
+.active {
+  color : red;
+}
+
+.selector-filter{
+  display:flex;
+  justify-content:space-around;
+  padding-bottom: 1rem;
+
+}
+
+.exercise-items{
+
+  width: 250px;
+
+}
+
+.exercise-details{
+
+  display: flex;
+  justify-content : space-between;
+
 
 }

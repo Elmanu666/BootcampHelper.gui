@@ -8,9 +8,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 //import { EditorModule } from '@tinymce/tinymce-angular';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatStepperModule, MatNativeDateModule, MatListModule, MatCardModule, MatInputModule, MatButtonModule, MatDatepickerModule, MatSelectModule, MatGridListModule, MatExpansionModule, MatIconModule} from '@angular/material';
+import {MatTooltipModule, MatStepperModule, MatNativeDateModule, MatListModule, MatCardModule, MatInputModule, MatButtonModule, MatDatepickerModule, MatSelectModule, MatGridListModule, MatExpansionModule, MatIconModule} from '@angular/material';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-
+import { OverlayModule } from '@angular/cdk/overlay';
 
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { UiSwitchModule } from 'ngx-ui-switch';
@@ -24,7 +24,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 // Services 
 import { ExerciseService } from './services/exercise.service';
 import { PagerService } from './services/pages.service';
-import { FileService } from './services/file.service';
+
 import { authService } from './services/auth.service';
 import { UserService } from './services/user.service';
 import { SessionService } from './services/session.service';
@@ -34,6 +34,7 @@ import { BodyPartService } from './services/bodyPart.service';
 import { MenuService } from './services/menu.service';
 import { MaterialService } from './services/material.service';
 import { errorHandler } from './services/errorHandler.service';
+import { CaloriesBurntService } from './services/caloriesBurnt.service';
 
 
 
@@ -47,6 +48,9 @@ import { ExerciseModule } from './exercise/exercise.module';
 import { SessionModule } from './session/session.module';
 import { MaterialModule } from './material/material.module';
 import { UsersModule } from './users/users.module';
+import { SharedModule } from './common/sharedComponent.module'
+import { FilesManagementModule } from './files-management/files-management.module'
+
         
 
 
@@ -54,7 +58,6 @@ import { UsersModule } from './users/users.module';
 import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { BootcampHelperHeaderComponent } from './bootcamp-helper-header/bootcamp-helper-header.component';
-
 
 import { loginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
@@ -64,7 +67,6 @@ import { HomeComponent } from './home/home.component';
 
 //pipe
 import {CapitalizePipe} from "./pipes/capitalize.pipe";
-import {SharedModule} from './common/sharedComponent.module'
 
 
 
@@ -85,8 +87,10 @@ import {SharedModule} from './common/sharedComponent.module'
     HomeComponent,
     loginComponent,
 //    SessionComponent,
-    CapitalizePipe,     
+    CapitalizePipe,
+
   ],
+
 
 
   imports: [
@@ -114,7 +118,9 @@ import {SharedModule} from './common/sharedComponent.module'
     MatListModule,
     MatCardModule,
     SharedModule,
+    FilesManagementModule,
     NgxSpinnerModule,
+    OverlayModule,
     NgbModule.forRoot(),
     ToastrModule.forRoot(),
   ],
@@ -124,7 +130,7 @@ import {SharedModule} from './common/sharedComponent.module'
 
     ],
 
-  providers: [errorHandler, MenuService, MaterialService, ExerciseService,  PagerService, FileService, authService, UserService, userSessionService, SessionService, CanActivateExercisesGuard, MaterialTypeService, BodyPartService],
+  providers: [errorHandler, MenuService, MaterialService, ExerciseService,  PagerService, authService, UserService, userSessionService, SessionService, CanActivateExercisesGuard, MaterialTypeService, BodyPartService, CaloriesBurntService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

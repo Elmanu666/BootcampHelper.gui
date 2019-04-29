@@ -4,12 +4,13 @@
  	<label [attr.for]="question.key" *ngIf="question.controlType != 'checkBox'">{{question.label}}</label>
 
     <input *ngSwitchCase="'textbox'" [formControlName]="question.key" [id]="question.key" [type]="question.type" class="form-control">
+    <input *ngSwitchCase="'range'"  type="range" class="custom-range" [min]="question.options.min" [max]="question.options.max" [step]="question.options.step" [formControlName]="question.key" [id]="question.key" [type]="question.type" class="form-control">
     <textarea *ngSwitchCase="'textarea'" [formControlName]="question.key" [id]="question.key"   row="question.row" class="form-control"></textarea>
  
     <select [id]="question.key" *ngSwitchCase="'dropdown'" [formControlName]="question.key" class="form-control">
       <option *ngFor="let opt of question.options" [value]="opt.key">{{opt.value}}</option>
     </select>
-
+    
     <select [id]="question.key" *ngSwitchCase="'SelectMultiple'" [formControlName]="question.key" class="form-control" multiple>
       <option *ngFor="let opt of question.options" [value]="opt.key">{{opt.value}}</option>
     </select>
