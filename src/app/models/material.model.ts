@@ -1,3 +1,8 @@
+import MaterialType from './materialType.model';
+
+
+
+
 class material {
     _id: string;
      title: string;
@@ -6,7 +11,7 @@ class material {
     length : Number;
     size : string;
     strength : string;
-    type: string;
+    type: MaterialType;
     quantity: Number;
 
 
@@ -18,7 +23,7 @@ class material {
           this.length = 0;
           this.size = '';
           this.strength = "";
-          this.type = "";
+          this.type = new MaterialType();
           this.quantity = 0;
 
 

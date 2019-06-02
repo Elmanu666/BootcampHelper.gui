@@ -1,6 +1,8 @@
 import { Response } from '@angular/http';
 import { ExerciseService } from '../../services/exercise.service';
 import Exercise from '../../models/exercise.model';
+import Sport from '../../models/sport.model';
+import MaterialType from '../../models/materialType.model';
 
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -8,6 +10,8 @@ import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { environment } from '../../../environments/environment';
 import { BodyPartService } from '../../services/bodyPart.service';
+import { SportService } from '../../services/sport.service';
+import { MaterialTypeService } from '../../services/materialType.service';
 import {ReactiveFormsModule, FormsModule, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
 
@@ -21,7 +25,7 @@ import {SelectMultipleQuestion} from '../../dynamic-form/models/question-select-
 
 import {FilesManagementComponent} from '../../files-management/files-management/files-management.component';
 
-
+import { zip } from 'rxjs';
 
 
 
@@ -45,16 +49,19 @@ export class ExerciseCreateComponent {
 
       private spinner: NgxSpinnerService,
       private bodyPartService: BodyPartService,
+      private sportService: SportService,
+      private materialTypeService: MaterialTypeService,
 
   	) { }
   images : File[];
   dynForm; edit; creation; view; ready :boolean;
   exercise: Exercise;
   bodyPartList: string[] = ["Abs", "Biceps", "Triceps", "Glutes", "Legs", "Shoulders", "Oblics", "Chest (middle)", "Chest (high)", "Chest (low)" ];
-  materialType: string[] = ["elastic band","dumbbell", "Yoga ball","medcine ball", "TRX", "bench", "ball"];
+  materialType: MaterialType[];
   id: string;
+  sportsList: Sport[];
   exerciseForm: FormGroup;
-  title; description; muscu; cardio; warmup; balance;bodyPart;material:FormControl;
+  title; description; muscu; cardio; warmup; balance;bodyPart;material; sports:FormControl;
   questionsExercises: QuestionBase<any>[];
 
 
@@ -70,24 +77,37 @@ export class ExerciseCreateComponent {
   	this.route.snapshot.paramMap.get('id') ? this.id = this.route.snapshot.paramMap.get('id') : '';
     this.bodyPartList = this.bodyPartService.getBodyPart();
 
+
+
+
+
+
+
     if (this.creation) {
           this.exercise = new Exercise();
-          // this.createFormControls();
-          // this.formInit();
-          this.questionsExercises = this.ExercisesToQuestions();
-          this.ready = true;
+          zip(this.materialTypeService.getMaterialType(), this.sportService.getSport()).subscribe(val =>
+            {  
+              this.materialType = val[0];
+              this.sportsList = val[1];
+              this.questionsExercises = this.ExercisesToQuestions();
+              this.ready = true;
+            }
+          )
+
+
 
     }
 
     else {
       this.spinner.show();
-      this.exerciseService.getExercise(this.id)
+      
+      zip(this.materialTypeService.getMaterialType(), this.sportService.getSport(),this.exerciseService.getExercise(this.id))
       .subscribe(
-        exercise => {
-          this.exercise = exercise;
+        val => {
+          this.materialType = val[0];
+          this.sportsList = val[1];
+          this.exercise = val[2];
           this.questionsExercises = this.ExercisesToQuestions();
-          // this.createFormControls();
-          // this.formInit();
           this.ready = true;
           setTimeout(() => {
 
@@ -105,20 +125,21 @@ export class ExerciseCreateComponent {
     }
   }
 
-  createFormControls(){
-    this.title = new FormControl({value:this.exercise.title, disabled:this.view}, [Validators.required, Validators.minLength(5)]);
-    this.description = new FormControl({value:this.exercise.description, disabled: this.view}, Validators.required);
+  // createFormControls(){
+  //   this.title = new FormControl({value:this.exercise.title, disabled:this.view}, [Validators.required, Validators.minLength(5)]);
+  //   this.description = new FormControl({value:this.exercise.description, disabled: this.view}, Validators.required);
 
-    this.muscu = new FormControl({value:this.exercise.details.muscu, disabled: this.view});
-    this.cardio = new FormControl({value:this.exercise.details.cardio, disabled: this.view});
-    this.balance = new FormControl({value:this.exercise.details.balance, disabled: this.view});
+  //   this.muscu = new FormControl({value:this.exercise.details.muscu, disabled: this.view});
+  //   this.cardio = new FormControl({value:this.exercise.details.cardio, disabled: this.view});
+  //   this.balance = new FormControl({value:this.exercise.details.balance, disabled: this.view});
 
-    this.warmup = new FormControl({value:this.exercise.details.warmup, disabled: this.view});
-    this.bodyPart = new FormControl({value:this.exercise.details.bodyPart, disabled: this.view}, Validators.required);
-    this.material = new FormControl({value:this.exercise.material, disabled: this.view});
+  //   this.warmup = new FormControl({value:this.exercise.details.warmup, disabled: this.view});
+  //   this.bodyPart = new FormControl({value:this.exercise.details.bodyPart, disabled: this.view}, Validators.required);
+  //   this.material = new FormControl({value:this.exercise.material, disabled: this.view});
+  //   this.sports = new FormControl({value:this.exercise.sports, disabled: this.view});
 
 
-  }
+  // }
 
   onSubmit(value){
     this.formToExercise(value);
@@ -204,7 +225,8 @@ export class ExerciseCreateComponent {
     this.exercise.details.balance = value.balance || false;
     this.exercise.details.warmup = value.warmup || false;
     this.exercise.details.bodyPart = value.bodyPart;
-    this.exercise.material = value.material;
+    this.exercise.materialType = value.material;
+    this.exercise.sports = value.sport;
     this.exercise.hidden = false;
   }
 
@@ -303,6 +325,14 @@ export class ExerciseCreateComponent {
             options: this.convertToValueForSelect(this.materialType),
             required: false,           
             order: 7
+            }),
+      new SelectMultipleQuestion({
+            key: 'sport',
+            label: 'Sports',
+            value: this.exercise.sports,
+            options: this.convertToValueForSelect(this.sportsList),
+            required: false,           
+            order: 7
             })
 
     ]
@@ -311,13 +341,24 @@ export class ExerciseCreateComponent {
 
   }
 
-  convertToValueForSelect(lists:string[]){
+  convertToValueForSelect(lists:any[]){
 
     let listValue :{'value': string, 'key': string}[];
     listValue = new Array();
 
     lists.forEach(list =>{
-      listValue.push({'value' : list, 'key' : list})
+
+      if (typeof list == "string" ){
+        listValue.push({'value' : list, 'key' : list});
+
+
+      }
+
+      else if(typeof list == "object" ){
+
+         listValue.push({'value' : list.name, 'key' : list._id})
+
+      }
 
     })
 

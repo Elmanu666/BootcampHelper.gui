@@ -1,3 +1,10 @@
+import Material from './material.model';
+import Sport from './sport.model';
+import MaterialType from './materialType.model';
+
+
+
+
 class exercise {
     _id:string;
     title: string;
@@ -7,7 +14,7 @@ class exercise {
     	cardio : Boolean;
     	balance : Boolean;
     	warmup : Boolean;
-    	bodyPart : [String]
+    	bodyPart : String[]
     	};
     media : {
     	img : String;
@@ -15,7 +22,9 @@ class exercise {
     	gif : String;
 
     };
-    material : [String];
+    material : Material[];
+    materialType : MaterialType[];
+    sports : Sport[]
     hidden: Boolean;
 
 
@@ -26,7 +35,9 @@ class exercise {
         this.description = ""
         this.details = {muscu : false, cardio : false, balance: false, warmup: false, bodyPart : ['']}
         this.media = {img: "", video :"", gif : ""}
-        this.material = [""]
+        this.material = new Array()
+        this.materialType = new Array()
+        this.sports = new Array()
         this.hidden = false
 
 

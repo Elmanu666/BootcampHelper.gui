@@ -29,8 +29,22 @@ export class MaterialService {
 
 
    createMaterial(material : Material): Observable<any>{
+
+     let datatoSend = {
+        title: material.title,
+        description: material.description,
+        weigth : material.weigth,
+        length : material.length,
+        size : material.size,
+        strength : material.strength,
+        type: material.type._id,
+        quantity: material.quantity,
+
+
+     }
+
     //returns the observable of http post request 
-    return this.http.post(`${this.materialUrl}`, material);
+    return this.http.post(`${this.materialUrl}`, datatoSend);
   }
 
   //Read exercise, takes no arguments

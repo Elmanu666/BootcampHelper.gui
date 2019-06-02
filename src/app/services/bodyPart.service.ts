@@ -23,9 +23,9 @@ export class BodyPartService {
 	}
 
 
-	addBodyPart(material:string){
+	addBodyPart(bodyPart:string){
 
-		this.bodyPart.push(material)
+		this.bodyPart.push(bodyPart)
 
 
 

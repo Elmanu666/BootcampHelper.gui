@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://api.bootcamp.dorne.ch/api/',
-  imgUrl: 'http://api.bootcamp.dorne.ch/',
+  apiUrl: 'http://api.bootcamphelper.com/api/',
+  imgUrl: 'http://api.bootcamphelper.com/',
 
 };

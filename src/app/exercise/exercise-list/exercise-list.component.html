@@ -16,8 +16,8 @@
 		     </tr>        
 		</thead>
 		<tbody [@tableLine]="exercisesListSliced.length">
-			<tr (click)="displayExercise(exercise._id)" *ngFor="let exercise of exercisesListSliced ; let i =index" id={{i}}>
-				<td>{{exercise.title}}
+			<tr (click)="displayExercise(exercise._id)" *ngFor="let exercise of exercisesListSliced ; let i =index"  id={{i}}>
+				<td class="list-title"><div>{{exercise.title | titlecase}}</div>
 					<i id="images" class="fas fa-camera" bchTooltip [bchTooltipImg]="true"  [bchTooltipObjectId]="exercise._id"></i>
 				</td>
 	            <td [innerHTML]="exercise.description"></td>
@@ -46,16 +46,16 @@
 			<div class="form-group">
 			    <label class="form-check-label" for="balance">Body part</label>
 			    <select multiple class="form-control" id="bodyPart" [(ngModel)]="bodyPartSelected" (click)="exerciseFilterByText($event)">
-			      	<option value="any" [selected]="bodyPartSelected.includes('any')">Any</option>
+			      	<option value="Any" [selected]="bodyPartSelected.includes('Any')">Any</option>
 			        <option *ngFor="let bp of bodyPart" [value]="bp" [selected]="bodyPartSelected.includes(bp)">{{bp}}</option>  
 			    </select>
 			</div>
 			<div class="form-group">
 				<label class="form-check-label" for="balance">Material</label>
 		      	<select multiple class="form-control" id="materialType" [(ngModel)]="materialTypeSelected" (click)="exerciseFilterByText($event)" >
-		       		<option value="indif" [selected]="materialTypeSelected.includes('indef')">Indif</option>
+<!-- 		       		<option value='{_id:"0", name:"indif"}' [selected]='materialTypeSelected.includes({"_id":"0", "name":"indif"})'>Indif</option>
 		       		<option value="none" [selected]="materialTypeSelected.includes('none')">None</option>
-		       		<option value="any" [selected]="materialTypeSelected.includes('any')">Any</option>
+		       		<option value="any" [selected]="materialTypeSelected.includes('any')">Any</option> -->
 		        	<option *ngFor="let mt of materialType" [value]="mt" [selected]="materialTypeSelected.includes(mt)">{{mt}}</option>
 		      	</select>
 			</div>

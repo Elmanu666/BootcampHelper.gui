@@ -30,6 +30,7 @@ export class ImageDisplayComponent implements OnInit {
   		console.log(this.objectId, this.style);
 
   		this.style = this.style || 'none';
+  		this.images = new Array();
 
   		this.ready = false
   		this.objectId ? this.getImage() : this.ready = true;

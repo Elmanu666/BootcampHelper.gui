@@ -122,6 +122,12 @@
                 <select class="form-control" id="material" name="material" formControlName="material" multiple>
                     <option *ngFor="let mat of materialType" [value]="mat">{{mat}}</option>
                 </select>
+               </div> 
+              <div class="form-group" [ngClass]="{'view' : view}">
+                <label for="sports">Sports</label>
+                <select class="form-control" id="sports" name="sports" formControlName="sports" multiple>
+                    <option *ngFor="let sport of sportsList" [value]="sport._id" >{{sport.name}}</option>
+                </select>
               </div>
               <div class="row media" *ngIf="edit">
                   <div class="form-group col-md-12">

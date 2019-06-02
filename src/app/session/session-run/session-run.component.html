@@ -167,14 +167,14 @@
 				    		<div class="exercises-container"   >
 				      			<span class="user" *ngFor="let usr of round.exercisesMainUser">{{usr.name}}</span>
 					      		<h1 class="ex-title">{{exercise.title}}</h1>
-					      		<p class="lead" [innerHTML]="exercise.description "> {{exercise.description }} </p>
+<!-- 					      		<p class="lead" [innerHTML]="exercise.description "> {{exercise.description }} </p> -->
 				    		</div >
 				    		<ng-container *ngFor="let exAl of round.exercisesAlternatives">
 				    				<div class="exercises-container">
 				    					<span class="user" *ngFor="let usrAlt of exAl.usersId">{{usrAlt.name}}</span>
 				    					<h1 class="ex-title">{{exAl.exercisesAltId[j].title}}</h1>
-				    					<p class="lead" [innerHTML]="exAl.exercisesAltId[j].description"></p>
-				    				</div>
+<!-- 				    					<p class="lead" [innerHTML]="exAl.exercisesAltId[j].description"></p>
+ -->				    				</div>
 
 				    		</ng-container>
 	

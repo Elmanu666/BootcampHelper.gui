@@ -1,6 +1,7 @@
 import { Response } from '@angular/http';
 import { ExerciseService } from '../../services/exercise.service';
 import Exercise from '../../models/exercise.model';
+import MaterialType from '../../models/materialType.model';
 import { Component, OnInit, ViewContainerRef, ViewChildren, AfterViewInit, QueryList,ElementRef } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { PagerService } from '../../services/pages.service';
@@ -113,14 +114,25 @@ export class ExerciseListComponent {
     this.start=0;
     this.nbDisplayItems=10;
     this.currentPage = 1;
-    this.materialType = this.materialTypeService.getMaterialType();
+
+    this.materialType = new Array();
+    this.materialType[0]='Indif';
+
+    this.materialType[1] ='None';
+
+    this.materialType[2] ='Any';
+    
+    this.materialTypeService.getMaterialType().subscribe( mtp =>
+        mtp.map(x=> this.materialType.push(x.name))
+      );
     this.bodyPart = this.bodyPartService.getBodyPart();
 
     this.bodyPartSelected = [];
-    this.bodyPartSelected[0] = 'any';
+    this.bodyPartSelected[0] = 'Any';
 
     this.materialTypeSelected=[];
-    this.materialTypeSelected[0]=('indif');
+    this.materialTypeSelected[0]='Indif';
+
 
     this.exerciseTypeSelected = {'criteriaActive': false, 'cardio' : 0, 'balance': 0, 'muscu': 0, 'warmup' : 0 } ;
     this.exerciseTypeSelectedBoolean = { 'result': false, 'cardio' : false, 'balance': false, 'muscu': false, 'warmup' : false } ;
@@ -219,13 +231,13 @@ export class ExerciseListComponent {
 
      }
 
-     if(this.materialTypeSelected[0] == 'none')
+     if(this.materialTypeSelected[0] == 'None')
        {
 
          this.materialTypeSelected.length > 0 ? this.materialTypeSelected = this.materialTypeSelected.slice(0,1) : '';
 
           this.exercisesListFiltered = this.exercisesListFiltered.filter( it => {
-            return it.material.length > 0 ? false : true;
+            return it.materialType.length > 0 ? false : true;
 
 
           })
@@ -233,12 +245,12 @@ export class ExerciseListComponent {
 
      }
 
-     if (this.materialTypeSelected[0]== 'any'){
+     if (this.materialTypeSelected[0] == 'Any'){
 
          this.materialTypeSelected.length > 0 ? this.materialTypeSelected = this.materialTypeSelected.slice(0,1) : '';
 
          this.exercisesListFiltered = this.exercisesListFiltered.filter( it => {
-            return it.material.length > 0 ? true : false;
+            return it.materialType.length > 0 ? true : false;
 
 
           })
@@ -246,7 +258,7 @@ export class ExerciseListComponent {
 
 
      }
-     if (this.materialTypeSelected[0] == 'indif'){
+     if (this.materialTypeSelected[0] == 'Indif'){
 
          this.materialTypeSelected.length > 0 ? this.materialTypeSelected = this.materialTypeSelected.slice(0,1) : '';
 
@@ -255,16 +267,16 @@ export class ExerciseListComponent {
 
      }
 
-     if(!(this.materialTypeSelected.includes('none') || this.materialTypeSelected.includes('any')|| this.materialTypeSelected.includes('indif')))
+     if(!(this.materialTypeSelected[0] =='None' || this.materialTypeSelected[0] == 'Any' || this.materialTypeSelected[0] =='Indif'))
      {
 
-       let materialTypeSelected :String[] =  this.materialTypeSelected ;
+       let materialTypeSelected :string[] =  this.materialTypeSelected ;
 
        this.exercisesListFiltered = this.exercisesListFiltered.filter(it => {
 
-         return it.material.some( res => {
+         return it.materialType.some( res => {
 
-           return materialTypeSelected.includes(res)
+           return materialTypeSelected.includes(res.name)
 
 
          })
@@ -276,14 +288,14 @@ export class ExerciseListComponent {
 
      }
 
-     if (this.bodyPartSelected.includes('any')){
+     if (this.bodyPartSelected.includes('Any')){
 
-       this.bodyPartSelected[0]='any';
+       this.bodyPartSelected[0]='Any';
        this.bodyPartSelected.length > 0 ? this.bodyPartSelected = this.bodyPartSelected.slice(0,1) : '';
 
      }
 
-     if (this.bodyPartSelected.length > 0 && this.bodyPartSelected[0] !='any') {
+     if (this.bodyPartSelected.length > 0 && this.bodyPartSelected[0] !='Any') {
 
        let bodyPartSelected :String[] =  this.bodyPartSelected ;
 

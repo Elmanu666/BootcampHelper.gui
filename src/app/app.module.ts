@@ -35,6 +35,7 @@ import { MenuService } from './services/menu.service';
 import { MaterialService } from './services/material.service';
 import { errorHandler } from './services/errorHandler.service';
 import { CaloriesBurntService } from './services/caloriesBurnt.service';
+import { SportService } from './services/sport.service';
 
 
 
@@ -107,14 +108,14 @@ import {CapitalizePipe} from "./pipes/capitalize.pipe";
     FormsModule,
     AngularFontAwesomeModule,
     MatIconModule,
- 	  MatStepperModule,
- 	  MatInputModule,
- 	  MatDatepickerModule,
- 	  MatButtonModule, 
- 	  MatNativeDateModule,
- 	  MatGridListModule,
- 	  MatSelectModule,
- 	  MatExpansionModule,
+      MatStepperModule,
+      MatInputModule,
+      MatDatepickerModule,
+      MatButtonModule, 
+      MatNativeDateModule,
+      MatGridListModule,
+      MatSelectModule,
+      MatExpansionModule,
     MatListModule,
     MatCardModule,
     SharedModule,
@@ -130,7 +131,7 @@ import {CapitalizePipe} from "./pipes/capitalize.pipe";
 
     ],
 
-  providers: [errorHandler, MenuService, MaterialService, ExerciseService,  PagerService, authService, UserService, userSessionService, SessionService, CanActivateExercisesGuard, MaterialTypeService, BodyPartService, CaloriesBurntService],
+  providers: [errorHandler, MenuService, SportService, MaterialService, ExerciseService,  PagerService, authService, UserService, userSessionService, SessionService, CanActivateExercisesGuard, MaterialTypeService, BodyPartService, CaloriesBurntService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

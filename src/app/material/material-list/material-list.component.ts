@@ -110,7 +110,16 @@ export class MaterialListComponent {
     this.currentPage = 1;
 
 
-    this.materialType = this.materialTypeService.getMaterialType();
+    this.materialTypeService.getMaterialType().subscribe(data=> {
+        this.materialType = data;
+
+
+    },
+    error => {
+
+      console.log('error getMaterialType')
+    }
+    );
     this.typeSelected = new Array();
     this.typeSelected[0]='any';
     this.searchCriteria = {'searchText': '', 'type' :{'active' : false, 'value': this.typeSelected} , 'weigth' : {'active': false ,'min':0, 'max':40}, 'size':{'active' : false, 'value': ['']}, 'length': {'active': false, 'min':0, 'max':200}, 'quantity' :{'active': false, 'min':0, 'max':50}, 'strength' : {'active' : false, 'value': ['']},  };
@@ -217,7 +226,7 @@ activeFilter(filter:string){
      if(this.searchCriteria.type.active){
 
        this.materialsListFiltered = this.materialsListFiltered.filter(it =>{
-         return this.searchCriteria.type.value.includes(it.type) 
+         return this.searchCriteria.type.value.includes(it.type.name) 
 
        });
 

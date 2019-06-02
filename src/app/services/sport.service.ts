@@ -1,50 +1,48 @@
 import { Injectable } from '@angular/core';
-import Material from '../models/material.model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import {Response} from '@angular/http';
 import { PagerService } from '../services/pages.service';
 import { environment } from '../../environments/environment';
-import MaterialType from '../models/materialType.model';
+import Sport from '../models/sport.model';
 
 
 
 @Injectable()
-export class MaterialTypeService {
+export class SportService {
 
 
-	materialType : MaterialType[];
+	sport : Sport[];
 	api_url = environment.apiUrl || 'http://localhost:3000/api/';
-  	materialUrl = `${this.api_url}materialType`;
+  	materialUrl = `${this.api_url}sport`;
 
 	constructor(
 		    private http: HttpClient,
 
   	) { 
-		this.materialType = new Array();
+		this.sport = new Array();
 
 	}
 
 
-	addMaterialType(material:any){
+	addSport(material:any){
 
-		this.materialType.push(material)
+		this.sport.push(material)
 
 
 
 
 	}
 
-	getMaterialType(): Observable<any>{
-		debugger;
-		if (this.materialType.length > 0){
+	getSport(): Observable<any>{
+		if (this.sport.length > 0){
 
 			 return new Observable((observer) => {
 
 				 
 				  // When the consumer unsubscribes, clean up data ready for next subscription.
-				  observer.next(this.materialType);
+				  observer.next(this.sport);
 				  observer.complete();
 
 				});
@@ -57,8 +55,8 @@ export class MaterialTypeService {
         		.get(this.materialUrl)
     			.map(res  => {
 
-    				this.materialType = res["data"];
-      	    		return res["data"] as MaterialType[];
+    				this.sport = res["data"];
+      	    		return res["data"] as Sport[];
 
 
             		}

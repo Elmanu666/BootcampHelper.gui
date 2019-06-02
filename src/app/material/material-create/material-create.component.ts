@@ -2,6 +2,7 @@ import { Response } from '@angular/http';
 import { MaterialService } from '../../services/material.service';
 import { MaterialTypeService } from '../../services/materialType.service';
 import Material from '../../models/material.model';
+import MaterialType from '../../models/materialType.model';
 
 import { Component, OnInit} from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
@@ -25,7 +26,7 @@ export class MaterialCreateComponent {
 	materialSize : Array<string>;
 	images:File;
 	ready:boolean;
-	materialType:Array<string>;
+	materialType:MaterialType[];
 	materialForm:FormGroup;
 	view : boolean;
 	path : string;
@@ -53,7 +54,6 @@ export class MaterialCreateComponent {
 	onSubmit(){
 
 		if (this.path == 'create'){
-
 			this.create();
 		}
 		else if (this.path == 'edit'){
@@ -96,7 +96,13 @@ export class MaterialCreateComponent {
 			this.route.snapshot.routeConfig.path.slice(0,6) == 'detail' ? this.view = true: this.view = false;
 			this.path = this.route.snapshot.routeConfig.path.split("/")[0];
 		 	this.materialSize=['XXS','XS','S', 'M', 'L', 'XL', 'XXL'];
-		 	this.materialType=this.materialTypeService.getMaterialType();
+		 	this.materialTypeService.getMaterialType()
+		 			.subscribe(
+		 				materialType=>{
+		 					debugger;
+							this.materialType=materialType
+		 				}
+		 				);
 		  	this.route.snapshot.paramMap.get('id') ? this.id =  this.route.snapshot.paramMap.get('id') : this.id = null;
 		  	
 		  	if (this.id == null){
@@ -131,7 +137,7 @@ export class MaterialCreateComponent {
 
 	createFormControls(){
 		this.title = new FormControl({value:this.material.title, disabled:this.view}, [Validators.required, Validators.minLength(5)]);
-		this.type = new FormControl({value:this.material.type, disabled: this.view}, Validators.required);
+		this.type = new FormControl({value:this.material.type._id, disabled: this.view});
 		this.description = new FormControl({value:this.material.description, disabled: this.view}, Validators.required);
 		this.weigth = new FormControl({value:this.material.weigth, disabled: this.view});
 		this.length = new FormControl({value:this.material.length, disabled: this.view});
@@ -156,6 +162,10 @@ export class MaterialCreateComponent {
 		
 
 	}
+
+	compareFn(c1: any, c2:any): boolean {     
+     return c1 && c2 ? c1.id === c2.id : c1 === c2; 
+}
 
 
 
