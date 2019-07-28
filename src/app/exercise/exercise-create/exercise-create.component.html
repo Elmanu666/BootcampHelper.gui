@@ -110,7 +110,7 @@
               <div class="form-group" [ngClass]="{'view' : view}">
                 <label for="bodyPart">Body part</label>
                 <select class="form-control" id="bodyPart" name="bodyPart" formControlName="bodyPart" multiple>
-                    <option *ngFor="let ty of bodyPartList" [value]="ty">{{ty}}</option>
+                    <option *ngFor="let ty of bodyPartList" [selected]="exercise.details.bodyPart.includes(ty)" [value]="ty">{{ty}}</option>
                 </select>
                 <div class="alert alert-danger" *ngIf="bodyPart.errors && (bodyPart.dirty || bodyPart.touched)"> 
                   <p *ngIf="bodyPart.errors.required">Bodypart is required </p>

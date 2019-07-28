@@ -38,6 +38,18 @@
     margin-top: 50px;
 }
 
+.fixed-top {
+    z-index:999 !important;
+}
+
+.modal-backdrop{
+z-index: 1000 !important;
+}
+
+.modal{
+    z-index: 1000 !important;
+}
+
 
 
 .HeaderTable{

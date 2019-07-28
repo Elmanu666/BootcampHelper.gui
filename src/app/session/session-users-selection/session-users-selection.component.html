@@ -1,0 +1,24 @@
+<div class="modal-header">
+  <h4 class="modal-title">Hi there!</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <p *ngFor="let user of users">  {{user.name}}</p>
+  <p *ngFor="let userA of userAdded">  {{userA.name}}<i class="fas fa-times-circle" (click)="removeUser(userA)"></i></p>
+</div>
+<div class="input-group mb-3">
+<select class="custom-select" id="inputGroupSelect01" [(ngModel)]="newUser">
+	    <option selected>Choose...</option>
+	    <option *ngFor="let usr of usersList" [value]="usr._id">{{usr.name}}</option>
+
+</select>  <div class="input-group-append">
+    <button class="btn btn-outline-secondary" type="button" id="button-addon2" (click)="addUser($event)">add</button>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark" (click)="save()">Save</button>
+</div>
+
+

@@ -68,6 +68,7 @@ import { HomeComponent } from './home/home.component';
 
 //pipe
 import {CapitalizePipe} from "./pipes/capitalize.pipe";
+//import { RoundComponent } from './round/round.component';
 
 
 
@@ -89,6 +90,7 @@ import {CapitalizePipe} from "./pipes/capitalize.pipe";
     loginComponent,
 //    SessionComponent,
     CapitalizePipe,
+
 
   ],
 

@@ -99,7 +99,6 @@ export class MaterialCreateComponent {
 		 	this.materialTypeService.getMaterialType()
 		 			.subscribe(
 		 				materialType=>{
-		 					debugger;
 							this.materialType=materialType
 		 				}
 		 				);

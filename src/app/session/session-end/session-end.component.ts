@@ -1,7 +1,8 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnChanges, OnInit, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import User from '../../models/user.model';
 import Session from '../../models/session.model';
 import {CaloriesBurntService} from '../../services/caloriesBurnt.service';
+import {SessionService} from '../../services/session.service';
 import CaloriesBurnt from '../../models/caloriesBurnt.model';
 import {RangeSimpleQuestion} from '../../dynamic-form/models/question-range-simple.model';
 import {QuestionBase} from '../../dynamic-form/models/question-base.model';
@@ -21,10 +22,12 @@ export class SessionEndComponent implements OnInit {
 	@Input() session : Session;
 	@Output() saveCal = new EventEmitter();
 	@Output() cancelCal = new EventEmitter();
+	update:number= 0;
 
 
   	constructor(    
-  		private caloriesBurntService: CaloriesBurntService
+  		private caloriesBurntService: CaloriesBurntService,
+  		private sessionService: SessionService,
 
 		) {
 
@@ -39,7 +42,15 @@ export class SessionEndComponent implements OnInit {
 		// 	this.caloriesPerUser.push({'user':this.users[j], 'cal': 0});
 		// }
 		this.usersToQuestion();
+      	this.sessionService.attendeesAdded.subscribe(x=>{
+      		this.update +=1;
+      		this.addAttendee(x);
+      	}
+
+      	)
 	}
+
+
 
 	save(value){
 	
@@ -84,5 +95,23 @@ export class SessionEndComponent implements OnInit {
   		}
   		return this.questionsCalories 
 
+	}
+
+	addAttendee(attendee:User[]){
+		debugger;
+		console.log('on est dans le addAttendee du  seesion end component')
+		const v = this.users.length ;
+		attendee.map(x=>	  	    		
+			this.questionsCalories.push(new RangeSimpleQuestion({
+			            key: x._id,
+			            label: x.name,
+			            value: 0,
+			            options: {min : 200, max: 800, step:1}, 
+			            required: true,
+			            order: v +1,
+
+	  	    		}) 
+			))
+		//attendee.map(x=> this.users.push(x));
 	}
 }

@@ -40,6 +40,10 @@ import { bchTooltipModule } from '../tooltip/bch-tooltip.module';
 import { SessionEndComponent } from './session-end/session-end.component'
 
 import {DynamicFormModule} from '../dynamic-form/dynamic-form.module';
+import { SessionUsersSelectionComponent } from './session-users-selection/session-users-selection.component';
+import { SessionUsersSelectionModalComponent } from './session-users-selection/session-users-selection.component';
+
+import { RoundComponent } from '../round/round.component';
 
 
 
@@ -81,6 +85,7 @@ import {DynamicFormModule} from '../dynamic-form/dynamic-form.module';
     DragDropModule,
     bchTooltipModule,
     DynamicFormModule,
+
   ],
 
   declarations: [
@@ -95,11 +100,16 @@ import {DynamicFormModule} from '../dynamic-form/dynamic-form.module';
     EscapeHtmlPipe,
     CalendarComponent,
     SessionEndComponent,
+    SessionUsersSelectionComponent,
+    SessionUsersSelectionModalComponent,
+    RoundComponent
 
   ],
 
   entryComponents: [
-
+    SessionUsersSelectionComponent,
+    SessionUsersSelectionModalComponent,
+    RoundComponent
   ],
 
 

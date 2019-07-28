@@ -1,5 +1,7 @@
 import Session from '../models/session.model';
-import { Observable } from 'rxjs';
+import Round from '../models/round.model';
+import User from '../models/user.model';
+import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import {Response} from '@angular/http';
@@ -17,6 +19,8 @@ export class SessionService {
 	api_url = environment.apiUrl || 'http://localhost:3000/api/';
   sessionsUrl = `${this.api_url}sessions`;
   sessionUrl = `${this.api_url}session`;
+  public ProcessingSession : Session;
+  attendeesAdded = new Subject<User[]>();
 
   constructor(
     private http: HttpClient,
@@ -151,6 +155,31 @@ export class SessionService {
     return this.http.put(editUrl, session);
   }
 
+  setAsProcessingSesssion(session:Session){
+    this.ProcessingSession=session;
+  }
+
+
+
+  addRoundToProcessingSession(round:Round[]){
+
+
+  }
+
+  addAttendeesToProcessingSession(attendees:User[]){
+    debugger;
+    console.log('on est dans le addAttendeesToProcessingSession');
+     attendees.map(x=> this.ProcessingSession.attendees.push(x));
+     this.attendeesAdded.next(attendees);
+
+
+
+  }
+
+  setAttendeesToProcessingSession(attendees:User[]){
+    this.ProcessingSession.attendees=attendees;
+
+  }
 
 
 

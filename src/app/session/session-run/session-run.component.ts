@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import SessionModel from '../../models/session.model';
 import ExerciseModel from '../../models/exercise.model';
 import EventModel from '../../calendar/calendar.model';
+import User from '../../models/user.model';
 import { SessionService } from '../../services/session.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -15,7 +16,9 @@ import {
   transition
 } from '@angular/animations';
 import { CalendarComponent } from '../../calendar/calendar.component';
+import { SessionUsersSelectionComponent } from '../session-users-selection/session-users-selection.component';
 import { NgxSpinnerService } from 'ngx-spinner';
+
 
 
 
@@ -121,7 +124,8 @@ export class SessionRunComponent implements OnInit {
   		private route: ActivatedRoute,
   		private sessionService: SessionService,
   		public toastr: ToastrService,
-      private spinner: NgxSpinnerService
+      private spinner: NgxSpinnerService,
+
 
   	) 
     {}
@@ -139,7 +143,9 @@ export class SessionRunComponent implements OnInit {
         this.spinner.show();
         this.sessionService.getSession(this.idSession)
             .subscribe(sessionApi => {
+             
               this.session = sessionApi;
+              this.sessionService.setAsProcessingSesssion(this.session);
                   setTimeout(() => {
                     this.loaded = true;
                     this.spinner.hide();
@@ -197,6 +203,7 @@ export class SessionRunComponent implements OnInit {
     this.roundsStarted = true;
     this.playAudio();
     setTimeout(()=>{
+     
           this.countdowncomponent.setDuration(this.session.round[this.currentExercise.round].restDuration);
 
           setTimeout(()=>{
@@ -238,7 +245,7 @@ export class SessionRunComponent implements OnInit {
 
   startCountDown(){
     this.playAudio();
-    debugger;
+   
     this.countdowncomponent.startCountDown();
 
 
@@ -540,7 +547,7 @@ export class SessionRunComponent implements OnInit {
   }
 
   setCalories(value:any){
-    debugger;
+   
     var data = value.data.map(x => {
       return x._id
     })
@@ -550,6 +557,17 @@ export class SessionRunComponent implements OnInit {
 
 
   }
+
+  addAttendees(user:any){
+
+    console.log(this.sessionService.ProcessingSession.attendees);
+
+
+
+
+  }
+
+
 }
 
 
