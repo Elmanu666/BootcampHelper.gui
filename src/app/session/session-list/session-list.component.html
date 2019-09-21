@@ -9,10 +9,10 @@
         <thead class="thead-dark bg-primary">
           <tr>
         
-                <th>Description</th>
-                <th>Attendees</th>
-                <th>Rounds number</th>
-                <th>Planned date</th>        
+                <th (click)="sortBy('description')">Description</th>
+                <th >Attendees</th>
+                <th >Rounds number</th>
+                <th (click)="sortBy('plannedDate')">Planned date </th>        
  
           </tr>        
         </thead>
@@ -20,7 +20,7 @@
         <tbody [@tableLine]="sessionsList.length">
 
             <tr  (click)="sessionJump(session._id)"  *ngFor="let session of sessionsList; let i =index" id={{i}}>
-              <td>{{session?.description || 'default'}}</td>
+              <td>{{session.description || 'default'}}</td>
               <td>
                 <i class="attendees" *ngFor="let att of session.attendees">{{att.name}}</i>
               </td>

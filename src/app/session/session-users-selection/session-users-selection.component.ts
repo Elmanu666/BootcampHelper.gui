@@ -100,7 +100,7 @@ export class SessionUsersSelectionModalComponent implements OnInit {
 
 @Component({
   selector: 'app-session-users-selection-modal',
-  template: '<button  class="btn btn-lg btn-success" (click)="open(content)">Add user</button>'
+  template: '<button  class="btn btn-lg btn-success" (click)="open()">Add user</button>'
 })
 
 

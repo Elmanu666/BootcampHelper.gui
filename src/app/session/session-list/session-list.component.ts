@@ -92,11 +92,14 @@ export class SessionListComponent implements OnInit {
   pagesInfo : Page = new Page();
   loaded : boolean = false;
   path: string;
+  sortingInfo : any[];
+
 
   ngOnInit(): void {
 
     this.path = this.route.snapshot.routeConfig.path
     this.getSessions();
+    this.sortingInfo = new Array();
     }
 
 
@@ -129,6 +132,45 @@ export class SessionListComponent implements OnInit {
     this.path == 'edit' ? this.router.navigate(['/session/edit/'+id]):'';
     this.path == 'detail' ? this.router.navigate(['/session/detail/'+id]):'';
     this.path == 'list' ? this.router.navigate(['/session/detail/'+id]):'';
+
+  }
+
+
+  sortBy(criteria){
+
+    var data = this.sortingInfoGetSorting(criteria);
+    console.log('sorting :', data);
+    console.log('sortingInfo :', this.sortingInfo);
+    
+
+    data.sort == 'asc' ? this.sessionsList.sort((a,b) => a[data.criteria].localeCompare(b[data.criteria])) : this.sessionsList.sort((a,b) => b[data.criteria].localeCompare(a[data.criteria]));
+
+//    this.sessionsList.sort((a,b) => a[criteria].localeCompare(b[criteria]))
+
+
+
+  }
+
+  sortingInfoGetSorting(criteria){
+    var sortingInfoExist = false;
+    var index = 0 ;
+    var data = {'criteria':criteria, 'sort':''};
+
+     for (var v = 0; v < this.sortingInfo.length; v++)
+      {
+      if (this.sortingInfo[v].criteria == criteria ){
+        this.sortingInfo[v].sort == 'asc' ? this.sortingInfo[v].sort = 'dsc' :this.sortingInfo[v].sort = 'asc';
+        sortingInfoExist = true;
+        index = v;
+
+        }
+      }
+
+    sortingInfoExist == false ? this.sortingInfo.push({'criteria': criteria, 'sort': 'asc'}) : '';
+    sortingInfoExist == false ? data.sort = 'asc' : data.sort = this.sortingInfo[index].sort;
+
+    return data
+
 
   }
 

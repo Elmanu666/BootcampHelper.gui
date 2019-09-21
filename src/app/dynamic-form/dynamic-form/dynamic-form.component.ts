@@ -27,16 +27,18 @@ export class DynamicFormComponent implements OnInit, OnChanges {
 		typeof this.disable != undefined ? this.disable : this.disable = false ;
 		this.form = this.qcs.toFormGroup(this.questions2display);
 		this.disable == true ? this.form.disable() : '';
+		this.update=0;
 	}
 
 	ngOnChanges(simples:SimpleChanges){
-
-
-		if(!simples.update.isFirstChange()){
-			debugger;
-			let newQuestion : QuestionBase<any>[] = this.questions.filter(x=> !this.questions2display.includes(x));
-			newQuestion.map(x=> x.required ? this.form.addControl(x.key || '', new FormControl(x.value || '', Validators.required)): this.form.addControl(x.key || '', new FormControl(x.value || '')) )
-			newQuestion.map(x=>this.questions2display.push(x));
+		debugger;
+		if (typeof simples.update !== "undefined") {
+			if(!simples.update.isFirstChange()){
+				debugger;
+				let newQuestion : QuestionBase<any>[] = this.questions.filter(x=> !this.questions2display.includes(x));
+				newQuestion.map(x=> x.required ? this.form.addControl(x.key || '', new FormControl(x.value || '', Validators.required)): this.form.addControl(x.key || '', new FormControl(x.value || '')) )
+				newQuestion.map(x=>this.questions2display.push(x));
+			}
 		}
 
 		
