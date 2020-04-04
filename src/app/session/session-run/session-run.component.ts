@@ -87,7 +87,7 @@ const colors: any = {
 export class SessionRunComponent implements OnInit {
 
 
-	@ViewChild(CountdownComponent, { static: false }) countdowncomponent: CountdownComponent;
+	@ViewChild(CountdownComponent) countdowncomponent: CountdownComponent;
 
 
 

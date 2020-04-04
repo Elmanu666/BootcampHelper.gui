@@ -16,7 +16,7 @@ export class FilesManagementComponent implements OnInit {
 	@Input() theme : string;
 
 
-	@ViewChild(ImageDisplayComponent, { static: false }) imagedisplaycomponent: ImageDisplayComponent;
+	@ViewChild(ImageDisplayComponent) imagedisplaycomponent: ImageDisplayComponent;
 
 	private style : string;
 
