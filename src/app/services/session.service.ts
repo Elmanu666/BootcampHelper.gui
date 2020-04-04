@@ -4,7 +4,7 @@ import User from '../models/user.model';
 import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
-import {Response} from '@angular/http';
+//import {Response} from '@angular/http';
 import { Injectable } from '@angular/core';
 import { PagerService } from '../services/pages.service';
 import { environment } from '../../environments/environment';

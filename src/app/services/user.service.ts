@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Observable } from 'rxjs/Rx';
 import User from '../models/user.model';
 import { map } from 'rxjs/operators';
-import {Response} from '@angular/http';
+//import {Response} from '@angular/http';
 import { PagerService } from '../services/pages.service';
 import { environment } from '../../environments/environment';
 

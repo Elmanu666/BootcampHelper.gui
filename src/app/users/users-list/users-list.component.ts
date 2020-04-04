@@ -1,4 +1,4 @@
-import { Response } from '@angular/http';
+//import { Response } from '@angular/http';
 import { UserService } from '../../services/user.service';
 import User from '../../models/user.model';
 import { Component, OnInit} from '@angular/core';

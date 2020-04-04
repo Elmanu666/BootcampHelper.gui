@@ -1,4 +1,4 @@
-import { Response } from '@angular/http';
+//import { Response } from '@angular/http';
 import { ExerciseService } from '../../services/exercise.service';
 import Exercise from '../../models/exercise.model';
 import Sport from '../../models/sport.model';

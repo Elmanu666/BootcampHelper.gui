@@ -69,7 +69,8 @@ export class CalendarComponent {
 		var currentDay = 1 ;
 
 		var lastWeek = this.getWeekOfTheMonth(this.monthLastDate)  ;
-		for (var i = 0 ; i< 6; i++){
+//		for (var i = 0 ; i< 6; i++){
+		for (var i = 0 ; i< lastWeek+1; i++){
 			var D = this.firstDay.getDay();
 
 			this.ngCalendar[i] = {'display': false, 'events': null, 'days':new Array() };
@@ -88,7 +89,7 @@ export class CalendarComponent {
 
 				i==0 && D == j ? (this.ngCalendar[i].days[j]={'day': 1 , 'month':this.month, 'events' : new Array()}, currentDay +=1):'';
 				i== 0 && D < j ? (this.ngCalendar[i].days[j]={'day': currentDay , 'month':this.month, 'events' : new Array()}, currentDay +=1 ):'';
-
+				debugger;
 				i ==lastWeek && this.monthLastDay > j ? (this.ngCalendar[i].days[j]={'day': currentDay , 'month':this.month, 'events' : new Array()}, currentDay +=1 ):'';
 				i ==lastWeek && this.monthLastDay == j ? (this.ngCalendar[i].days[j]={'day': currentDay , 'month':this.month, 'events' : new Array()}, currentDay =1 ):'';
 				i== lastWeek && this.monthLastDay < j ? (this.ngCalendar[i].days[j]={'day': currentDay , 'month':this.month+1, 'events' : new Array()}, currentDay +=1):'';
@@ -111,7 +112,8 @@ export class CalendarComponent {
 
 		var yearEndOfCalendar ;
 		this.nextMonth == 11 ? yearEndOfCalendar = this.refDate.getFullYear()+1: yearEndOfCalendar = this.refDate.getFullYear();
-		this.calendarLastDate = new Date(yearEndOfCalendar, this.ngCalendar[5].days[6].month, this.ngCalendar[5].days[6].day)
+	//	this.calendarLastDate = new Date(yearEndOfCalendar, this.ngCalendar[5].days[6].month, this.ngCalendar[5].days[6].day)
+		this.calendarLastDate = new Date(yearEndOfCalendar, this.ngCalendar[lastWeek].days[6].month, this.ngCalendar[lastWeek].days[6].day)
 
 
 
@@ -119,6 +121,7 @@ export class CalendarComponent {
 	}
 
 	setDateVariables(){
+
 
 		this.today = new Date();
 
@@ -129,7 +132,8 @@ export class CalendarComponent {
 		this.firstDay = new Date(this.refDate.getFullYear(), this.refDate.getMonth(), 1)
 		this.todayDay = this.refDate.getDate();
 		
-		this.refDate.getMonth() == 11 ? (this.monthLastDate = new Date(this.refDate.getFullYear()+1, 0, 0),this.monthLastDay = this.monthLastDate.getDay() ) : (this.refDate.getMonth() == 0 ? (this.monthLastDate = new Date(this.refDate.getFullYear()-1, 11, 0),this.monthLastDay = this.monthLastDate.getDay() ) :  (this.monthLastDate = new Date(this.refDate.getFullYear(), this.refDate.getMonth()+1, 0),this.monthLastDay = this.monthLastDate.getDay()));
+	//	this.refDate.getMonth() == 11 ? (this.monthLastDate = new Date(this.refDate.getFullYear()+1, 0, 0),this.monthLastDay = this.monthLastDate.getDay() ) : (this.refDate.getMonth() == 0 ? (this.monthLastDate = new Date(this.refDate.getFullYear()-1, 11, 0),this.monthLastDay = this.monthLastDate.getDay() ) :  (this.monthLastDate = new Date(this.refDate.getFullYear(), this.refDate.getMonth()+1, 0),this.monthLastDay = this.monthLastDate.getDay()));
+		this.refDate.getMonth() == 11 ? (this.monthLastDate = new Date(this.refDate.getFullYear(), 11, 31),this.monthLastDay = this.monthLastDate.getDay() ) : (this.monthLastDate = new Date(this.refDate.getFullYear(), this.refDate.getMonth()+1, 0),this.monthLastDay = this.monthLastDate.getDay());
 
 		var LastDateOfPreviousTheMonth; this.previousMonthLastDay
 		this.previousMonthLastDate = new Date(this.refDate.getFullYear(), this.refDate.getMonth(), 0)
@@ -150,7 +154,7 @@ export class CalendarComponent {
 
 	setEventToCalObject(){
 
-
+	
 		if (this.events != undefined){
 
 			for (var i=0; i < this.events.length; i++){
@@ -178,7 +182,6 @@ export class CalendarComponent {
 	}
 
 	displayCalMonthItems(i, dayEvent){
-		debugger;
 
 		for (var j = 0 ; j < 6 ; j++){
 
@@ -195,7 +198,8 @@ export class CalendarComponent {
 
 		var firstDateOfTheMonth = new Date(date.getFullYear(), date.getMonth(), 1);
 		var day = date.getDate();
-		var m = Math.floor((day+(firstDateOfTheMonth.getDay()))/7);
+	//	var m = Math.floor((day+(firstDateOfTheMonth.getDay()))/7);
+		var m = Math.floor((day-1+(firstDateOfTheMonth.getDay()))/7);
 
 			return m
 
@@ -223,6 +227,8 @@ export class CalendarComponent {
 
 
 	}
+
+
 
 	changeMonthDisplay(){
 		var monthList = ['January', 'February', 'March', 'April', 'May', 'June', 'Jully', 'August', 'September', 'October', 'November', 'December'];

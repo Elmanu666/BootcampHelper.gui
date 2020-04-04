@@ -3,7 +3,7 @@ import Material from '../models/material.model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import {Response} from '@angular/http';
+//import {Response} from '@angular/http';
 import { PagerService } from '../services/pages.service';
 import { environment } from '../../environments/environment';
 import MaterialType from '../models/materialType.model';

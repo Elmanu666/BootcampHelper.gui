@@ -10,7 +10,7 @@ import { DraggableHandlerDirective } from './draggable-handler.directive';
 export class DraggableDirective implements AfterContentInit {
   @HostBinding('class.draggable') draggable = true;
 
-  @ContentChild(DraggableHandlerDirective) draggableHandler: DraggableHandlerDirective;
+  @ContentChild(DraggableHandlerDirective, /* TODO: add static flag */ {static: true}) draggableHandler: DraggableHandlerDirective;
 
 
   pointerId?: number;

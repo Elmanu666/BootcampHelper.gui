@@ -76,7 +76,7 @@ export class SessionCreateComponent implements OnInit {
   activAccordion:number;
   filter:{'any':boolean, 'cardio': boolean, 'muscu': boolean, 'balance': boolean, 'warmup':boolean} ;
 
-  @ViewChild('stepper') stepper;
+  @ViewChild('stepper', { static: false }) stepper;
 
   constructor(
     private _formBuilder: FormBuilder,

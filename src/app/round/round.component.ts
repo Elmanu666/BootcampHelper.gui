@@ -150,29 +150,28 @@ export class RoundComponent implements OnInit {
     this.dropAreaClass = 'dropOut';
   }
 
-  drop(event: any, id : number, type: string, idAtl : number){
-    event.preventDefault();
-    event.stopPropagation();
+//   drop(event: any, id : number, type: string, idAtl : number){
+//     event.preventDefault();
+//     event.stopPropagation();
     
-    
-    if(type == 'main'){
-      for (var i = 0 ; i < this.exercisesList.length; i++){
+//     if(type == 'main'){
+//       for (var i = 0 ; i < this.exercisesList.length; i++){
 
-//        this.exercisesList[i]._id == event.dataTransfer.getData("_id") ?   ( this.round.exercises.length < 1 ? this.round.exercises[0] = this.exercisesList[i] :  this.round.exercisesNumber > this.round.exercises.length ? this.round.exercises.push(this.exercisesList[i]) : this.round.exercises[this.round.exercises.length-1] = this.exercisesList[i]):'';
-        this.exercisesList[i]._id == event.dataTransfer.getData("_id") ?  this.addExercise(this.exercisesList[i], id, type, idAtl) :'';
-      }
+// //        this.exercisesList[i]._id == event.dataTransfer.getData("_id") ?   ( this.round.exercises.length < 1 ? this.round.exercises[0] = this.exercisesList[i] :  this.round.exercisesNumber > this.round.exercises.length ? this.round.exercises.push(this.exercisesList[i]) : this.round.exercises[this.round.exercises.length-1] = this.exercisesList[i]):'';
+//         this.exercisesList[i]._id == event.dataTransfer.getData("_id") ?  this.addExercise(this.exercisesList[i], id, type, idAtl) :'';
+//       }
 
-    }
-    else if(type=='alt'){
-       for (var i = 0 ; i < this.exercisesList.length; i++){
-              this.exercisesList[i]._id == event.dataTransfer.getData("_id") ?   this.addExercise(this.exercisesList[i], id, type, idAtl) :''
-        }
+//     }
+//     else if(type=='alt'){
+//        for (var i = 0 ; i < this.exercisesList.length; i++){
+//               this.exercisesList[i]._id == event.dataTransfer.getData("_id") ?   this.addExercise(this.exercisesList[i], id, type, idAtl) :''
+//         }
 
-    }
+//     }
 
 
-    this.dropAreaClass = 'dropOut';
-  }
+//     this.dropAreaClass = 'dropOut';
+//   }
 
   drop2(event: CdkDragDrop<string[]>, round : number, idAtl : number) {
     debugger;
@@ -191,7 +190,7 @@ export class RoundComponent implements OnInit {
  
 
       event.container.id.slice(0, 3) === 'alt' ? type = "alt" : type ="main";
-      this.addExercise(event.item.data, round, type, idAtl);
+      this.addExercise(event.item.data, round, type, idAtl, event.currentIndex);
 
       // copyArrayItem(event.previousContainer.data,
       //                   event.container.data,
@@ -207,43 +206,60 @@ export class RoundComponent implements OnInit {
 
 
 
-  addExercise(exercise, id : number, type: string, idAtl : number){
+  addExercise(exercise:Exercise, id : number, type: string, idAtl : number, dropIndex : number){
 
     //try to find the first empty exercise in the list
-    debugger;
-    var successed = false
 
-    if (type=='main'){
-      for (var i=0; i< this.round.exercisesId.length; i++){
-        if (this.round.exercisesId[i].title== '' && successed == false){
+    //var successed = false
 
-            this.round.exercisesId[i]=exercise;
-            successed = true;
-            break;
 
-        }
-      }
 
-    }
-    // in case all exercise has been already selected we swap with the last one in the list
-    if (type=='alt'){
-      for (var i=0; i< this.round.exercisesAlternatives[idAtl].exercisesAltId.length; i++){
-        if (this.round.exercisesAlternatives[idAtl].exercisesAltId[i].title== '' && successed == false){
-
-            this.round.exercisesAlternatives[idAtl].exercisesAltId[i]=exercise;
-            successed = true;
-            break;
-
-        }
-      }
+    if (type == 'main'){
+      this.round.exercisesId[dropIndex].title==''? this.round.exercisesId.splice(dropIndex, 1, exercise):this.round.exercisesId.splice(dropIndex, 0, exercise) ;
+ 
+      this.round.exercisesId.length > this.round.exercisesNumber ? this.round.exercisesId.length = this.round.exercisesNumber : "";
 
     }
 
+    else if (type == 'alt'){
+      this.round.exercisesAlternatives[idAtl].exercisesAltId[dropIndex].title==''? this.round.exercisesAlternatives[idAtl].exercisesAltId.splice(dropIndex, 1, exercise): this.round.exercisesAlternatives[idAtl].exercisesAltId.splice(dropIndex, 0, exercise);
 
-    if (successed == false){
-      type == 'main' ? this.round.exercisesId[this.round.exercisesId.length - 1]=exercise : this.round.exercisesAlternatives[idAtl].exercisesAltId[this.round.exercisesAlternatives[idAtl].exercisesAltId.length -1]=exercise;
+      this.round.exercisesAlternatives[idAtl].exercisesAltId.length > this.round.exercisesNumber ? this.round.exercisesAlternatives[idAtl].exercisesAltId.length = this.round.exercisesNumber : "";
+
 
     }
+
+    // if (type=='main'){
+    //   for (var i=0; i< this.round.exercisesId.length; i++){
+    //     if (this.round.exercisesId[i].title== '' && successed == false){
+
+    //         this.round.exercisesId[i]=exercise;
+    //         successed = true;
+    //         break;
+
+    //     }
+    //   }
+
+    // }
+    // // in case all exercise has been already selected we swap with the last one in the list
+    // if (type=='alt'){
+    //   for (var i=0; i< this.round.exercisesAlternatives[idAtl].exercisesAltId.length; i++){
+    //     if (this.round.exercisesAlternatives[idAtl].exercisesAltId[i].title== '' && successed == false){
+
+    //         this.round.exercisesAlternatives[idAtl].exercisesAltId[i]=exercise;
+    //         successed = true;
+    //         break;
+
+    //     }
+    //   }
+
+    // }
+
+
+    // if (successed == false){
+    //   type == 'main' ? this.round.exercisesId[this.round.exercisesId.length - 1]=exercise : this.round.exercisesAlternatives[idAtl].exercisesAltId[this.round.exercisesAlternatives[idAtl].exercisesAltId.length -1]=exercise;
+
+    // }
 
   //  this.round.exercises.length < 1 ? this.round.exercises[0] = this.exercisesList[i] :  this.round.exercisesNumber > this.round.exercises.length ? this.round.exercises.push(this.exercisesList[i]) : this.round.exercises[this.round.exercises.length-1] = this.exercisesList[i]):'';
 

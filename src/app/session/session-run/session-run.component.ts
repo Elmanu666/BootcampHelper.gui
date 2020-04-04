@@ -87,7 +87,7 @@ const colors: any = {
 export class SessionRunComponent implements OnInit {
 
 
-	@ViewChild(CountdownComponent) countdowncomponent: CountdownComponent;
+	@ViewChild(CountdownComponent, { static: false }) countdowncomponent: CountdownComponent;
 
 
 
@@ -243,6 +243,34 @@ export class SessionRunComponent implements OnInit {
 
   }
 
+
+  skipRounds(){
+   console.log('skipRounds');
+    this.nextRound()
+  }
+
+  nextRound(){
+
+    if ( this.currentExercise.round == this.session.round.length -1){
+      this.finishSession();
+
+    }
+
+    else
+    {
+      this.currentExercise.drills = false;
+      this.currentExercise.repeat=1;
+      this.currentExercise.exercise = 0;
+      this.currentExercise.round +=  1;
+      this.countdowncomponent.setDuration(this.session.round[this.currentExercise.round].restDuration);
+    }
+
+
+  }
+
+
+
+
   startCountDown(){
     this.playAudio();
    
@@ -257,6 +285,8 @@ export class SessionRunComponent implements OnInit {
 
 
   }
+
+
 
   finishSession(){
     this.session.executionEnd = new Date();

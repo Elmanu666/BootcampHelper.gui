@@ -4,6 +4,14 @@
 
 	<div class="col-md-10">
 	<table class="table table-hover">
+		<colgroup>
+			<col class="w">
+			<col>
+			<col>
+			<col>
+			<col>
+			<col>
+		</colgroup>
 		<thead class="thead-dark bg-primary">
 			<tr>
 		      <th (click)="sortBy('title')">Title</th>
@@ -17,7 +25,7 @@
 		</thead>
 		<tbody [@tableLine]="exercisesListSliced.length">
 			<tr (click)="displayExercise(exercise._id)" *ngFor="let exercise of exercisesListSliced ; let i =index"  id={{i}}>
-				<td class="list-title"><div>{{exercise.title | titlecase}}</div>
+				<td class="list-title"><div class="list-div-title">{{exercise.title | titlecase}}</div>
 					<i id="images" class="fas fa-camera" bchTooltip [bchTooltipImg]="true"  [bchTooltipObjectId]="exercise._id"></i>
 				</td>
 	            <td [innerHTML]="exercise.description"></td>

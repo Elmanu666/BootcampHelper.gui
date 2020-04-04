@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Observable } from 'rxjs/Rx';
 import CaloriesBurnt from '../models/caloriesBurnt.model';
 import { map } from 'rxjs/operators';
-import {Response} from '@angular/http';
+//import {Response} from '@angular/http';
 import { PagerService } from '../services/pages.service';
 import { environment } from '../../environments/environment';
 
