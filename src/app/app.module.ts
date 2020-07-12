@@ -12,7 +12,7 @@ import {MatTooltipModule, MatStepperModule, MatNativeDateModule, MatListModule, 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { OverlayModule } from '@angular/cdk/overlay';
 
-import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { UiSwitchModule } from 'ngx-ui-switch';
 import {ToastrModule} from 'ngx-toastr';
 import { NgxSpinnerModule } from 'ngx-spinner';
@@ -108,7 +108,7 @@ import {CapitalizePipe} from "./pipes/capitalize.pipe";
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
-    AngularFontAwesomeModule,
+    FontAwesomeModule,
     MatIconModule,
       MatStepperModule,
       MatInputModule,

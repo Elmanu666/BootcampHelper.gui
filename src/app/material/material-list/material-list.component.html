@@ -41,7 +41,7 @@
 			</div>
 			<div class="form-group">
 				<label for="nbDisplayItems">Number of display</label>
-				<ion-range-slider  min="0" max="40"  [from]="nbDisplayItems" grid="true" grid_num="8" (onFinish)="updateFilter($event, 'nbItems')"></ion-range-slider>
+				<ngx-slider  min="0" max="40"  [from]="nbDisplayItems" grid="true" grid_num="8" (onFinish)="updateFilter($event, 'nbItems')"></ngx-slider>
 			</div>
 			<div class="filter_group">
 				<div class="filter-header">
@@ -64,7 +64,7 @@
 					</div>
 				</div>
 				<div class="form-group" *ngIf="searchCriteria.weigth.active">
-					<ion-range-slider type="double"  postfix="kg" min="0" max="40"[from]="searchCriteria.weigth.min" [to]="searchCriteria.weigth.max" (onFinish)="updateFilter($event, 'weigth')"></ion-range-slider>  
+					<ngx-slider type="double"  postfix="kg" min="0" max="40"[from]="searchCriteria.weigth.min" [to]="searchCriteria.weigth.max" (onFinish)="updateFilter($event, 'weigth')"></ngx-slider>  
  				</div>
 			</div>
 			<div class="filter_group" >
@@ -74,7 +74,7 @@
 					</div>
 				</div> 
 				<div class="form-group" *ngIf="searchCriteria.length.active">
-					<ion-range-slider type="double" min="0" max="200"  postfix=" cm" (onFinish)="updateFilter($event, 'length')"></ion-range-slider>
+					<ngx-slider type="double" min="0" max="200"  postfix=" cm" (onFinish)="updateFilter($event, 'length')"></ngx-slider>
 				</div>
 
 			</div>
@@ -86,7 +86,7 @@
 					</div>
 				</div>
 				<div class="form-group" *ngIf="searchCriteria.quantity.active">
-					<ion-range-slider type="double" min="0" max="50"  (onFinish)="updateFilter($event, 'quantity')"></ion-range-slider> 
+					<ngx-slider type="double" min="0" max="50"  (onFinish)="updateFilter($event, 'quantity')"></ngx-slider> 
 				</div>
 			</div>
 			<div class="filter_group" >

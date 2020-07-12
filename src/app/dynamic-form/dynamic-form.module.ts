@@ -4,7 +4,9 @@ import { DynamicFormQuestionComponent } from './dynamic-form-question/dynamic-fo
 import { QuestionService } from './question.service';
 import { DynamicFormComponent } from './dynamic-form/dynamic-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { IonRangeSliderModule } from "ng2-ion-range-slider";
+import { NgxSliderModule } from '@m0t0r/ngx-slider';
+
+//import { IonRangeSliderModule } from "ng2-ion-range-slider";
 
 
 
@@ -13,7 +15,8 @@ import { IonRangeSliderModule } from "ng2-ion-range-slider";
   [
     CommonModule,
     ReactiveFormsModule,
-    IonRangeSliderModule
+    NgxSliderModule
+//    IonRangeSliderModule
   ],
   declarations: 
   [

@@ -16,7 +16,9 @@ import { MaterialCreateComponent } from './material-create/material-create.compo
 import {SharedModule} from '../common/sharedComponent.module'
 import {FilesManagementModule} from '../files-management/files-management.module'
 import { ReactiveFormsModule } from '@angular/forms';
-import { IonRangeSliderModule } from "ng2-ion-range-slider";
+//import { IonRangeSliderModule } from "ng2-ion-range-slider";
+import { NgxSliderModule } from '@m0t0r/ngx-slider';
+
 
 
 
@@ -38,7 +40,8 @@ import { IonRangeSliderModule } from "ng2-ion-range-slider";
  //   FormsModule,
     UiSwitchModule,
     MatSliderModule,
-    IonRangeSliderModule,
+ //   IonRangeSliderModule,
+    NgxSliderModule,
     ReactiveFormsModule,
     FilesManagementModule,
 
