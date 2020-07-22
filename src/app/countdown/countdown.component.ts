@@ -43,41 +43,18 @@ export class CountdownComponent implements OnInit {
   	console.log(this.progressBarEnable);
   }
 
-  startCountDown(){
-  	if (this.start){
-
-
-  		this.stop = true;
-
-  		var dureationSelect = this.durationSelected
-
-  		setTimeout(()=>{
-	  		this.start=true;	
-	  		this.tickTick(dureationSelect);
-	  		this.durationSelected = dureationSelect;
-	  		this.stop=false;
-	  		this.pause=false;
-
-
-  			}, 5)
-
-  	}
-
-  	else {
-  		  
+  startCountDown(){  		  
   		this.start=true;	
   		this.tickTick(this.durationSelected);
   		this.stop=false;
   		this.pause=false;
-
-  	}
-  	//this.duration = this.durationSelected;
-
   }
 
   pauseCountDown(){
+  	debugger;
   	this.pause=true
-  	this.durationSelected = this.numberToJson(this.duration);
+  	let durationLasting = this.numberToJson(this.duration);
+  	this.durationSelected = durationLasting[0];
   	clearInterval(this.interval);
   	this.countDownPause.emit(true)
 
@@ -119,20 +96,11 @@ export class CountdownComponent implements OnInit {
 	tickTick(duration:{"hour":number, "minute":number, "second":number, "msecond" : number}) {
 		this.duration = this.jsonToNumber(duration);
 		this.initialDuration = this.duration;
-		// var buzzer = 1000;
-		// buzzer = buzzer - this.clockPrecision;
+
 		if (this.duration > 0) {
 			this.interval = setInterval(() => {
 			
 				this.duration = this.duration - this.clockPrecision
-			
-				// if (this.duration == buzzer){
-				// 	var _this = this ;
-				// 	setTimeout(function() {
-				// 	       _this.playAudio();
-				// 	    }, 20)
-				// }
-
 				if (this.duration <=-1){
 
 
@@ -140,40 +108,6 @@ export class CountdownComponent implements OnInit {
 				}
 
 
-
-
-
-
-
-				// if (this.duration <= 0 || this.stop || this.pause) {
-				// 	clearInterval(this.interval);
-
-				// 	this.stop ? this.countDownStop.emit(true) :'';
-				// 	this.duration <=0 ? this.countDownFinished.emit(true): '';
-				// 	this.pause ? this.countDownPause.emit(true):'';
-				// 	this.start=false;
-				// 	this.stop=false;
-				// 	this.pause=false;
-
-					
-
-				// 	;
-				// 	// perform next actions
-				// }
-
-				// if (this.stop){
-
-				// 	this.start=false
-				// 	this.durationSelected.hour = 0;
-				// 	this.durationSelected.minute = 0;
-				// 	this.durationSelected.second = 0;
-				// 	this.durationSelected.msecond = 0;
-				// 	this.clockPurcentage = 100;
-
-
-				// }
-
-				// else {
 
 				var duration=[];
 
@@ -193,8 +127,7 @@ export class CountdownComponent implements OnInit {
 	}
 
 	numberToJson(timeNumber:number):any{
-		// debugger;
-		//timeNumber 	= timeNumber + 999;
+
 		let timeJson = {"hour":0, "minute":0, "second":0, "msecond":0};
 		let timeStringJson = {"hour":"00", "minute":"00", "second":"00", "msecond":"000"};
 		let msecond = timeNumber%1000;

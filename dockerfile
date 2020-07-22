@@ -1,13 +1,17 @@
-FROM node:14.4.0-alpine AS build
+FROM node:14.4.0 AS build
 WORKDIR /usr/src/app
-COPY package.json ./
-RUN apk update && \
-	apk upgrade && \
-RUN apk add --no-cache --upgrade bash
+COPY package.json package-lock.json ./
+RUN npm install -g @angular/cli
 RUN npm install
 COPY . .
 RUN ng build --prod
 
 FROM nginx:stable
-COPY docker/nginx/default.conf /etc/nginx/conf.d/default.conf
-COPY --from=compile-image /opt/ng/dist/ /usr/share/nginx/html
+
+#COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+COPY --from=build /usr/src/app/dist/ /usr/share/nginx/html
+EXPOSE 80
+
+# run nginx
+CMD ["nginx", "-g", "daemon off;"]

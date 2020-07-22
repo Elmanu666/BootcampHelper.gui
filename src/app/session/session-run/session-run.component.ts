@@ -105,6 +105,7 @@ export class SessionRunComponent implements OnInit {
   NextExercise : {'round':number, 'exercise':number, 'drills':boolean, 'repeat':number};
 	started:boolean;
 	roundsStarted :boolean=false;
+  roundsPaused :boolean=false;
   sessionFinished : boolean =false;
   SessionResume : boolean=false;
 	progressBar:boolean=true;
@@ -200,9 +201,10 @@ export class SessionRunComponent implements OnInit {
 
 
   startRounds(){
-    this.roundsStarted = true;
-    this.playAudio();
-    setTimeout(()=>{
+    if(!this.roundsPaused){
+      this.roundsStarted = true;
+      this.playAudio();
+      setTimeout(()=>{
      
           this.countdowncomponent.setDuration(this.session.round[this.currentExercise.round].restDuration);
 
@@ -212,7 +214,14 @@ export class SessionRunComponent implements OnInit {
 
 
           }, 5);
-    }, 5);
+       }, 5);
+
+    }
+    else if(this.roundsPaused){
+      this.roundsPaused = false;
+      this.countdowncomponent.startCountDown();
+
+    }
 
 
   //  this.countdowncomponent.startCountDown();
@@ -229,8 +238,10 @@ export class SessionRunComponent implements OnInit {
 
 
   pauseRounds(){
+    debugger;
     this.countdowncomponent.pauseCountDown();
-    this.roundsStarted = false;
+    this.roundsStarted = true;
+    this.roundsPaused = true;
 
 
   }

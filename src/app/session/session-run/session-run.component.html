@@ -95,16 +95,16 @@
 
 	<div class="row space-around-timer" *ngIf="roundsStarted">
 		<div class="col-md-1">
-			<div class="lecteur">
-				<button [@flyInOut] *ngIf="!roundsStarted" class="btn btn-lg btn-success" (click)="startRounds()">
+			<div class="lecteur" [@flyInOut]>
+				<button  *ngIf="!roundsStarted||roundsPaused" class="btn btn-lg btn-success" (click)="startRounds()">
        				<i  class="fas fa-play-circle fa-3x"></i>
     			</button>
-    			<button *ngIf="roundsStarted" class="btn btn-lg btn-warning" (click)="pauseRounds()">
+    			<button *ngIf="roundsStarted&&!roundsPaused" class="btn btn-lg btn-warning" (click)="pauseRounds()">
        				<i class="fas fa-pause fa-3x"></i>
     			</button>
     		</div>
 		</div>
-		<div class="col-md-10 countdown" [@flyDown] [ngClass]="{ 'drills': started && currentExercise.drills, 'rest' : started && !currentExercise.drills, '': !started && !currentExercise.drills}">
+		<div class="col-md-10 countdown" [@flyDown] [ngClass]="{ 'drills': started && currentExercise.drills, 'pause' : roundsPaused, 'rest' : started && !currentExercise.drills, '': !started && !currentExercise.drills}">
         	<app-countdown (countDownFinished)="nextExercise('auto')" [progressBarEnable]="progressBar"></app-countdown>
         </div>
         <div class="col-md-1">
