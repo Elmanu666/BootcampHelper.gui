@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SessionService } from '../../services/session.service';
 import Session from '../../models/session.model';
 import { PagerService } from '../../services/pages.service';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
 import { PagerComponent } from '../../common/pager/pager.component';
 
 import {

@@ -6,7 +6,7 @@ import {CdkDragDrop, moveItemInArray, transferArrayItem, copyArrayItem} from '@a
 
 
 
-import { MatTooltipModule } from '@angular/material';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 

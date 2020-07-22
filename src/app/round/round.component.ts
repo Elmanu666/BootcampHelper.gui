@@ -3,7 +3,8 @@ import Round from '../models/round.model';
 import Exercise from '../models/exercise.model';
 import User from '../models/user.model';
 import {ExerciseService} from '../services/exercise.service';
-import {MatFormFieldModule, MatInputModule} from '@angular/material';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import {CdkDragDrop, moveItemInArray, transferArrayItem, copyArrayItem} from '@angular/cdk/drag-drop';
 import { ToastrService } from 'ngx-toastr';
 
