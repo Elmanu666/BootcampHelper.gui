@@ -1,0 +1,78 @@
+/*.progress-ring__circle {
+  transition: stroke-dashoffset 0.35s;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%,
+}*/
+
+.progress__value
+ {
+  stroke:#4CAF50;
+  /*stroke-dasharray: 326.7256 326.7256;*/
+  -webkit-transition: 0.35s stroke-dashoffset;
+  transition: 0.35s stroke-dashoffset;
+  -webkit-transform: rotate(-90deg);
+          transform: rotate(-90deg);
+  -webkit-transform-origin: 50% 50%;
+          transform-origin: 50% 50%;
+  -webkit-stroke-dashoffset: 50;
+          stroke-dashoffset: 50;
+}
+
+.progress__value2
+ {
+  stroke: #ccc;
+  /*stroke-dasharray: 326.7256 326.7256;*/
+  -webkit-transition: 0.35s stroke-dashoffset;
+  transition: 0.35s stroke-dashoffset;
+  -webkit-transform: rotate(-90deg);
+          transform: rotate(-90deg);
+  -webkit-transform-origin: 50% 50%;
+          transform-origin: 50% 50%;
+  -webkit-stroke-dashoffset: 50;
+          stroke-dashoffset: 50;
+}
+
+.progress__value3
+ {
+  stroke: #4CAF50;
+  /*stroke-dasharray: 326.7256 326.7256;*/
+  -webkit-transition: 0.35s stroke-dashoffset;
+  transition: 0.35s stroke-dashoffset;
+  -webkit-transform: rotate(-90deg);
+          transform: rotate(-90deg);
+  -webkit-transform-origin: 50% 50%;
+          transform-origin: 50% 50%;
+  -webkit-stroke-dashoffset: 50;
+          stroke-dashoffset: 50;
+}
+
+.progress__meter,
+.progress__value,
+.progress__meter2,
+.progress__value2,
+.progress__meter3,
+.progress__value3
+{
+  fill: transparent;
+}
+
+.progress__meter {
+  stroke: #ccc;
+}
+
+.progress__meter2 {
+  stroke: #4640cb;
+}
+
+/*.progress__meter3 {
+  stroke: red;
+
+}*/
+
+.progress__value-text {
+/*  position: absolute;
+  top: 48px;
+  left: 45px;*/
+  
+
+}

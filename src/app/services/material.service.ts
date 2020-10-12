@@ -1,7 +1,7 @@
 
 import Material from '../models/material.model';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 //import {Response} from '@angular/http';
 import { Injectable } from '@angular/core';
@@ -66,22 +66,17 @@ export class MaterialService {
 
     	let config = {'params' : {'page' : page }};  	
 
-      return this.http
-        .get(url)
-    		.map(res  => {
+      return this.http.get(url)
+        .pipe(
+          map(res  => {
+            return res["data"] as Material[];
+            }),
+          catchError(error=> {
 
-
-      	    return res["data"] as Material[];
-
-
-            }
-          )
-        .catch(error=> {
-
-          return this.handleError(error)}
+          return this.handleError(error);}
           ) 
-        
-    }
+         )
+        }
 
 
   getMaterial(id:Material['_id']): Observable<Material>{

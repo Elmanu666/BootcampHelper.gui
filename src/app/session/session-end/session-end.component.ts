@@ -6,6 +6,8 @@ import {SessionService} from '../../services/session.service';
 import CaloriesBurnt from '../../models/caloriesBurnt.model';
 import {RangeSimpleQuestion} from '../../dynamic-form/models/question-range-simple.model';
 import {QuestionBase} from '../../dynamic-form/models/question-base.model';
+import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
@@ -25,14 +27,17 @@ export class SessionEndComponent implements OnInit {
 	update:number= 0;
 
 
+
   	constructor(    
   		private caloriesBurntService: CaloriesBurntService,
   		private sessionService: SessionService,
+  		library: FaIconLibrary
 
 		) {
 
   		this.caloriesPerUser = new Array();
   		this.questionsCalories = new Array();
+  		library.addIcons(faCoffee);
 
   	 }
 

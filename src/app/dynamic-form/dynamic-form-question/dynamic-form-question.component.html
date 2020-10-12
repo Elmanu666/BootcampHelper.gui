@@ -16,9 +16,9 @@
     </select>
 
 <!--     <input *ngSwitchCase="'simpleRange'" type="range" class="custom-range" min="{{question.options.min}}" max="{{question.options.max}}" step="{{question.options.step}}" [id]="question.key" [formControlName]="question.key">     -->
-	<ng2-ion-range-slider  *ngSwitchCase="'simpleRange'" [min]="question.options.min" [max]="question.options.max"  [from]="question.value" grid="true" [step]="question.options.step" [id]="question.key"  [from]="question.value"  (onFinish)="rangeValueUpdate($event)"></ng2-ion-range-slider>
-<!-- 	<input *ngSwitchCase="'simpleRange'" class="hidden-input" [formControlName]="question.key" [id]="question.key" [type]="question.type" class="form-control"> -->
-	<ng-container *ngSwitchCase="'checkBox'">
+<!-- 	<mat-slider  *ngSwitchCase="'simpleRange'" [min]="question.options.min" [max]="question.options.max" [(ngModel)]="question.value" [step]="question.options.step" [id]="question.key"  (MatSliderChange)="rangeValueUpdate($event)"></mat-slider> -->
+<mat-slider *ngSwitchCase="'simpleRange'" [min]="question.options.min" [max]="question.options.max" [step]="question.options.step" (change)="rangeValueUpdate($event)" thumbLabel tickInterval="1"></mat-slider>
+<!-- 	<input *ngSwitchCase="'simpleRange'" class="hidden-input" [formControlName]="question.key" [id]="question.key" [type]="question.type" class="form-control"> -->	<ng-container *ngSwitchCase="'checkBox'">
 	 	<input  type="checkbox" class="form-check-input" [id]="question.key" [formControlName]="question.key">
 	    <label [attr.for]="question.key" class="form-check-label">{{question.label}}</label>
 	</ng-container>

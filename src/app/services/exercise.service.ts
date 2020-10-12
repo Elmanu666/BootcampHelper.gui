@@ -44,16 +44,20 @@ export class ExerciseService {
     	let url = this.exercisesUrl+'?page='+page
   //  	let url = this.exercisesUrl
     	let config = {'params' : {'page' : page }};
-    	return this.http
-        .get(url)
-    		.map(res  => {
-      	   return res["data"] as Exercise[];
-          }
-         ) 
-        .catch(error => {
+    	return this.http.get(url)
+        .pipe(
+
+           map(res  => {
+             return res["data"] as Exercise[];
+            }),
+          catchError(error => {
            return this.handleError(error);
 
         })
+
+           )
+
+
   }
 
 
@@ -62,15 +66,17 @@ export class ExerciseService {
     let url = this.exercisesUrl+'/'+id
   //    let url = this.sessionUrl
     
-    return this.http
-      .get(url)
-      .map(res  => {
-            //Maps the response object sent from the server        
-            return res["data"] as Exercise;
-      })
-      .catch(error => {
-          return this.handleError(error);
-      })
+    return this.http.get(url)
+       .pipe(
+               map(res  => {
+                    //Maps the response object sent from the server        
+                    return res["data"] as Exercise;
+              }),
+              catchError(error => {
+                  return this.handleError(error);
+              })
+            )
+
 
 
 

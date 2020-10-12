@@ -4,14 +4,20 @@
     <div class="col-md-6">
       <div class="row">
         <button class="btn btn-danger" (click)="deleteExercise()" *ngIf="edit || view">
-          <i  class="fa fa-trash"></i>
+        <!--   <i  class="fa fa-trash"></i> -->
+          <fa-icon [icon]="['fas', 'trash-alt']" ></fa-icon>
+
         </button>
 
         <button class="btn btn-warning" (click)="editExercise()" *ngIf="view">
-          <i  class="fa fa-pencil"></i>
+<!--           <i  class="fa fa-pencil"></i>
+ -->          <fa-icon [icon]="['far', 'edit']" ></fa-icon>
+
         </button> 
        <button class="btn btn-success" (click)="viewExercise()" *ngIf="edit">
-          <i  class="fa fa-eye"></i>
+<!--           <i  class="fa fa-eye"></i> -->
+          <fa-icon [icon]="['fas', 'eye']" ></fa-icon>
+
         </button>
       </div>
     </div>

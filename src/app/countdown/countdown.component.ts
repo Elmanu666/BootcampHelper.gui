@@ -1,4 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { ProgressChartComponent } from '../progress-chart/progress-chart.component';
+
+
 
 @Component({
   selector: 'app-countdown',
@@ -29,6 +32,7 @@ export class CountdownComponent implements OnInit {
   	 clockPurcentage: number=0;
   	 private clockPrecision : number = 10;  
   	 private processRunning ;
+  	 pourcentageProgress:number[]=[0,0,0];
 
 
 
@@ -106,8 +110,10 @@ export class CountdownComponent implements OnInit {
 
 					this.finishCountDown();
 				}
+				for (var v=0;v<3;v++){
+					this.pourcentageProgress[v] = this.calculProgress(this.initialDuration,this.duration);
 
-
+				}
 
 				var duration=[];
 
@@ -190,7 +196,12 @@ export class CountdownComponent implements OnInit {
 
 		}
 
+	calculProgress(total:number,value:number){
+		var result = value/total;
+		return result;
 
+
+	}
 		
 
 

@@ -1,0 +1,166 @@
+<svg *ngIf="formDef==='ellipse'"
+  class="progress-ring"
+  [style.height]="height"
+  [style.width]="width"
+>
+	<ellipse class="progress__meter" 
+		[attr.cx]="cx" 
+		[attr.cy]="cy"
+
+		[attr.rx]="radiusX[0]" 
+		[attr.ry]="radiusY[0]" 
+		[style.strokeWidth]="border" 
+	/>
+
+  	<ellipse
+	    class="progress__value"
+
+	    [style.strokeWidth]="border"
+	    [style.strokeDashoffset]="dashoffset[0]"
+	    [attr.rx]="radiusY[0]"
+	    [attr.ry]="radiusX[0]"
+	    [attr.cx]="cx"
+	    [attr.cy]="cy"
+	    [style.strokeDasharray]="circumference[0]"
+  	/>
+  	<ellipse class="progress__meter2" 
+
+		[attr.cx]="cx" 
+		[attr.cy]="cy" 
+		[attr.rx]="radiusX[1]" 
+		[attr.ry]="radiusY[1]" 
+		[style.strokeWidth]="border" 
+	/>
+
+  	<ellipse
+	    class="progress__value2"
+	    stroke="#4CAF50"
+	    [style.strokeWidth]="border"
+
+	    [style.strokeDashoffset]="dashoffset[1]"
+	    [attr.rx]="radiusY[1]"
+	    [attr.ry]="radiusX[1]"
+	    [attr.cx]="cx"
+	    [attr.cy]="cy"
+	    [style.strokeDasharray]="circumference[1]"
+  	/>
+	<circle
+	    class="progress__value3"
+	    
+	    stroke="#4CAF50"
+	    [style.strokeWidth]="border_center"
+
+	    [style.strokeDashoffset]="dashoffset[2]"
+	    [attr.r]="radiusX[2]"
+
+	    [attr.cx]="cx"
+	    [attr.cy]="cy"
+	    [style.strokeDasharray]="circumference[2]"
+	    clip-path="url(#user-space)"/>
+	/>
+	<defs>
+	    <clipPath id="user-space" clipPathUnits="userSpaceOnUse">
+		  	<ellipse class="progress__meter3" 
+
+				[attr.cx]="cx" 
+				[attr.cy]="cy" 
+				[attr.rx]="radiusY_mask" 
+				[attr.ry]="radiusX_mask" 
+		
+			/>	  	
+		</clipPath>
+	</defs>
+	<text class="progress__value-text"
+		[attr.x]="cx"
+	    [attr.y]="cy_text"
+	    [style.fontSize]="fontSize"
+	    text-anchor="middle"
+	>
+	{{value[0]}}%
+	</text>
+</svg>
+<svg *ngIf="formDef==='circle'"
+  class="progress-ring"
+  [style.height]="height"
+  [style.width]="width"
+>
+	<circle class="progress__meter" 
+		[attr.cx]="cx" 
+		[attr.cy]="cy"
+
+		[attr.r]="radiusX[0]" 
+		 
+		[style.strokeWidth]="border" 
+	/>
+
+  	<circle
+	    class="progress__value"
+
+	    [style.strokeWidth]="border"
+	    [style.strokeDashoffset]="dashoffset[0]"
+	    [attr.r]="radiusY[0]"
+	    
+	    [attr.cx]="cx"
+	    [attr.cy]="cy"
+	    [style.strokeDasharray]="circumference[0]"
+  	/>
+  	<circle class="progress__meter2" 
+
+		[attr.cx]="cx" 
+		[attr.cy]="cy" 
+		[attr.r]="radiusX[1]" 
+		 
+		[style.strokeWidth]="border" 
+	/>
+
+  	<circle
+	    class="progress__value2"
+	    stroke="#4CAF50"
+	    [style.strokeWidth]="border"
+
+	    [style.strokeDashoffset]="dashoffset[1]"
+	    [attr.r]="radiusY[1]"
+	    
+	    [attr.cx]="cx"
+	    [attr.cy]="cy"
+	    [style.strokeDasharray]="circumference[1]"
+  	/>
+
+  	<circle 
+
+  		class="progress__meter3" 
+
+		[attr.cx]="cx" 
+		[attr.cy]="cy" 
+		[attr.x]="radiusX[2]" 
+
+		[style.strokeWidth]="border" 
+		
+
+	/>	
+
+	<circle
+	    class="progress__value3"
+	    
+	    stroke="#4CAF50"
+	    [style.strokeWidth]="border_center"
+
+	    [style.strokeDashoffset]="dashoffset[2]"
+	    [attr.r]="radiusX[2]"
+
+	    [attr.cx]="cx"
+	    [attr.cy]="cy"
+	    [style.strokeDasharray]="circumference[2]"
+
+	 />  
+
+
+	<text class="progress__value-text"
+		[attr.x]="cx"
+	    [attr.y]="cy_text"
+	    [style.fontSize]="fontSize"
+	    text-anchor="middle"
+	>
+	{{value[0]}}%
+	</text>
+</svg>

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 //import {Response} from '@angular/http';
 import { PagerService } from '../services/pages.service';
@@ -51,21 +51,23 @@ export class SportService {
 		}
 		else {
 
-			return this.http
-        		.get(this.materialUrl)
-    			.map(res  => {
+			return this.http.get(this.materialUrl)
+				.pipe(
+					map(res  => {
 
     				this.sport = res["data"];
       	    		return res["data"] as Sport[];
 
 
             		}
-          		)
-        		.catch(error=> {
+          		),
+        		catchError(error=> {
 
           			return (error)
           		}
           		) 
+          		)
+
 			}
 
 	}

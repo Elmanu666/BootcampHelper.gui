@@ -18,6 +18,9 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 
+import { FontAwesomeModule, FaIconLibrary, FaConfig } from '@fortawesome/angular-fontawesome';
+import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+
 import {FilesManagementModule} from '../files-management/files-management.module';
 
 
@@ -33,6 +36,7 @@ import {SessionMainComponent} from './session-main/session-main.component';
 import {SessionComponent} from './session.component';
 
 import { CountdownComponent } from '../countdown/countdown.component';
+import { ProgressChartComponent } from '../progress-chart/progress-chart.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { SessionRoutingModule } from './session-routing.module';
@@ -96,6 +100,7 @@ import { RoundComponent } from '../round/round.component';
     DragDropModule,
     bchTooltipModule,
     DynamicFormModule,
+    FontAwesomeModule,
 
   ],
 
@@ -107,6 +112,7 @@ import { RoundComponent } from '../round/round.component';
     SessionRunComponent,
   	SessionMainComponent,
   	CountdownComponent,
+    ProgressChartComponent,
   	SessionSheetComponent,
     EscapeHtmlPipe,
     CalendarComponent,
@@ -131,4 +137,13 @@ import { RoundComponent } from '../round/round.component';
   providers: [],
 
 })
-export class SessionModule {}
+export class SessionModule {
+
+  constructor(library: FaIconLibrary, faConfig: FaConfig) {
+    // Add an icon to the library for convenient access in other components
+    library.addIcons(faEdit);
+    library.addIcons(faTrashAlt);
+    faConfig.defaultPrefix = 'far';
+  }
+
+}

@@ -5,6 +5,8 @@ import { QuestionService } from './question.service';
 import { DynamicFormComponent } from './dynamic-form/dynamic-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxSliderModule } from '@m0t0r/ngx-slider';
+import { MatSliderModule } from '@angular/material/slider';
+
 
 //import { IonRangeSliderModule } from "ng2-ion-range-slider";
 
@@ -15,7 +17,8 @@ import { NgxSliderModule } from '@m0t0r/ngx-slider';
   [
     CommonModule,
     ReactiveFormsModule,
-    NgxSliderModule
+    NgxSliderModule,
+    MatSliderModule
 //    IonRangeSliderModule
   ],
   declarations: 

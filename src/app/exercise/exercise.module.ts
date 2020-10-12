@@ -33,6 +33,9 @@ import {DynamicFormModule} from '../dynamic-form/dynamic-form.module';
 import { bchTooltipModule } from '../tooltip/bch-tooltip.module'
 
 
+import { FontAwesomeModule, FaIconLibrary, FaConfig } from '@fortawesome/angular-fontawesome';
+import { faEdit, faTrashAlt, faEye } from '@fortawesome/free-solid-svg-icons';
+import { faEdit as farEdit } from '@fortawesome/free-regular-svg-icons';
 
 
 
@@ -57,7 +60,8 @@ import { bchTooltipModule } from '../tooltip/bch-tooltip.module'
     FilesManagementModule,
     ReactiveFormsModule,
     DynamicFormModule,
-    bchTooltipModule
+    bchTooltipModule,
+    FontAwesomeModule
   ],
   declarations: [
     ExerciseListComponent,
@@ -71,4 +75,12 @@ import { bchTooltipModule } from '../tooltip/bch-tooltip.module'
   ],
 
 })
-export class ExerciseModule {}
+export class ExerciseModule {
+
+  constructor(library: FaIconLibrary, faConfig: FaConfig) {
+    // Add an icon to the library for convenient access in other components
+    library.addIcons(farEdit, faTrashAlt,faEye);
+
+//    faConfig.defaultPrefix = 'far';
+  }
+}

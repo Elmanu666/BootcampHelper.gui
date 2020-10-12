@@ -7,7 +7,7 @@ import { HttpClient, HttpClientModule, HttpHandler } from '@angular/common/http'
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 //import { EditorModule } from '@tinymce/tinymce-angular';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -20,10 +20,14 @@ import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSliderModule } from '@angular/material/slider';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { OverlayModule } from '@angular/cdk/overlay';
 
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import { faCoffee } from '@fortawesome/free-solid-svg-icons';
+
+
 import { UiSwitchModule } from 'ngx-ui-switch';
 import {ToastrModule} from 'ngx-toastr';
 import { NgxSpinnerModule } from 'ngx-spinner';
@@ -79,6 +83,7 @@ import { HomeComponent } from './home/home.component';
 
 //pipe
 import {CapitalizePipe} from "./pipes/capitalize.pipe";
+//import { ProgressChartComponent } from './progress-chart/progress-chart.component';
 //import { RoundComponent } from './round/round.component';
 
 
@@ -100,7 +105,7 @@ import {CapitalizePipe} from "./pipes/capitalize.pipe";
     HomeComponent,
     loginComponent,
 //    SessionComponent,
-    CapitalizePipe,
+    CapitalizePipe
 
 
   ],
@@ -121,21 +126,22 @@ import {CapitalizePipe} from "./pipes/capitalize.pipe";
     FormsModule,
     FontAwesomeModule,
     MatIconModule,
-      MatStepperModule,
-      MatInputModule,
-      MatDatepickerModule,
-      MatButtonModule, 
-      MatNativeDateModule,
-      MatGridListModule,
-      MatSelectModule,
-      MatExpansionModule,
+    MatStepperModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatButtonModule, 
+    MatNativeDateModule,
+    MatGridListModule,
+    MatSelectModule,
+    MatExpansionModule,
+    MatSliderModule,
     MatListModule,
     MatCardModule,
     SharedModule,
     FilesManagementModule,
     NgxSpinnerModule,
     OverlayModule,
-    NgbModule.forRoot(),
+    NgbModule,
     ToastrModule.forRoot(),
   ],
 
@@ -147,4 +153,7 @@ import {CapitalizePipe} from "./pipes/capitalize.pipe";
   providers: [errorHandler, MenuService, SportService, MaterialService, ExerciseService,  PagerService, authService, UserService, userSessionService, SessionService, CanActivateExercisesGuard, MaterialTypeService, BodyPartService, CaloriesBurntService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { 
+
+
+}

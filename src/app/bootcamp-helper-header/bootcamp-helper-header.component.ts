@@ -27,10 +27,11 @@ export class BootcampHelperHeaderComponent implements OnInit {
   	menuAdmin.type='admin';
   	menuAdmin.link=[{'name':'Home', 'adress':''}];
     menuAdmin.link.push({'name':'Exercise', 'adress':'exercise'});
-    menuAdmin.link.push({'name':'Session', 'adress':'session'});;
-    menuAdmin.link.push({'name':'Material', 'adress':'material'});;
-  	menuAdmin.link.push({'name':'User', 'adress':'user'});;
-
+    menuAdmin.link.push({'name':'Session', 'adress':'session'});
+    menuAdmin.link.push({'name':'Material', 'adress':'material'});
+  	menuAdmin.link.push({'name':'User', 'adress':'user'});
+    menuAdmin.link.push({'name':'V0.9.2', 'adress':'user'});
+    
 
   	var menuGuest:menu = new menu();
 
@@ -40,6 +41,7 @@ export class BootcampHelperHeaderComponent implements OnInit {
     menuGuest.link.push({'name':'Session', 'adress':'session'}); 
     menuGuest.link.push({'name':'Material', 'adress':'material'}); 
     menuGuest.link.push({'name':'User', 'adress':'user'}); 
+    menuGuest.link.push({'name':'V0.9.2', 'adress':'user'});
 
 
   	if(this.auth.isSignedIn()){

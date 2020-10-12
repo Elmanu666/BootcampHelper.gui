@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import Material from '../models/material.model';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 //import {Response} from '@angular/http';
 import { PagerService } from '../services/pages.service';
@@ -37,7 +37,6 @@ export class MaterialTypeService {
 	}
 
 	getMaterialType(): Observable<any>{
-		debugger;
 		if (this.materialType.length > 0){
 
 			 return new Observable((observer) => {
@@ -53,21 +52,23 @@ export class MaterialTypeService {
 		}
 		else {
 
-			return this.http
-        		.get(this.materialUrl)
-    			.map(res  => {
+			return this.http.get(this.materialUrl)
+				.pipe(    			
+					map(res  => {
 
     				this.materialType = res["data"];
       	    		return res["data"] as MaterialType[];
 
 
-            		}
-          		)
-        		.catch(error=> {
+            			}
+          			),
+        			catchError(error=> {
 
           			return (error)
-          		}
-          		) 
+          				}
+          			) 
+          		)
+
 			}
 
 	}

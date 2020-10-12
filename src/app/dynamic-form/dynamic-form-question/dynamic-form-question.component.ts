@@ -21,9 +21,9 @@ export class DynamicFormQuestionComponent  {
 
 
   rangeValueUpdate(sliderEvent){
-
+    debugger;
 //  	this.form.controls[this.question.key].value = sliderEvent.from;
-  	this.form.controls[this.question.key].setValue(sliderEvent.from); 
+  	this.form.controls[this.question.key].setValue(sliderEvent.value); 
 
   }
 

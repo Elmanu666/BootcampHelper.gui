@@ -1,10 +1,11 @@
 import File from '../models/file.model';
 import { environment } from '../../../environments/environment';
+import { map, catchError } from 'rxjs/operators';
 
 
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs';
 
 
 
@@ -37,8 +38,9 @@ export class FileService {
     }
     getImages(id) : any{
         return this.http.get(this._baseURL + "?exerciseId="+id)
+        .pipe(catchError(error => Observable.throw(error)))
                    
-                   .catch(error => Observable.throw(error));
+                   
     }
 
     deleteImage(id) : any{

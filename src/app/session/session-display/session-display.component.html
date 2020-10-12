@@ -1,15 +1,15 @@
 <div class="row">
   <div class="col-md-3"></div>
-  <div class="col-md-8">
+  <div class="col-md-8" style="padding-top: 5px">
     <div class="row">
         <div class="col-md-2 ActionButtons">
           <button class="btn btn-danger" (click)="deleteSession()">
-            <i  class="fa fa-trash"></i>
+            <fa-icon [icon]="['fas', 'trash-alt']" ></fa-icon>
           </button>
         </div>
       <div class="col-md-2 ActionButtons">
           <button class="btn btn-warning" (click)="editSession()">
-            <i  class="fa fa-pencil"></i>
+            <fa-icon [icon]="['fas', 'edit']"></fa-icon>
         </button>
       </div>
     </div>
