@@ -3,7 +3,7 @@
 		<div class="clockDigit">
 			<h1 class="clock">{{durationSelected2Digit.minute}}:{{durationSelected2Digit.second}}</h1><h2 class="clock">:{{durationSelected2Digit.msecond}}</h2>
 		</div>
-		<app-progress-chart [height]="240" [width]="240" [value]="pourcentageProgress"></app-progress-chart>
+<!-- 		<app-progress-chart [height]="240" [width]="240" [value]="pourcentageProgress"></app-progress-chart> -->
 		<div class="lecteur" *ngIf="playerEnable">
 			<button  *ngIf="!start" class="btn btn-lg btn-success" (click)="startCountDown(durationSelected)">
    				<i  class="fas fa-play-circle fa-3x"></i>
